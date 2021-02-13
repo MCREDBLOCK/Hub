@@ -1,0 +1,7 @@
+name: Hub
+version: ${project.version}
+main: com.redblock6.hub.Main
+api-version: 1.16
+authors: [Redblock6]
+description: Hub plugin for mc.redblock6.com
+website: mc.redblock6.com
