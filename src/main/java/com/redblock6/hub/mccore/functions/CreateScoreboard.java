@@ -42,31 +42,50 @@ public class CreateScoreboard {
         Score levelline = o.getScore(level);
         levelline.setScore(4);
 
-        /* //blank
-        String blank3 = ChatColor.translateAlternateColorCodes('&', "&4&l&c&m&9&l&b&m");
-        Score blankline3 = o.getScore(blank3);
-        blankline3.setScore(4);
+        //top line
+        String line2 = ChatColor.translateAlternateColorCodes('&', "&4&l&7&m---------------------");
+        Score line2line = o.getScore(line2);
+        line2line.setScore(5);
 
-        //claim blocks
-        String claim = ChatColor.translateAlternateColorCodes('&', "&3&lClaim Blocks");
-        Score claimline = o.getScore(claim);
-        claimline.setScore(6);
+        CreateScoreboard.o = o;
+        return b;
+    }
+
+    public static Scoreboard parkour() {
+        //create scoreboard
+        Scoreboard b = Bukkit.getScoreboardManager().getNewScoreboard();
+
+        String s1 = ChatColor.translateAlternateColorCodes('&', "&6&lPARKOUR");
+        Objective o = b.registerNewObjective("PK", "dummy", s1);
+        o.setDisplaySlot(DisplaySlot.SIDEBAR);
+        o.setDisplayName(s1);
+
+        //bottom line
+        String line = ChatColor.translateAlternateColorCodes('&', "&7&m---------------------");
+        Score line1 = o.getScore(line);
+        line1.setScore(0);
+
+        //ip
+        String ip = ChatColor.translateAlternateColorCodes('&', "&6&lmc.redblock6.com");
+        Score ipline = o.getScore(ip);
+        ipline.setScore(1);
 
         //blank
-        String blank45 = ChatColor.translateAlternateColorCodes('&', "&4&l&c&m");
-        Score blankline45 = o.getScore(blank45);
-        blankline45.setScore(7);
+        String blank = "";
+        Score blankline = o.getScore(blank);
+        blankline.setScore(2);
 
-        //player count
-        Team playercount = b.registerNewTeam("playercount");
-        playercount.addEntry(ChatColor.AQUA + "" + ChatColor.GRAY);
-        playercount.setPrefix(ChatColor.translateAlternateColorCodes('&', "&b" + Bukkit.getOnlinePlayers().size() + "&7/50"));
-        o.getScore(ChatColor.AQUA + "" + ChatColor.GRAY).setScore(8);
+        //exp
+        String exp = ChatColor.translateAlternateColorCodes('&', "&6&lTIME");
+        Score expline = o.getScore(exp);
+        expline.setScore(3);
 
-        //players
-        String playerslineb = ChatColor.translateAlternateColorCodes('&', "&3&lPlayers");
-        Score playersline = o.getScore(playerslineb);
-        playersline.setScore(9); */
+        //level
+        Team aclaimblocks = b.registerNewTeam("time");
+        aclaimblocks.addEntry(ChatColor.YELLOW + "" + ChatColor.YELLOW);
+        String aclaimblocksline = ChatColor.translateAlternateColorCodes('&', "&e");
+        aclaimblocks.setPrefix(aclaimblocksline);
+        o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(4);
 
         //top line
         String line2 = ChatColor.translateAlternateColorCodes('&', "&4&l&7&m---------------------");
@@ -76,6 +95,7 @@ public class CreateScoreboard {
         CreateScoreboard.o = o;
         return b;
     }
+
 
     public static void setScoreboard(Player p, String type, Boolean setscoreboard) {
         if (type.equals("Normal")) {
@@ -87,6 +107,15 @@ public class CreateScoreboard {
                 o.getScore(ChatColor.AQUA + "" + ChatColor.GRAY).setScore(8);
             } else if (setscoreboard.equals(true)) {
                 p.setScoreboard(new CreateScoreboard().normal());
+            }
+        } else if (type.equals("Parkour")) {
+            if (setscoreboard.equals(false)) {
+                Scoreboard b = p.getScoreboard();
+                String s1 = CreateGameMenu.translate("&6&lPARKOUR");
+                b.getTeam("playercount").setPrefix(ChatColor.translateAlternateColorCodes('&', "&e" + Parkour.getTime(p)));
+                o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(4);
+            } else if (setscoreboard.equals(true)) {
+                p.setScoreboard(new CreateScoreboard().parkour());
             }
         }
     }

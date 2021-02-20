@@ -5,3 +5,24 @@ api-version: 1.16
 authors: [Redblock6]
 description: Hub plugin for mc.redblock6.com
 website: mc.redblock6.com
+
+commands:
+  gamemenu:
+    description: Opens the gamemenu
+  gmc:
+    description: Sets your gamemode to creative
+  gms:
+    description: Sets your gamemode to survival
+  gma:
+    description: Sets your gamemode to adventure
+  gmsp:
+    description: Sets your gamemode to spectator
+
+permissions:
+  redblock.gamemode.creative:
+    description: Sets your gamemode to creative
+  redblock.gamemode.survival:
+    description: Sets your gamemode to survival
+  redblock.gamemode.adventure:
+    description: Sets your gamemode to adventure
+  redblock.gamemode.spectator:

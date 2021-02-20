@@ -1,6 +1,9 @@
 package com.redblock6.hub;
 
 import com.redblock6.hub.mccore.events.JoinLeaveEvent;
+import com.redblock6.hub.mccore.commands.GameMenuCommand;
+import com.redblock6.hub.mccore.commands.Gamemode;
+import com.redblock6.hub.mccore.events.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 
@@ -12,5 +15,16 @@ public class Register {
         PluginManager pm = Bukkit.getPluginManager();
         // Register events
         pm.registerEvents(new JoinLeaveEvent(), pl);
+        pm.registerEvents(new InteractEvent(), pl);
+        pm.registerEvents(new DeathDamageEvent(), pl);
+        pm.registerEvents(new JumpEvent(), pl);
+        pm.registerEvents(new InvClickEvent(), pl);
+
+        // Register commands
+        pl.getCommand("gamemenu").setExecutor(new GameMenuCommand());
+        pl.getCommand("gmc").setExecutor(new Gamemode());
+        pl.getCommand("gma").setExecutor(new Gamemode());
+        pl.getCommand("gms").setExecutor(new Gamemode());
+        pl.getCommand("gmsp").setExecutor(new Gamemode());
     }
 }
