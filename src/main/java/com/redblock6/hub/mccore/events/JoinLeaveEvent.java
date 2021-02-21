@@ -5,9 +5,6 @@ import com.redblock6.hub.mccore.functions.Bar;
 import com.redblock6.hub.mccore.functions.CreateGameMenu;
 import com.redblock6.hub.mccore.functions.CreateScoreboard;
 import com.redblock6.hub.mccore.functions.Parkour;
-import de.slikey.effectlib.Effect;
-import de.slikey.effectlib.EffectManager;
-import de.slikey.effectlib.effect.WarpEffect;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -26,6 +23,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class JoinLeaveEvent implements Listener {
     private static final Main plugin = Main.getInstance();
+    public Bar bar = new Bar(plugin);
 
     @EventHandler
     public void onHungerDeplete(FoodLevelChangeEvent e) {
@@ -89,6 +87,7 @@ public class JoinLeaveEvent implements Listener {
         ItemStack item = new ItemStack(Material.NETHER_STAR);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lGAME MENU"));
+        item.setItemMeta(meta);
 
         //get the players inv & give them the gamemenu
         NBTItem nbti = new NBTItem(item);
@@ -100,8 +99,11 @@ public class JoinLeaveEvent implements Listener {
         //create a scoreboard for the player
         CreateScoreboard.setScoreboard(p, "Normal", true);
 
+        //create a bossbar for the player
+        if (!bar.getBar().getPlayers().contains(e.getPlayer())) bar.addPlayer(p);
+
         //get a world and teleport the player to it
-        Location loc = new Location(plugin.getServer().getWorld("Hub"), plugin.getServer().getWorld("Hub").getSpawnLocation().getX(), plugin.getServer().getWorld("Hub").getSpawnLocation().getY(), plugin.getServer().getWorld("Hub").getSpawnLocation().getZ());
+        Location loc = new Location(plugin.getServer().getWorld("Hub"), plugin.getServer().getWorld("Hub").getSpawnLocation().getX(), plugin.getServer().getWorld("Hub").getSpawnLocation().getY(), plugin.getServer().getWorld("Hub").getSpawnLocation().getZ(), (float) -179.9, (float) -1.5);
         p.teleport(loc);
 
         //send the player a title
@@ -112,7 +114,7 @@ public class JoinLeaveEvent implements Listener {
         String welcome = ChatColor.translateAlternateColorCodes('&', "&fWelcome to &4&lMCREDBLOCK &c&lJAVA");
         String blank = "";
         String name = ChatColor.translateAlternateColorCodes('&', "&4&lNAME &c" + player);
-        String store = ChatColor.translateAlternateColorCodes('&', "&4&lSOTRE &chttps://store.redblock6.com");
+        String store = ChatColor.translateAlternateColorCodes('&', "&4&lSTORE &chttps://store.redblock6.com");
         String forums = ChatColor.translateAlternateColorCodes('&', "&4&lFORUMS &chttps://forums.redblock6.com");
         String discord = ChatColor.translateAlternateColorCodes('&', "&4&lDISCORD &chttps://discord.com/invite/wcdMgBBhWy");
         String ip = ChatColor.translateAlternateColorCodes('&', "&4&lmc.redblock6.com");

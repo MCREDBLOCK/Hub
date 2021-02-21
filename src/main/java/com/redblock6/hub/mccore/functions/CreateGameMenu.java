@@ -13,37 +13,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 
 public class CreateGameMenu implements Listener {
-    private Plugin plugin = Main.getPlugin(Main.class);
+    private static Plugin plugin = Main.getPlugin(Main.class);
 
     public void newGameMenu(Player p) {
         Inventory i = plugin.getServer().createInventory(null, 6, "Game Menu");
         p.openInventory(i);
 	}
-    /*
-    public static Inventory inv;
-
-
-    public static Inventory newGameMenu() {
-        inv = Bukkit.createInventory(null, 6, "Game Menu");
-
-        initializeItems();
-
-        return inv;
-    }
-
-    public CreateGameMenu(Inventory inv) {
-        this.inv = inv;
-    }
-
-    public static void initializeItems() {
-        inv.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP"), "&4&m-----------------------", "&fFight against other", "&fplayers with unique", "&fkits and abilities.", "", "&c&l%{players.kitpvp}% &4&lPLAYERS", "&4&m-----------------------"));
-    }
-
-    public static void openGameMenu(Player p) {
-        newGameMenu();
-        new CreateGameMenu(newGameMenu());
-        p.openInventory(newGameMenu());
-    } */
 
     protected static ItemStack createGuiItem(Material material, String name, String... lore) {
         ItemStack item = new ItemStack(material, 1);
@@ -60,6 +35,7 @@ public class CreateGameMenu implements Listener {
         return item;
     }
 
+
     /*
     public static ItemStack getGameMenuItem(final Material material, final String name) {
         final ItemStack item = new ItemStack(material, 1);
@@ -70,6 +46,9 @@ public class CreateGameMenu implements Listener {
         NBTItem nbti = new NBTItem(item);
         nbti.setString("item", "gameMenu");
         nbti.applyNBT(item);
+        }
+
+        */
 		
     public static void newInventory(Player p) {
         Inventory i = plugin.getServer().createInventory(null, 27, "Game Menu");
