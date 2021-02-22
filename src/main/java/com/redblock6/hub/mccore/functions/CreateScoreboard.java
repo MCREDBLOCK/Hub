@@ -78,19 +78,36 @@ public class CreateScoreboard {
         //exp
         String exp = ChatColor.translateAlternateColorCodes('&', "&6&lTIME");
         Score expline = o.getScore(exp);
-        expline.setScore(3);
+        expline.setScore(4);
 
         //level
         Team aclaimblocks = b.registerNewTeam("time");
         aclaimblocks.addEntry(ChatColor.YELLOW + "" + ChatColor.YELLOW);
         String aclaimblocksline = ChatColor.translateAlternateColorCodes('&', "&e");
         aclaimblocks.setPrefix(aclaimblocksline);
-        o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(4);
+        o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(3);
+
+        //blank
+        String blank2 = CreateGameMenu.translate("&4&l&c&m");
+        Score blankline2 = o.getScore(blank2);
+        blankline2.setScore(5);
+
+        //actual players playing with you
+        Team aotherplayers = b.registerNewTeam("playingwithyou");
+        aotherplayers.addEntry(ChatColor.YELLOW + "" + ChatColor.WHITE);
+        String aotherplayersline = ChatColor.translateAlternateColorCodes('&', "&e" + Parkour.getOtherPlayers() + " &fother players");
+        aotherplayers.setPrefix(aotherplayersline);
+        o.getScore(ChatColor.YELLOW + "" + ChatColor.WHITE).setScore(6);
+
+        //other players playing with you
+        String otherplayers = ChatColor.translateAlternateColorCodes('&', "&6&lYOU'RE PLAYING &e&lPK &6&lWITH");
+        Score otherplayersline = o.getScore(otherplayers);
+        otherplayersline.setScore(7);
 
         //top line
         String line2 = ChatColor.translateAlternateColorCodes('&', "&4&l&7&m---------------------");
         Score line2line = o.getScore(line2);
-        line2line.setScore(5);
+        line2line.setScore(8);
 
         CreateScoreboard.o = o;
         return b;
@@ -110,10 +127,14 @@ public class CreateScoreboard {
             }
         } else if (type.equals("Parkour")) {
             if (setscoreboard.equals(false)) {
+                Parkour park = Parkour.getParkourStatus(p);
+
                 Scoreboard b = p.getScoreboard();
                 String s1 = CreateGameMenu.translate("&6&lPARKOUR");
-                b.getTeam("playercount").setPrefix(ChatColor.translateAlternateColorCodes('&', "&e" + Parkour.getTime(p)));
+                b.getTeam("time").setPrefix(ChatColor.translateAlternateColorCodes('&', "&e" + park.getTime()));
                 o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(4);
+                b.getTeam("playingwithyou").setPrefix(ChatColor.translateAlternateColorCodes('&', "&e" + (Parkour.getOtherPlayers().size() - 1) + " &fother players"));
+                o.getScore(ChatColor.YELLOW + "" + ChatColor.WHITE).setScore(6);
             } else if (setscoreboard.equals(true)) {
                 p.setScoreboard(new CreateScoreboard().parkour());
             }

@@ -11,10 +11,16 @@ public class MoveEvent implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
-        if (p.getLocation().subtract(0, 1, 0).equals(Material.GOLD_BLOCK)) {
-            Parkour.enterParkour(p);
-        } else if (p.getLocation().subtract(0, 1, 0).equals(Material.DIAMOND_BLOCK)) {
-            Parkour.exitParkour(p);
+        Parkour park = Parkour.getParkourStatus(p);
+        if (p.getLocation().subtract(0, 1, 0).getBlock().getType().equals(Material.GOLD_BLOCK)) {
+            if (!park.inParkour) {
+                park.enterParkour();
+            }
+
+        } else if (p.getLocation().subtract(0, 1, 0).getBlock().getType().equals(Material.DIAMOND_BLOCK)) {
+            if (park.inParkour()) {
+                park.finishParkour();
+            }
         }
     }
 }

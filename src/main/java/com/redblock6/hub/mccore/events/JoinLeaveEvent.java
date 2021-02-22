@@ -100,6 +100,7 @@ public class JoinLeaveEvent implements Listener {
         CreateScoreboard.setScoreboard(p, "Normal", true);
 
         //create a bossbar for the player
+        Bar.createBossBar();
         if (!bar.getBar().getPlayers().contains(e.getPlayer())) bar.addPlayer(p);
 
         //get a world and teleport the player to it
@@ -193,5 +194,9 @@ public class JoinLeaveEvent implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         e.setQuitMessage(null);
+        Parkour park = Parkour.getParkourStatus(e.getPlayer());
+        if (park.inParkour) {
+            park.exitParkour();
+        }
     }
 }

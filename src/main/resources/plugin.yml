@@ -26,3 +26,4 @@ permissions:
   redblock.gamemode.adventure:
     description: Sets your gamemode to adventure
   redblock.gamemode.spectator:
+    description: Sets your gamemode to spectator

@@ -1,10 +1,13 @@
 package com.redblock6.hub.mccore.events;
 
 import com.redblock6.hub.Main;
+import com.redblock6.hub.mccore.functions.Parkour;
 import org.bukkit.Location;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -17,15 +20,22 @@ public class DeathDamageEvent implements Listener {
             return;
         }
         Player p = (Player) e.getEntity();
+        Parkour park = Parkour.getParkourStatus(p);
 
         if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {
-            Location loc = new Location(plugin.getServer().getWorld("Hub"),
-                    plugin.getServer().getWorld("Hub").getSpawnLocation().getX(),
-                    plugin.getServer().getWorld("Hub").getSpawnLocation().getY(),
-                    plugin.getServer().getWorld("Hub").getSpawnLocation().getZ(),
-                    (float) -179.9, (float) -1.5);
-            p.teleport(loc);
-            e.setCancelled(true);
+            if (!park.inParkour()) {
+                Location loc = new Location(plugin.getServer().getWorld("Hub"),
+                        plugin.getServer().getWorld("Hub").getSpawnLocation().getX(),
+                        plugin.getServer().getWorld("Hub").getSpawnLocation().getY(),
+                        plugin.getServer().getWorld("Hub").getSpawnLocation().getZ(),
+                        (float) -179.9, (float) -1.5);
+                p.teleport(loc);
+                e.setCancelled(true);
+            } else if (park.inParkour()) {
+                Location loc = new Location(plugin.getServer().getWorld("Hub"), 1379, 74, -42, -1, -1);
+                p.teleport(loc);
+                e.setCancelled(true);
+            }
         } else if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
             e.setCancelled(true);
         }
@@ -40,6 +50,13 @@ public class DeathDamageEvent implements Listener {
                     plugin.getServer().getWorld("Hub").getSpawnLocation().getZ(),
                     (float) -179.9, (float) -1.5);
             e.getPlayer().teleport(loc);
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Firework) {
+            e.setCancelled(true);
         }
     }
 }

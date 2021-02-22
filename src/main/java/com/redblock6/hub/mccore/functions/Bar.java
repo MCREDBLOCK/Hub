@@ -26,11 +26,18 @@ public class Bar {
         return bar;
     }
 
-    public void createBossBar() {
+    public static void createBossBar() {
         bar = Bukkit.createBossBar(ChatColor.DARK_RED + "" + ChatColor.BOLD + "MCREDBLOCK" + ChatColor.RED + " " + ChatColor.BOLD + "JAVA", BarColor.RED, BarStyle.SOLID);
         bar.setVisible(true);
         // cast();
     }
+
+    /*
+    public static void createParkourBossBar(Player p) {
+        bar = Bukkit.createBossBar(ChatColor.GOLD + "" + ChatColor.BOLD + "TIME" + ChatColor.YELLOW + " " + ChatColor.BOLD + Parkour.getTime(p), BarColor.RED, BarStyle.SOLID);
+        bar.setVisible(true);
+        // cast();
+    } */
 
     /*
     public static void cast() {

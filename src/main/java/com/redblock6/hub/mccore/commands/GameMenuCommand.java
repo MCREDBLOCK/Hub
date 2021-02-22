@@ -15,7 +15,7 @@ public class GameMenuCommand implements Listener, CommandExecutor {
             if (sender instanceof Player) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4&l> &fYou opened the &cGame Menu"));
                 //open the gamemenu
-                CreateGameMenu.newInventory((Player) sender);
+                CreateGameMenu.newInventory((Player) sender, "GameMenu");
 
             } else {
                 sender.sendMessage("&4&l> &fImagine trying to open the gamemenu from console &cbruh");

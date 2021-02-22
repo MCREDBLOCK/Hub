@@ -50,18 +50,28 @@ public class CreateGameMenu implements Listener {
 
         */
 		
-    public static void newInventory(Player p) {
-        Inventory i = plugin.getServer().createInventory(null, 27, "Game Menu");
+    public static void newInventory(Player p, String type) {
+        if (type.equals("GameMenu")) {
+            Inventory i = plugin.getServer().createInventory(null, 27, "Game Menu");
 
-        i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&c%{players.kitpvp}% &4&lPLAYERS"), translate("&4&m-----------------------")));
-        i.setItem(12, createGuiItem(Material.BOW, ChatColor.translateAlternateColorCodes('&', "&4&lONE IN THE QUIVER"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers. There are 4 kits,"), translate("&ffighter, archer, default, jumper, and tank."), translate("&fThe first person to get"), translate("&fto &4&l20 kills &fwins!"), "", translate("&c%{players.oitq1}% &4&lPLAYERS"), translate("&4&m-----------------------")));
-        i.setItem(11, createGuiItem(Material.LEATHER_BOOTS, ChatColor.translateAlternateColorCodes('&', "&4&lDEATH RUN"), translate("&4&m-----------------------"), translate("&fTry to avoid traps"), translate("&fset off by a randomly"), translate("&fselected death."), "", translate("&c%{_dr}% &4&lPLAYERS"), translate("&4&m-----------------------")));
-        i.setItem(15, createGuiItem(Material.WOODEN_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lMOB WARS"), translate("&4&m-----------------------"), translate("&fTry to kill all mobs. If you do so, your team"), translate("&fwins the game"), "", translate("&c%{players.mw}% &4&lPLAYERS"), translate("&4&m-----------------------")));
-        i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
-        i.setItem(14, createGuiItem(Material.GOLDEN_BOOTS, ChatColor.translateAlternateColorCodes('&', "&4&lPARKOUR RUN"), translate("&4&m-----------------------"), translate("&fTry to be the first to the end."), translate("&fIf you don't get to the end &cin time&f,"), translate("&fyou lose! Only &c3 players &fcan win!"), "", translate("&c%{players.pk1}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+            i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&c%{players.kitpvp}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+            i.setItem(12, createGuiItem(Material.BOW, ChatColor.translateAlternateColorCodes('&', "&4&lONE IN THE QUIVER"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers. There are 4 kits,"), translate("&ffighter, archer, default, jumper, and tank."), translate("&fThe first person to get"), translate("&fto &4&l20 kills &fwins!"), "", translate("&c%{players.oitq1}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+            i.setItem(11, createGuiItem(Material.LEATHER_BOOTS, ChatColor.translateAlternateColorCodes('&', "&4&lDEATH RUN"), translate("&4&m-----------------------"), translate("&fTry to avoid traps"), translate("&fset off by a randomly"), translate("&fselected death."), "", translate("&c%{_dr}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+            i.setItem(15, createGuiItem(Material.WOODEN_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lMOB WARS"), translate("&4&m-----------------------"), translate("&fTry to kill all mobs. If you do so, your team"), translate("&fwins the game"), "", translate("&c%{players.mw}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+            i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
+            i.setItem(14, createGuiItem(Material.GOLDEN_BOOTS, ChatColor.translateAlternateColorCodes('&', "&4&lPARKOUR RUN"), translate("&4&m-----------------------"), translate("&fTry to be the first to the end."), translate("&fIf you don't get to the end &cin time&f,"), translate("&fyou lose! Only &c3 players &fcan win!"), "", translate("&c%{players.pk1}% &4&lPLAYERS"), translate("&4&m-----------------------")));
 
-        p.openInventory(i);
-        //p.setArrowsInBody(0);
+            p.openInventory(i);
+            //p.setArrowsInBody(0);
+        } else if (type.equals("KitPvP")) {
+            Inventory i = plugin.getServer().createInventory(null, 27, "Select a game");
+
+            i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&c%{players.kitpvp}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+            i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
+            i.setItem(21, createGuiItem(Material.ARROW, ChatColor.translateAlternateColorCodes('&', "&4&lBACK"), (String) null));
+
+            p.openInventory(i);
+        }
     }
 
     public static String translate(String msg) {

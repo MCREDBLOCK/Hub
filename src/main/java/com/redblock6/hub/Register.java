@@ -1,5 +1,6 @@
 package com.redblock6.hub;
 
+import com.redblock6.hub.mccore.commands.TheBlock;
 import com.redblock6.hub.mccore.events.JoinLeaveEvent;
 import com.redblock6.hub.mccore.commands.GameMenuCommand;
 import com.redblock6.hub.mccore.commands.Gamemode;
@@ -19,6 +20,7 @@ public class Register {
         pm.registerEvents(new DeathDamageEvent(), pl);
         pm.registerEvents(new JumpEvent(), pl);
         pm.registerEvents(new InvClickEvent(), pl);
+        pm.registerEvents(new MoveEvent(), pl);
 
         // Register commands
         pl.getCommand("gamemenu").setExecutor(new GameMenuCommand());
@@ -26,5 +28,6 @@ public class Register {
         pl.getCommand("gma").setExecutor(new Gamemode());
         pl.getCommand("gms").setExecutor(new Gamemode());
         pl.getCommand("gmsp").setExecutor(new Gamemode());
+        // pl.getCommand("getblock").setExecutor(new TheBlock());
     }
 }
