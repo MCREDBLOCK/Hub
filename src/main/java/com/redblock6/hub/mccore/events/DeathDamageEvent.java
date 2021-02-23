@@ -23,7 +23,7 @@ public class DeathDamageEvent implements Listener {
         Parkour park = Parkour.getParkourStatus(p);
 
         if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {
-            if (!park.inParkour()) {
+            if (!park.inParkour) {
                 Location loc = new Location(plugin.getServer().getWorld("Hub"),
                         plugin.getServer().getWorld("Hub").getSpawnLocation().getX(),
                         plugin.getServer().getWorld("Hub").getSpawnLocation().getY(),
@@ -31,9 +31,9 @@ public class DeathDamageEvent implements Listener {
                         (float) -179.9, (float) -1.5);
                 p.teleport(loc);
                 e.setCancelled(true);
-            } else if (park.inParkour()) {
-                Location loc = new Location(plugin.getServer().getWorld("Hub"), 1379, 74, -42, -1, -1);
-                p.teleport(loc);
+            } else {
+                Location loc2 = new Location(plugin.getServer().getWorld("Hub"), 1379, 74, -42);
+                p.teleport(loc2);
                 e.setCancelled(true);
             }
         } else if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
@@ -44,12 +44,19 @@ public class DeathDamageEvent implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         if (e.getPlayer().getLocation().getY() < 0) {
-            Location loc = new Location(plugin.getServer().getWorld("Hub"),
-                    plugin.getServer().getWorld("Hub").getSpawnLocation().getX(),
-                    plugin.getServer().getWorld("Hub").getSpawnLocation().getY(),
-                    plugin.getServer().getWorld("Hub").getSpawnLocation().getZ(),
-                    (float) -179.9, (float) -1.5);
-            e.getPlayer().teleport(loc);
+            Parkour park = Parkour.getParkourStatus(e.getPlayer());
+
+            if (!park.inParkour) {
+                Location loc = new Location(plugin.getServer().getWorld("Hub"),
+                        plugin.getServer().getWorld("Hub").getSpawnLocation().getX(),
+                        plugin.getServer().getWorld("Hub").getSpawnLocation().getY(),
+                        plugin.getServer().getWorld("Hub").getSpawnLocation().getZ(),
+                        (float) -179.9, (float) -1.5);
+                e.getPlayer().teleport(loc);
+            } else {
+                Location loc2 = new Location(plugin.getServer().getWorld("Hub"), 1379, 74, -42);
+                e.getPlayer().teleport(loc2);
+            }
         }
     }
 
