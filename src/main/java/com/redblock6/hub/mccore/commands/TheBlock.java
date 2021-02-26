@@ -1,32 +1,27 @@
 package com.redblock6.hub.mccore.commands;
 
 import com.redblock6.hub.Main;
-import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import com.redblock6.hub.mccore.functions.GiveCoinsXP;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class TheBlock {
+public class TheBlock implements Listener, CommandExecutor {
     private static final Main plugin = Main.getInstance();
 
-    /*
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
         if (command.getName().equalsIgnoreCase("getblock")) {
-            sender.sendMessage("there you go asuidohaus");
+            sender.sendMessage("Attemting to give you 100 coins and exp...");
+            GiveCoinsXP.GivePlayerBoth((Player) sender, 100, 100);
 
-            getItem((Player) sender);
         }
         return false;
     }
 
+/*
     public ItemStack getItem(Player p) {
         Inventory inv = p.getInventory();
 

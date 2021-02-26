@@ -1,7 +1,5 @@
 package com.redblock6.hub;
 
-import com.redblock6.hub.mccore.functions.CreateGameMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.JedisPool;
 
@@ -16,23 +14,20 @@ public class Main extends JavaPlugin {
         instance = this;
 
         Register.registerEvents();
-
-        //do the thingy thingy with the jedis thingy ;)
-        try {
-            pool = new JedisPool("172.0.0.1", 6379);
-        } catch (Exception e) {
-            Bukkit.getLogger().info(CreateGameMenu.translate("&4&l> &fFailed to connect to redis, you know what to do."));
-        }
-
-
+        pool = new JedisPool("192.168.1.242", Integer.parseInt("6379"));
+        loadConfigs();
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
-
         //close the thingy wingy thing thing jedis
-        pool.close();
+        pool.destroy();
     }
+
     public static Main getInstance() { return instance;}
+
+    public void loadConfigs() {
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+    }
 }

@@ -1,18 +1,27 @@
 package com.redblock6.hub.mccore.functions;
 
+import com.redblock6.hub.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
+import redis.clients.jedis.Jedis;
+
+import static com.redblock6.hub.Main.pool;
 
 public class CreateScoreboard {
 
     public static Objective o;
-    public static Scoreboard normal() {
+    private static final Main plugin = Main.getInstance();
+
+    public static Scoreboard normal(Player p) {
+        //get the pool
+        Jedis j = pool.getResource();
+
         //create scoreboard
         Scoreboard b = Bukkit.getScoreboardManager().getNewScoreboard();
 
-        String s1 = ChatColor.translateAlternateColorCodes('&', "&4&lHUB");
+        String s1 = ChatColor.translateAlternateColorCodes('&', "&4&lHUB-" + plugin.getConfig().getInt("hub-identifier"));
         Objective o = b.registerNewObjective("HUB", "dummy", s1);
         o.setDisplaySlot(DisplaySlot.SIDEBAR);
         o.setDisplayName(s1);
@@ -28,26 +37,43 @@ public class CreateScoreboard {
         ipline.setScore(1);
 
         //blank
+        String blank2 = CreateGameMenu.translate("&4&l&c&m");
+        Score blankline2 = o.getScore(blank2);
+        blankline2.setScore(2);
+
+        //coins
+        Team coins = b.registerNewTeam("c" + p.getName());
+        coins.addEntry(ChatColor.YELLOW + "" + ChatColor.YELLOW);
+        String coinsline = ChatColor.translateAlternateColorCodes('&', "&6&lCOINS &e" + j.get(p.getUniqueId() + "Coins"));
+        coins.setPrefix(coinsline);
+        o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(3);
+
+        //blank
         String blank = "";
         Score blankline = o.getScore(blank);
-        blankline.setScore(2);
+        blankline.setScore(4);
 
         //exp
-        String exp = ChatColor.translateAlternateColorCodes('&', "&4&lEXP &c0&7/&c1000");
-        Score expline = o.getScore(exp);
-        expline.setScore(3);
+        Team exp = b.registerNewTeam("e" + p.getName());
+        exp.addEntry(ChatColor.RED + "" + ChatColor.GRAY);
+        String expline = ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + j.get(p.getUniqueId() + "Exp") + "&7/&c" + j.get(p.getUniqueId() + "ExpMax"));
+        exp.setPrefix(expline);
+        o.getScore(ChatColor.RED + "" + ChatColor.GRAY).setScore(5);
 
         //level
-        String level = ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL &cComming Soon");
-        Score levelline = o.getScore(level);
-        levelline.setScore(4);
+        Team level = b.registerNewTeam("l" + p.getName());
+        level.addEntry(ChatColor.DARK_RED + "" + ChatColor.RED);
+        String levelline = ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL &c" + j.get(p.getUniqueId() + "Level"));
+        level.setPrefix(levelline);
+        o.getScore(ChatColor.DARK_RED + "" + ChatColor.RED).setScore(6);
 
         //top line
         String line2 = ChatColor.translateAlternateColorCodes('&', "&4&l&7&m---------------------");
         Score line2line = o.getScore(line2);
-        line2line.setScore(5);
+        line2line.setScore(7);
 
         CreateScoreboard.o = o;
+        j.close();
         return b;
     }
 
@@ -117,13 +143,24 @@ public class CreateScoreboard {
     public static void setScoreboard(Player p, String type, Boolean setscoreboard) {
         if (type.equals("Normal")) {
             if (setscoreboard.equals(false)) {
-                Scoreboard b = p.getScoreboard();
-                String s1 = ChatColor.translateAlternateColorCodes('&', "&3&lSMP");
+                //get the pool
+                Jedis j = pool.getResource();
 
-                b.getTeam("playercount").setPrefix(ChatColor.translateAlternateColorCodes('&', "&b" + Bukkit.getOnlinePlayers().size() + "&7/50"));
-                o.getScore(ChatColor.AQUA + "" + ChatColor.GRAY).setScore(8);
+                Scoreboard b = p.getScoreboard();
+                String s1 = ChatColor.translateAlternateColorCodes('&', "&4&lHUB-" + plugin.getConfig().getInt("hub-identifier"));
+
+                b.getTeam("c" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&6&lCOINS &e" + j.get(p.getUniqueId() + "Coins")));
+                o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(3);
+
+                b.getTeam("e" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + j.get(p.getUniqueId() + "Exp") + "&7/&c" + j.get(p.getUniqueId() + "ExpMax")));
+                o.getScore(ChatColor.RED + "" + ChatColor.GRAY).setScore(5);
+
+                b.getTeam("l" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL &c" + j.get(p.getUniqueId() + "Level")));
+                o.getScore(ChatColor.DARK_RED + "" + ChatColor.RED).setScore(6);
+
+                j.close();
             } else if (setscoreboard.equals(true)) {
-                p.setScoreboard(new CreateScoreboard().normal());
+                p.setScoreboard(new CreateScoreboard().normal(p));
             }
         } else if (type.equals("Parkour")) {
             if (setscoreboard.equals(false)) {

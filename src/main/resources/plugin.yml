@@ -17,6 +17,8 @@ commands:
     description: Sets your gamemode to adventure
   gmsp:
     description: Sets your gamemode to spectator
+  getblock:
+    description: im TESTING
 
 permissions:
   redblock.gamemode.creative:

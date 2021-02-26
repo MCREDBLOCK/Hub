@@ -1,6 +1,7 @@
 package com.redblock6.hub.mccore.events;
 
 import com.redblock6.hub.mccore.functions.CreateGameMenu;
+import com.redblock6.hub.mccore.functions.CreateScoreboard;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,6 +16,9 @@ import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.spigotmc.event.entity.EntityDismountEvent;
+import redis.clients.jedis.Jedis;
+
+import static com.redblock6.hub.Main.pool;
 
 public class InteractEvent implements Listener {
 
