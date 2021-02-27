@@ -41,7 +41,7 @@ public class Holograms {
         hologram.appendItemLine(item);
     }
 
-    public static void removeHologramPacket(Player p, int entID) {
+    public static void removeHologramPacket() {
         hologram.delete();
     }
 }

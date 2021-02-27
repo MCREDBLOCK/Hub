@@ -30,11 +30,11 @@ public class GiveCoinsXP {
                         p.sendMessage(CreateGameMenu.translate("&6&l> &fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins"));
                         j.close();
 
-                        p.sendTitle(CreateGameMenu.translate("&6&l☆ &e0 &6&l☆"), CreateGameMenu.translate("&fspend these coins wisely"), 0, 40, 10);
+                        p.sendTitle(CreateGameMenu.translate("&6&l☆ &e0 &6&l☆"), CreateGameMenu.translate(CreateGameMenu.translate("&fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins")), 0, 40, 10);
                         // CreateScoreboard.setScoreboard(p, "Normal", true);
                     } else {
                         coinsgiven++;
-                        p.sendTitle(CreateGameMenu.translate("&6&l★ &e" + (amount - coinsgiven) + " &6&l★"), CreateGameMenu.translate(j.get(p.getUniqueId() + "Coins")), 0, 20, 0);
+                        p.sendTitle(CreateGameMenu.translate("&6&l★ &e" + (amount - coinsgiven) + " &6&l★"), CreateGameMenu.translate("&fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins"), 0, 20, 0);
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
                         j.incrBy(p.getUniqueId() + "Coins", 1);
                         CreateScoreboard.setScoreboard(p, "Normal", false);
@@ -106,7 +106,7 @@ public class GiveCoinsXP {
                         p.sendMessage(CreateGameMenu.translate("&4&l> &fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."));
                         j.close();
 
-                        p.sendTitle(CreateGameMenu.translate("&6&l★ &e" + "0" + " &6&l★ &7&l- &4&l⬝ &c" + "0" + " &4&l⬝"), "All exp and coins have been given.", 0, 40, 10);
+                        p.sendTitle(CreateGameMenu.translate("&6&l★ &e" + "0" + " &6&l★ &7&l- &4&l⬝ &c" + "0" + " &4&l⬝"), CreateGameMenu.translate("&fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."), 0, 40, 10);
                         // CreateScoreboard.setScoreboard(p, "Normal", true);
                     } else {
                         p.sendTitle(CreateGameMenu.translate("&6&l★ &e" + (amountcoins - coinsgiven) + " &6&l★ &7&l- &4&l⬝ &c" + (amountexp - expgiven) + " &4&l⬝"), CreateGameMenu.translate("&fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."), 0, 20, 0);

@@ -3,6 +3,7 @@ package com.redblock6.hub;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 public class Main extends JavaPlugin {
@@ -22,11 +23,21 @@ public class Main extends JavaPlugin {
 
         //get protocol lib
         protocolManager = ProtocolLibrary.getProtocolManager();
+
+        //set this hub's status to online
+        Jedis j = pool.getResource();
+        j.set("HUB-" + this.getConfig().get("hub-identifier") + "Status", "ONLINE");
+        j.close();
     }
 
     @Override
     public void onDisable() {
-        //close the thingy wingy thing thing jedis
+        //set this hub's status to offline
+        Jedis j = pool.getResource();
+        j.set("HUB-" + this.getConfig().get("hub-identifier") + "Status", "OFFLINE");
+        j.close();
+
+        //destroy the jedis pool
         pool.destroy();
     }
 

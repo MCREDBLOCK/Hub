@@ -25,7 +25,7 @@ public class InvClickEvent implements Listener {
             }
 
             if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP"))) {
-                p.chat("/server kitpvp");
+                ServerConnector.sendServer(p, "KITPVP-1");
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lCLOSE"))) {
                 p.closeInventory();

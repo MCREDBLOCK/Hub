@@ -27,17 +27,6 @@ public class JoinLeaveEvent implements Listener {
     private static final Main plugin = Main.getInstance();
     public Bar bar = new Bar(plugin);
     private static EntityPlayer npc;
-    private static EntityArmorStand hologram;
-    private static EntityArmorStand hologram2;
-    private static EntityArmorStand hologram3;
-    private static EntityArmorStand hologram4;
-    private static EntityArmorStand hologram5;
-
-    private static int hologramID;
-    private static int hologramID2;
-    private static int hologramID3;
-    private static int hologramID4;
-    private static int hologramID5;
 
     @EventHandler
     public void onHungerDeplete(FoodLevelChangeEvent e) {
@@ -130,10 +119,6 @@ public class JoinLeaveEvent implements Listener {
         npc.setInvulnerable(true);
         npc.setCustomNameVisible(false);
 
-        //and those holograms
-        Location hololoc = new Location(p.getWorld(), (1364 + 0.5), 76.5, (-47 + 0.5));
-        Holograms.createStatsHologram(hololoc, p);
-
         //create a scoreboard for the player
         CreateScoreboard.setScoreboard(p, "Normal", true);
 
@@ -165,11 +150,14 @@ public class JoinLeaveEvent implements Listener {
             j.set(p.getUniqueId() + "Exp", String.valueOf(Integer.parseInt("0")));
             j.set(p.getUniqueId() + "Level", String.valueOf(Integer.parseInt("1")));
             j.set(p.getUniqueId() + "ExpMax", String.valueOf(Integer.parseInt("100")));
+            j.set(p.getUniqueId() + "KitKills", String.valueOf(Integer.parseInt("0")));
+            j.set(p.getUniqueId() + "OITQWS", String.valueOf(Integer.parseInt("0")));
+            j.set(p.getUniqueId() + "DRWS", String.valueOf(Integer.parseInt("0")));
+            j.set(p.getUniqueId() + "PKRWS", String.valueOf(Integer.parseInt("0")));
             j.close();
             String achline = CreateGameMenu.translate("&2&m---------------------------------");
             String completed = CreateGameMenu.translate("&2&lACHEIVEMENT COMPLETED &a&lOUR ADVENTURE BEGINS");
             String coinplus = CreateGameMenu.translate("&6&l+ &e100 COINS");
-            String xpplus = CreateGameMenu.translate("&2&l+ &a10 EXP");
             String tutorial = CreateGameMenu.translate("&fUse the &aTutorial NPC&f, or click the");
             String tutorial2 = CreateGameMenu.translate("&f&aGame Menu &fto get started");
 
@@ -178,11 +166,14 @@ public class JoinLeaveEvent implements Listener {
             p.sendMessage(completed);
             p.sendMessage(blank);
             p.sendMessage(coinplus);
-            p.sendMessage(xpplus);
             p.sendMessage(blank);
             p.sendMessage(tutorial);
             p.sendMessage(tutorial2);
             p.sendMessage(achline);
+
+            //and those holograms
+            Location hololoc = new Location(p.getWorld(), (1364 + 0.5), 76.5, (-47 + 0.5));
+            Holograms.createStatsHologram(hololoc, p);
 
             //play teh acheivement sound thingy wingy
             new BukkitRunnable() {
@@ -196,7 +187,7 @@ public class JoinLeaveEvent implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    GiveCoinsXP.GivePlayerBoth(p, 100, 10);
+                    GiveCoinsXP.GivePlayerCoins(p, 100);
                 }
             }.runTaskLaterAsynchronously(plugin, 40);
 
@@ -232,7 +223,7 @@ public class JoinLeaveEvent implements Listener {
                     //play a sound
                     p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 0);
                 }
-            }.runTaskLaterAsynchronously(plugin, 400);
+            }.runTaskLaterAsynchronously(plugin, 360);
         } else {
             //send the messages
             p.sendMessage(line);
@@ -245,6 +236,11 @@ public class JoinLeaveEvent implements Listener {
             p.sendMessage(blank);
             p.sendMessage(ip);
             p.sendMessage(line);
+
+            //and those holograms
+            Location hololoc = new Location(p.getWorld(), (1364 + 0.5), 76.5, (-47 + 0.5));
+            Holograms.createStatsHologram(hololoc, p);
+
             //play a sound
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 0);
         }
@@ -263,7 +259,7 @@ public class JoinLeaveEvent implements Listener {
         }
 
         NPC.removeNpcPacket(npc, e.getPlayer());
-        Holograms.removeHologramPacket(e.getPlayer(), hologramID);
+        Holograms.removeHologramPacket();
 
         try {
             j = pool.getResource();

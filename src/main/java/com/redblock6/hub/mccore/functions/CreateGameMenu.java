@@ -9,8 +9,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import redis.clients.jedis.Jedis;
 
 import java.util.Arrays;
+
+import static com.redblock6.hub.Main.pool;
 
 public class CreateGameMenu implements Listener {
     private static Plugin plugin = Main.getPlugin(Main.class);
@@ -64,9 +67,12 @@ public class CreateGameMenu implements Listener {
             p.openInventory(i);
             //p.setArrowsInBody(0);
         } else if (type.equals("KitPvP")) {
+            Jedis j = pool.getResource();
             Inventory i = plugin.getServer().createInventory(null, 27, "Select a game");
 
-            i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&c%{players.kitpvp}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+            if (j.get("KITPVP-1") == "ONLINE") {
+                i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-1"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&c%{players.kitpvp}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+            }
             i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
             i.setItem(21, createGuiItem(Material.ARROW, ChatColor.translateAlternateColorCodes('&', "&4&lBACK"), (String) null));
 
