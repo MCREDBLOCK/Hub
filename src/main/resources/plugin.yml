@@ -5,6 +5,8 @@ api-version: 1.16
 authors: [Redblock6]
 description: Hub plugin for mc.redblock6.com
 website: mc.redblock6.com
+depend: [ProtocolLib]
+softdepend: [HolographicDisplays]
 
 commands:
   gamemenu:

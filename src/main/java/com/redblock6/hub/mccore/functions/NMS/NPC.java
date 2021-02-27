@@ -1,9 +1,19 @@
 package com.redblock6.hub.mccore.functions.NMS;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.PacketContainer;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
+import com.gmail.filoghost.holographicdisplays.api.line.ItemLine;
+import com.gmail.filoghost.holographicdisplays.api.line.TextLine;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import com.redblock6.hub.Main;
+import com.redblock6.hub.mccore.functions.CreateGameMenu;
 import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,20 +24,37 @@ import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_16_R3.scoreboard.CraftScoreboard;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+import redis.clients.jedis.Jedis;
 
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static com.redblock6.hub.Main.pool;
+
 public class NPC implements Listener {
+    /*
+    public NPCLocation(String[] Text, Location loc, boolean npc) {
+        if (!npc) {
+            this.text = Text;
+            this.loc = loc;
+            create();
+        }
+    } */
+
+    private static final com.redblock6.hub.Main plugin = Main.getInstance();
+
     public static EntityPlayer createPlayerNpc(World world, Location location, String skin, Player p, String npcname) {
         MinecraftServer nmsServer = ((CraftServer) Bukkit.getServer()).getServer();
-        WorldServer nmsWorld = ((CraftWorld)Bukkit.getWorld(world.getName())).getHandle();
+        net.minecraft.server.v1_16_R3.WorldServer nmsWorld = ((CraftWorld)Bukkit.getWorld(world.getName())).getHandle();
         GameProfile gameProfile = new GameProfile(UUID.randomUUID(), npcname); // Change "playername" to the name the NPC should have, max 16 characters.
         EntityPlayer npc = new EntityPlayer(nmsServer, nmsWorld, gameProfile, new PlayerInteractManager(nmsWorld)); // This will be the EntityPlayer (NPC) we send with the sendNPCPacket method.
         npc.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-        npc.setCustomNameVisible(false);
+        npc.getBukkitEntity().setCustomName(CreateGameMenu.translate("&7&lNPC &fStats"));
+        npc.getBukkitEntity().setCustomNameVisible(false);
 
         String[] name = getSkin(p, skin);
         gameProfile.getProperties().put("textures", new Property("textures", name[0], name[1]));
@@ -51,7 +78,6 @@ public class NPC implements Listener {
 
             return new String[] {texture, signature};
         } catch (Exception e) {
-            EntityPlayer player = ((CraftPlayer) p).getHandle();
             GameProfile profile = ((CraftPlayer) p).getProfile();
             Property property = profile.getProperties().get("textures").iterator().next();
             String texture = property.getValue();
@@ -65,7 +91,7 @@ public class NPC implements Listener {
         connection.sendPacket(new PacketPlayOutEntityDestroy(npc.getId()));
     }
 
-    public static EntityPlayer addNpcPacket(EntityPlayer npc, Player p, boolean showName, Location loc) {
+    public static EntityPlayer addNpcPacket(EntityPlayer npc, Player p, boolean showName) {
         PlayerConnection connection = ((CraftPlayer)p).getHandle().playerConnection;
 
         //adds the player data for the client to use when spawning a player
@@ -75,9 +101,13 @@ public class NPC implements Listener {
         connection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
 
         //fix head rotation
-        connection.sendPacket(new PacketPlayOutEntity.PacketPlayOutEntityLook(npc, loc));
+        connection.sendPacket(new PacketPlayOutEntityHeadRotation(npc, (byte) (npc.yaw * 256 / 360)));
 
-        if (showName) {
+        // Show the Second Skin Layer
+        DataWatcher watcher = npc.getDataWatcher();
+        watcher.set(new DataWatcherObject<>(16, DataWatcherRegistry.a), (byte) 255);
+
+        if (!showName) {
             ScoreboardTeam team = new ScoreboardTeam(((CraftScoreboard) Bukkit.getScoreboardManager().getMainScoreboard()).getHandle(), p.getName());
 
             team.setNameTagVisibility(ScoreboardTeamBase.EnumNameTagVisibility.NEVER);
@@ -94,4 +124,48 @@ public class NPC implements Listener {
         return npc;
     }
 
+    /*
+    public static EntityArmorStand addHologramPacket(World world, Location loc, String line, Player p) {
+        WorldServer nmsWorld = ((CraftWorld)Bukkit.getWorld(world.getName())).getHandle();
+
+        EntityArmorStand hologram = new EntityArmorStand(nmsWorld, loc.getX(), loc.getY(), loc.getZ());
+        hologram.setInvisible(true);
+        hologram.setInvulnerable(true);
+        hologram.setNoGravity(true);
+        hologram.setCustomName(IChatBaseComponent.ChatSerializer.a(line));
+        hologram.setCustomNameVisible(true);
+        hologram.setBasePlate(false);
+
+        PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(hologram);
+        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+
+        return hologram;
+    }
+
+    private void create(World world, Location loc) {
+        for (String text : this.text) {
+            EntityArmorStand entity = new EntityArmorStand(((CraftWorld) this.loc.getWorld()).getHandle(),this.loc.getX(), this.loc.getY(),this.loc.getZ());
+        }
+    } */
+
+            /*
+        WrappedDataWatcher.Serializer serializer = WrappedDataWatcher.Registry.get(String.class);
+
+        WrappedDataWatcher water = new WrappedDataWatcher();
+        water.setEntity((org.bukkit.entity.Entity) stand);
+
+        water.setObject(2, serializer, line);
+        hologram.getWatchableCollectionModifier().write(0, water.getWatchableObjects());
+
+        Optional<?> opt = Optional
+                .of(WrappedChatComponent
+                        .fromChatMessage(line)[0].getHandle());
+        water.setObject(new WrappedDataWatcher.WrappedDataWatcherObject(2, WrappedDataWatcher.Registry.getChatComponentSerializer(true)), opt);
+
+        try {
+            protocolManager.sendServerPacket(p, hologram);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(
+                    "Cannot send packet" + hologram, e);
+        } */
 }

@@ -7,7 +7,6 @@ import de.tr7zw.nbtapi.NBTItem;
 import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.*;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_16_R3.scoreboard.CraftScoreboard;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,10 +17,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Team;
 import redis.clients.jedis.Jedis;
 
-import java.util.ArrayList;
+import java.util.Random;
 
 import static com.redblock6.hub.Main.pool;
 
@@ -29,6 +27,17 @@ public class JoinLeaveEvent implements Listener {
     private static final Main plugin = Main.getInstance();
     public Bar bar = new Bar(plugin);
     private static EntityPlayer npc;
+    private static EntityArmorStand hologram;
+    private static EntityArmorStand hologram2;
+    private static EntityArmorStand hologram3;
+    private static EntityArmorStand hologram4;
+    private static EntityArmorStand hologram5;
+
+    private static int hologramID;
+    private static int hologramID2;
+    private static int hologramID3;
+    private static int hologramID4;
+    private static int hologramID5;
 
     @EventHandler
     public void onHungerDeplete(FoodLevelChangeEvent e) {
@@ -115,11 +124,15 @@ public class JoinLeaveEvent implements Listener {
 
         //get that amazing location :D
         Location statsloc = new Location(Bukkit.getWorld("Hub"), (1364 + 0.5), 73, (-47 + 0.5), (float) -179.4, (float) 0.7);
-        //and create that npc
+        //create that npc
         npc = NPC.addNpcPacket(NPC.createPlayerNpc(Bukkit.getWorld("Hub"), statsloc, p.getName(), p, ""), p, false);
         npc.setNoGravity(true);
         npc.setInvulnerable(true);
         npc.setCustomNameVisible(false);
+
+        //and those holograms
+        Location hololoc = new Location(p.getWorld(), (1364 + 0.5), 76.5, (-47 + 0.5));
+        Holograms.createStatsHologram(hololoc, p);
 
         //create a scoreboard for the player
         CreateScoreboard.setScoreboard(p, "Normal", true);
@@ -250,6 +263,7 @@ public class JoinLeaveEvent implements Listener {
         }
 
         NPC.removeNpcPacket(npc, e.getPlayer());
+        Holograms.removeHologramPacket(e.getPlayer(), hologramID);
 
         try {
             j = pool.getResource();
