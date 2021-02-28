@@ -27,14 +27,17 @@ public class InvClickEvent implements Listener {
 
             if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP"))) {
                 CreateGameMenu.newInventory(p, "KitPvP");
-                e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lCLOSE"))) {
                 p.closeInventory();
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lBACK"))) {
                 CreateGameMenu.newInventory(p, "GameMenu");
                 e.setCancelled(true);
-            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-1"))) {
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lDEATH RUN"))) {
+                CreateGameMenu.newInventory(p, "DR");
+            }
+        } else if (e.getView().getTitle().equals("Select a KITPVP game")) {
+            if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-1"))) {
                 ServerConnector.sendServer(p, "KITPVP-1");
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-2"))) {
@@ -46,8 +49,33 @@ public class InvClickEvent implements Listener {
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-4"))) {
                 ServerConnector.sendServer(p, "KITPVP-4");
                 e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lBACK"))) {
+                CreateGameMenu.newInventory(p, "GameMenu");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lCLOSE"))) {
+                p.closeInventory();
+                e.setCancelled(true);
             }
-
+        } else if (e.getView().getTitle().equals("Select a DR game")) {
+            if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-1"))) {
+                ServerConnector.sendServer(p, "DR-1");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-2"))) {
+                ServerConnector.sendServer(p, "DR-2");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-3"))) {
+                ServerConnector.sendServer(p, "DR-3");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-4"))) {
+                ServerConnector.sendServer(p, "DR-4");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lBACK"))) {
+                CreateGameMenu.newInventory(p, "GameMenu");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lCLOSE"))) {
+                p.closeInventory();
+                e.setCancelled(true);
+            }
         }
     }
 

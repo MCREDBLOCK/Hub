@@ -143,22 +143,25 @@ public class CreateScoreboard {
     public static void setScoreboard(Player p, String type, Boolean setscoreboard) {
         if (type.equals("Normal")) {
             if (setscoreboard.equals(false)) {
-                //get the pool
-                Jedis j = pool.getResource();
+                Parkour park = Parkour.getParkourStatus(p);
+                if (!park.inParkour()) {
+                    //get the pool
+                    Jedis j = pool.getResource();
 
-                Scoreboard b = p.getScoreboard();
-                String s1 = ChatColor.translateAlternateColorCodes('&', "&4&lHUB-" + plugin.getConfig().getInt("hub-identifier"));
+                    Scoreboard b = p.getScoreboard();
+                    String s1 = ChatColor.translateAlternateColorCodes('&', "&4&lHUB-" + plugin.getConfig().getInt("hub-identifier"));
 
-                b.getTeam("c" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&6&lCOINS &e" + j.get(p.getUniqueId() + "Coins")));
-                o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(3);
+                    b.getTeam("c" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&6&lCOINS &e" + j.get(p.getUniqueId() + "Coins")));
+                    o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(3);
 
-                b.getTeam("e" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + j.get(p.getUniqueId() + "Exp") + "&7/&c" + j.get(p.getUniqueId() + "ExpMax")));
-                o.getScore(ChatColor.RED + "" + ChatColor.GRAY).setScore(5);
+                    b.getTeam("e" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + j.get(p.getUniqueId() + "Exp") + "&7/&c" + j.get(p.getUniqueId() + "ExpMax")));
+                    o.getScore(ChatColor.RED + "" + ChatColor.GRAY).setScore(5);
 
-                b.getTeam("l" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL &c" + j.get(p.getUniqueId() + "Level")));
-                o.getScore(ChatColor.DARK_RED + "" + ChatColor.RED).setScore(6);
+                    b.getTeam("l" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL &c" + j.get(p.getUniqueId() + "Level")));
+                    o.getScore(ChatColor.DARK_RED + "" + ChatColor.RED).setScore(6);
 
-                j.close();
+                    j.close();
+                }
             } else if (setscoreboard.equals(true)) {
                 p.setScoreboard(new CreateScoreboard().normal(p));
             }

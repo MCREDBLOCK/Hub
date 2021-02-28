@@ -57,7 +57,7 @@ public class CreateGameMenu implements Listener {
         if (type.equals("GameMenu")) {
             Inventory i = plugin.getServer().createInventory(null, 27, "Game Menu");
 
-            i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&c%{players.kitpvp}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+            i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), translate("&4&m-----------------------")));
             i.setItem(12, createGuiItem(Material.BOW, ChatColor.translateAlternateColorCodes('&', "&4&lONE IN THE QUIVER"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers. There are 4 kits,"), translate("&ffighter, archer, default, jumper, and tank."), translate("&fThe first person to get"), translate("&fto &4&l20 kills &fwins!"), "", translate("&c%{players.oitq1}% &4&lPLAYERS"), translate("&4&m-----------------------")));
             i.setItem(11, createGuiItem(Material.LEATHER_BOOTS, ChatColor.translateAlternateColorCodes('&', "&4&lDEATH RUN"), translate("&4&m-----------------------"), translate("&fTry to avoid traps"), translate("&fset off by a randomly"), translate("&fselected death."), "", translate("&c%{_dr}% &4&lPLAYERS"), translate("&4&m-----------------------")));
             i.setItem(15, createGuiItem(Material.WOODEN_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lMOB WARS"), translate("&4&m-----------------------"), translate("&fTry to kill all mobs. If you do so, your team"), translate("&fwins the game"), "", translate("&c%{players.mw}% &4&lPLAYERS"), translate("&4&m-----------------------")));
@@ -68,38 +68,115 @@ public class CreateGameMenu implements Listener {
             //p.setArrowsInBody(0);
         } else if (type.equals("KitPvP")) {
             Jedis j = pool.getResource();
-            Inventory i = plugin.getServer().createInventory(null, 27, "Select a game");
+            Inventory i = plugin.getServer().createInventory(null, 27, "Select a KITPVP game");
 
-            if (j.get("KITPVP-1").equals("OFFLINE")) {
-                i.setItem(10, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-1"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
-            } else {
-                i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-1"), translate("&2&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&a" + j.get("KITPVP-1Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+            if (j.get("KITPVP-1") != null) {
+                if (j.get("KITPVP-1").equals("OFFLINE")) {
+                    i.setItem(10, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-1"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-1"), translate("&2&m-----------------------"), translate("&a" + j.get("KITPVP-1Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
             }
             if (j.get("KITPVP-2Online") != null) {
                 if (j.get("KITPVP-2Online").equals("OFFLINE")) {
-                    i.setItem(11, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-2"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&c%{players.kitpvp}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+                    i.setItem(11, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-2"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(11, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-2"), translate("&2&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&a" + j.get("KITPVP-2Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(11, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-2"), translate("&2&m-----------------------"), translate("&a" + j.get("KITPVP-2Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("KITPVP-3Online") != null) {
                 if (j.get("KITPVP-3Online").equals("OFFLINE")) {
-                    i.setItem(12, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-3"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                    i.setItem(12, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-3"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(12, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-3"), translate("&2&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&a" + j.get("KITPVP-3Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(12, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-3"), translate("&2&m-----------------------"), translate("&a" + j.get("KITPVP-3Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("KITPVP-4Online") != null) {
                 if (j.get("KITPVP-4Online").equals("OFFLINE")) {
-                    i.setItem(13, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-4"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                    i.setItem(13, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-4"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(13, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-4"), translate("&2&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&a" + j.get("KITPVP-4Online") + " &2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(13, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-4"), translate("&2&m-----------------------"), translate("&a" + j.get("KITPVP-4Online") + " &2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
             i.setItem(21, createGuiItem(Material.ARROW, ChatColor.translateAlternateColorCodes('&', "&4&lBACK"), (String) null));
 
             p.openInventory(i);
+            j.close();
+        } else if (type.equals("DR")) {
+            Jedis j = pool.getResource();
+            Inventory i = plugin.getServer().createInventory(null, 27, "Select a DR game");
+
+            if (j.get("DR-1") != null) {
+                if (j.get("DR-1").equals("OFFLINE")) {
+                    i.setItem(10, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lDR-1"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-1"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("DR-1Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            if (j.get("DR-2Online") != null) {
+                if (j.get("DR-2Online").equals("OFFLINE")) {
+                    i.setItem(11, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lDR-2"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(11, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-2"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("DR-2Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            if (j.get("DR-3Online") != null) {
+                if (j.get("DR-3Online").equals("OFFLINE")) {
+                    i.setItem(12, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lDR-3"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(12, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-3"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("DR-3Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            if (j.get("DR-4Online") != null) {
+                if (j.get("DR-4Online").equals("OFFLINE")) {
+                    i.setItem(13, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lDR-4"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(13, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-4"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("DR-4Online") + " &2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
+            i.setItem(21, createGuiItem(Material.ARROW, ChatColor.translateAlternateColorCodes('&', "&4&lBACK"), (String) null));
+
+            p.openInventory(i);
+            j.close();
+        } else if (type.equals("OITQ")) {
+            Jedis j = pool.getResource();
+            Inventory i = plugin.getServer().createInventory(null, 27, "Select a OITQ game");
+
+            if (j.get("OITQ-1") != null) {
+                if (j.get("OITQ-1").equals("OFFLINE")) {
+                    i.setItem(10, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-1"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-1"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("OITQ-1Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            if (j.get("OITQ-2Online") != null) {
+                if (j.get("OITQ-2Online").equals("OFFLINE")) {
+                    i.setItem(11, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-2"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(11, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-2"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("OITQ-2Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            if (j.get("OITQ-3Online") != null) {
+                if (j.get("OITQ-3Online").equals("OFFLINE")) {
+                    i.setItem(12, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-3"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(12, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-3"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("OITQ-3Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            if (j.get("OITQ-4Online") != null) {
+                if (j.get("OITQ-4Online").equals("OFFLINE")) {
+                    i.setItem(13, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-4"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(13, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-4"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("OITQ-4Online") + " &2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
+            i.setItem(21, createGuiItem(Material.ARROW, ChatColor.translateAlternateColorCodes('&', "&4&lBACK"), (String) null));
+
+            p.openInventory(i);
+            j.close();
         }
     }
 

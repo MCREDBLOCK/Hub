@@ -172,7 +172,7 @@ public class JoinLeaveEvent implements Listener {
             p.sendMessage(achline);
 
             //and those holograms
-            Location hololoc = new Location(p.getWorld(), (1364 + 0.5), 76.5, (-47 + 0.5));
+            Location hololoc = new Location(p.getWorld(), (1364 + 0.5), 76.7, (-47 + 0.5));
             Holograms.createStatsHologram(hololoc, p);
 
             //play teh acheivement sound thingy wingy
@@ -238,7 +238,7 @@ public class JoinLeaveEvent implements Listener {
             p.sendMessage(line);
 
             //and those holograms
-            Location hololoc = new Location(p.getWorld(), (1364 + 0.5), 76.5, (-47 + 0.5));
+            Location hololoc = new Location(p.getWorld(), (1364 + 0.5), 76.7, (-47 + 0.5));
             Holograms.createStatsHologram(hololoc, p);
 
             //play a sound

@@ -29,7 +29,7 @@ public class Register {
         pl.getCommand("gma").setExecutor(new Gamemode());
         pl.getCommand("gms").setExecutor(new Gamemode());
         pl.getCommand("gmsp").setExecutor(new Gamemode());
-        pl.getCommand("getblock").setExecutor(new TheBlock());
+        // pl.getCommand("getblock").setExecutor(new TheBlock());
     }
 
     public static void registerRedis() {
