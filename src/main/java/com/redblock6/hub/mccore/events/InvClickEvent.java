@@ -1,5 +1,6 @@
 package com.redblock6.hub.mccore.events;
 
+import com.redblock6.hub.mccore.functions.CreateGameMenu;
 import com.redblock6.hub.mccore.functions.ServerConnector;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -25,12 +26,28 @@ public class InvClickEvent implements Listener {
             }
 
             if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP"))) {
-                ServerConnector.sendServer(p, "KITPVP-1");
+                CreateGameMenu.newInventory(p, "KitPvP");
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lCLOSE"))) {
                 p.closeInventory();
                 e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lBACK"))) {
+                CreateGameMenu.newInventory(p, "GameMenu");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-1"))) {
+                ServerConnector.sendServer(p, "KITPVP-1");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-2"))) {
+                ServerConnector.sendServer(p, "KITPVP-2");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-3"))) {
+                ServerConnector.sendServer(p, "KITPVP-3");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-4"))) {
+                ServerConnector.sendServer(p, "KITPVP-4");
+                e.setCancelled(true);
             }
+
         }
     }
 

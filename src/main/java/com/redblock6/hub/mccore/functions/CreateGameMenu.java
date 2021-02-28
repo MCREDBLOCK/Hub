@@ -70,8 +70,31 @@ public class CreateGameMenu implements Listener {
             Jedis j = pool.getResource();
             Inventory i = plugin.getServer().createInventory(null, 27, "Select a game");
 
-            if (j.get("KITPVP-1") == "ONLINE") {
-                i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-1"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&c%{players.kitpvp}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+            if (j.get("KITPVP-1").equals("OFFLINE")) {
+                i.setItem(10, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-1"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+            } else {
+                i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-1"), translate("&2&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&a" + j.get("KITPVP-1Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+            }
+            if (j.get("KITPVP-2Online") != null) {
+                if (j.get("KITPVP-2Online").equals("OFFLINE")) {
+                    i.setItem(11, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-2"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&c%{players.kitpvp}% &4&lPLAYERS"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(11, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-2"), translate("&2&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&a" + j.get("KITPVP-2Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            if (j.get("KITPVP-3Online") != null) {
+                if (j.get("KITPVP-3Online").equals("OFFLINE")) {
+                    i.setItem(12, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-3"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(12, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-3"), translate("&2&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&a" + j.get("KITPVP-3Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            if (j.get("KITPVP-4Online") != null) {
+                if (j.get("KITPVP-4Online").equals("OFFLINE")) {
+                    i.setItem(13, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lKITPVP-4"), translate("&4&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(13, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lKITPVP-4"), translate("&2&m-----------------------"), translate("&fFight against other"), translate("&fplayers with unique"), translate("&fkits and abilities."), "", translate("&a" + j.get("KITPVP-4Online") + " &2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
             }
             i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
             i.setItem(21, createGuiItem(Material.ARROW, ChatColor.translateAlternateColorCodes('&', "&4&lBACK"), (String) null));
