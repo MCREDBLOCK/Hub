@@ -65,7 +65,7 @@ public class Main extends JavaPlugin {
         pool.destroy();
 
         //close mongodb
-        mongoClient.close();
+        // mongoClient.close();
     }
 
     public static Main getInstance() { return instance;}
