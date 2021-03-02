@@ -23,7 +23,7 @@ import redis.clients.jedis.Jedis;
 
 import java.util.Random;
 
-import static com.redblock6.hub.Main.maincollection;
+//import static com.redblock6.hub.Main.maincollection;
 import static com.redblock6.hub.Main.pool;
 
 public class JoinLeaveEvent implements Listener {
@@ -148,9 +148,10 @@ public class JoinLeaveEvent implements Listener {
 
         //check if the player has joined before
         if (!p.hasPlayedBefore()) {
-            DBObject stats = new BasicDBObject("_name", p.getUniqueId()).append("MagicDust", "0").append("OITQCoins", "0").append("KITPVPCoins", "0").append("DRCoins", "0").append("PKRCoins", "0");
+            /*DBObject stats = new BasicDBObject("_name", p.getUniqueId()).append("MagicDust", "0").append("OITQCoins", "0").append("KITPVPCoins", "0").append("DRCoins", "0").append("PKRCoins", "0");
             maincollection.findAndRemove(stats);
             maincollection.insert(stats);
+             */
 
             j = pool.getResource();
             j.set(p.getUniqueId() + "Coins", String.valueOf(Integer.parseInt("0")));
