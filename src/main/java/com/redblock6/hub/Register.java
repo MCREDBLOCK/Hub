@@ -2,7 +2,6 @@ package com.redblock6.hub;
 
 import com.redblock6.hub.mccore.commands.GameMenuCommand;
 import com.redblock6.hub.mccore.commands.Gamemode;
-import com.redblock6.hub.mccore.commands.TheBlock;
 import com.redblock6.hub.mccore.events.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;

@@ -1,5 +1,7 @@
 package com.redblock6.hub.mccore.events;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.redblock6.hub.Main;
 import com.redblock6.hub.mccore.functions.NMS.NPC;
 import com.redblock6.hub.mccore.functions.*;
@@ -21,6 +23,7 @@ import redis.clients.jedis.Jedis;
 
 import java.util.Random;
 
+import static com.redblock6.hub.Main.maincollection;
 import static com.redblock6.hub.Main.pool;
 
 public class JoinLeaveEvent implements Listener {
@@ -145,6 +148,10 @@ public class JoinLeaveEvent implements Listener {
 
         //check if the player has joined before
         if (!p.hasPlayedBefore()) {
+            DBObject stats = new BasicDBObject("_name", p.getUniqueId()).append("MagicDust", "0").append("OITQCoins", "0").append("KITPVPCoins", "0").append("DRCoins", "0").append("PKRCoins", "0");
+            maincollection.findAndRemove(stats);
+            maincollection.insert(stats);
+
             j = pool.getResource();
             j.set(p.getUniqueId() + "Coins", String.valueOf(Integer.parseInt("0")));
             j.set(p.getUniqueId() + "Exp", String.valueOf(Integer.parseInt("0")));
@@ -154,6 +161,7 @@ public class JoinLeaveEvent implements Listener {
             j.set(p.getUniqueId() + "OITQWS", String.valueOf(Integer.parseInt("0")));
             j.set(p.getUniqueId() + "DRWS", String.valueOf(Integer.parseInt("0")));
             j.set(p.getUniqueId() + "PKRWS", String.valueOf(Integer.parseInt("0")));
+
             j.close();
             String achline = CreateGameMenu.translate("&2&m---------------------------------");
             String completed = CreateGameMenu.translate("&2&lACHEIVEMENT COMPLETED &a&lOUR ADVENTURE BEGINS");
@@ -181,29 +189,9 @@ public class JoinLeaveEvent implements Listener {
                 public void run() {
                     Parkour.otherSound(p);
                     p.sendTitle(CreateGameMenu.translate("&2&l✔ ACHEIVEMENT COMPLETED ✔"), CreateGameMenu.translate("&aOur Adventure Begins"), 10, 20, 0);
+                    GiveCoinsXP.GivePlayerCoins(p, 100);
                 }
             }.runTaskLaterAsynchronously(plugin, 20);
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    GiveCoinsXP.GivePlayerCoins(p, 100);
-                }
-            }.runTaskLaterAsynchronously(plugin, 40);
-
-            /*
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    GiveCoinsXP.GivePlayerCoins(p, 100);
-                }
-            }.runTaskLaterAsynchronously(plugin, 40);
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    GiveCoinsXP.GivePlayerEXP(p, 10);
-                }
-            }.runTaskLaterAsynchronously(plugin, 140); */
 
             //send the welcome message later
             new BukkitRunnable() {

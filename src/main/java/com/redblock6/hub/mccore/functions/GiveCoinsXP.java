@@ -12,8 +12,6 @@ public class GiveCoinsXP {
     private static final Main plugin = Main.getInstance();
 
     public static void GivePlayerCoins(Player p, int amount) {
-        p.sendTitle(CreateGameMenu.translate("&2&lHANG ON"), CreateGameMenu.translate("&fContacting RYGB services..."), 0, 120, 0);
-
         //get the pool
         try {
             Jedis j = pool.getResource();
@@ -51,7 +49,6 @@ public class GiveCoinsXP {
     }
 
     public static void GivePlayerEXP(Player p, int amount) {
-        p.sendTitle(CreateGameMenu.translate("&2&lHANG ON"), CreateGameMenu.translate("&fContacting RYGB services..."), 0, 120, 0);
         try {
             Jedis j = pool.getResource();
 
@@ -88,7 +85,6 @@ public class GiveCoinsXP {
     }
 
     public static void GivePlayerBoth(Player p, int amountcoins, int amountexp) {
-        p.sendTitle(CreateGameMenu.translate("&2&lHANG ON"), CreateGameMenu.translate("&fContacting RYGB services..."), 0, 120, 0);
         try {
             Jedis j = pool.getResource();
 
@@ -103,13 +99,12 @@ public class GiveCoinsXP {
                         cancel();
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
-                        p.sendMessage(CreateGameMenu.translate("&4&l> &fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."));
+                        p.sendMessage(CreateGameMenu.translate("&4&l> &fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."));
                         j.close();
 
-                        p.sendTitle(CreateGameMenu.translate("&6&l★ &e" + "0" + " &6&l★ &7&l- &4&l⬝ &c" + "0" + " &4&l⬝"), CreateGameMenu.translate("&fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."), 0, 40, 10);
-                        // CreateScoreboard.setScoreboard(p, "Normal", true);
+                        p.sendTitle(CreateGameMenu.translate("&5&l★ &5" + "0" + " &5&l★ &7&l- &4&l⬝ &c" + "0" + " &4&l⬝"), CreateGameMenu.translate("&fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."), 0, 40, 10);
                     } else {
-                        p.sendTitle(CreateGameMenu.translate("&6&l★ &e" + (amountcoins - coinsgiven) + " &6&l★ &7&l- &4&l⬝ &c" + (amountexp - expgiven) + " &4&l⬝"), CreateGameMenu.translate("&fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."), 0, 20, 0);
+                        p.sendTitle(CreateGameMenu.translate("&5&l★ &5" + (amountcoins - coinsgiven) + " &5&l★ &7&l- &4&l⬝ &c" + (amountexp - expgiven) + " &4&l⬝"), CreateGameMenu.translate("&fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."), 0, 20, 0);
                         if (coinsgiven != amountcoins) {
                             coinsgiven++;
                             j.incrBy(p.getUniqueId() + "Coins", 1);
@@ -130,11 +125,11 @@ public class GiveCoinsXP {
                 }
             }.runTaskTimerAsynchronously(plugin, 40, 2);
 
-            plugin.getServer().getLogger().info("> Added " + amountcoins + " coins and " + amountexp + " exp for " + p.getUniqueId() + " in redis.");
+            plugin.getServer().getLogger().info("> Added " + amountcoins + " Magic Dust and " + amountexp + " exp for " + p.getUniqueId() + " in redis.");
         } catch (Exception e) {
             e.printStackTrace();
             p.sendTitle(CreateGameMenu.translate("&4&lWELL THAT'S WEIRD..."), CreateGameMenu.translate("&fFailed to contact RYGB services. Please tell &cRedblock6#6091 &fto fix his code."), 0, 40, 0);
-            plugin.getServer().getLogger().info("> Failed to give " + p + " " + amountcoins + " coins and " + amountexp + " exp with redis.");
+            plugin.getServer().getLogger().info("> Failed to give " + p + " " + amountcoins + " Magic Dust and " + amountexp + " exp with redis.");
         }
     }
 

@@ -148,28 +148,65 @@ public class CreateGameMenu implements Listener {
                 if (j.get("OITQ-1").equals("OFFLINE")) {
                     i.setItem(10, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-1"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-1"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("OITQ-1Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-1"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + j.get("OITQ-1Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("OITQ-2Online") != null) {
                 if (j.get("OITQ-2Online").equals("OFFLINE")) {
                     i.setItem(11, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-2"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(11, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-2"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("OITQ-2Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(11, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-2"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + j.get("OITQ-2Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("OITQ-3Online") != null) {
                 if (j.get("OITQ-3Online").equals("OFFLINE")) {
                     i.setItem(12, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-3"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(12, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-3"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("OITQ-3Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(12, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-3"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + j.get("OITQ-3Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("OITQ-4Online") != null) {
                 if (j.get("OITQ-4Online").equals("OFFLINE")) {
                     i.setItem(13, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-4"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(13, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-4"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("OITQ-4Online") + " &2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(13, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-4"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + j.get("OITQ-4Online") + " &2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
+            i.setItem(21, createGuiItem(Material.ARROW, ChatColor.translateAlternateColorCodes('&', "&4&lBACK"), (String) null));
+
+            p.openInventory(i);
+            j.close();
+        } else if (type.equals("PKR")) {
+            Jedis j = pool.getResource();
+            Inventory i = plugin.getServer().createInventory(null, 27, "Select a PKR game");
+
+            if (j.get("PKR-1") != null) {
+                if (j.get("PKR-1").equals("OFFLINE")) {
+                    i.setItem(10, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lPKR-1"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lPKR-1"), translate("&2&m-----------------------"), translate("Map:"), translate("&aPyramid"), "", translate("&a" + j.get("PKR-1Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            if (j.get("PKR-2Online") != null) {
+                if (j.get("PKR-2Online").equals("OFFLINE")) {
+                    i.setItem(11, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lPKR-2"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(11, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lPKR-2"), translate("&2&m-----------------------"), translate("Map:"), translate("&aPyramid"), "", translate("&a" + j.get("PKR-2Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            if (j.get("PKR-3Online") != null) {
+                if (j.get("PKR-3Online").equals("OFFLINE")) {
+                    i.setItem(12, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lPKR-3"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(12, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lPKR-3"), translate("&2&m-----------------------"), translate("Map:"), translate("&aPyramid"), "", translate("&a" + j.get("PKR-3Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                }
+            }
+            if (j.get("PKR-4Online") != null) {
+                if (j.get("PKR-4Online").equals("OFFLINE")) {
+                    i.setItem(13, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lPKR-4"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
+                } else {
+                    i.setItem(13, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lPKR-4"), translate("&2&m-----------------------"), translate("Map:"), translate("&aPyramid"), "", translate("&a" + j.get("PKR-4Online") + " &2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
