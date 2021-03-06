@@ -1,7 +1,5 @@
 package com.redblock6.hub.mccore.events;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.redblock6.hub.Main;
 import com.redblock6.hub.mccore.functions.NMS.NPC;
 import com.redblock6.hub.mccore.functions.*;
@@ -67,6 +65,7 @@ public class JoinLeaveEvent implements Listener {
         // flight
         p.setAllowFlight(true);
         p.setFlying(false);
+        p.setInvisible(false);
 
         //testing bro lololoo
         /*
@@ -138,7 +137,7 @@ public class JoinLeaveEvent implements Listener {
 
         //set message strings
         String line = ChatColor.translateAlternateColorCodes('&', "&4&m---------------------------------");
-        String welcome = ChatColor.translateAlternateColorCodes('&', "&fWelcome to &4&lMCREDBLOCK &c&lJAVA");
+        String welcome = ChatColor.translateAlternateColorCodes('&', "&fWelcome to &4&lMCREDBLOCK");
         String blank = "";
         String name = ChatColor.translateAlternateColorCodes('&', "&4&lNAME &c" + player);
         String store = ChatColor.translateAlternateColorCodes('&', "&4&lSTORE &chttps://store.redblock6.com");
@@ -146,8 +145,37 @@ public class JoinLeaveEvent implements Listener {
         String discord = ChatColor.translateAlternateColorCodes('&', "&4&lDISCORD &chttps://discord.com/invite/wcdMgBBhWy");
         String ip = ChatColor.translateAlternateColorCodes('&', "&4&lmc.redblock6.com");
 
+        if (plugin.getServer().getOnlinePlayers().size() == 1 || plugin.getServer().getOnlinePlayers().size() == 0) {
+            new BukkitRunnable() {
+                int timesran = 0;
+                Location loc;
+
+                @Override
+                public void run() {
+                    if (timesran == 0) {
+                        loc = new Location(plugin.getServer().getWorld("Hub"), (1371 + 0.5), (79 + 0.3), (-88 + 0.5));
+                        Holograms.createGameHologram(loc, "KITPVP");
+                    } else if (timesran == 1) {
+                        loc = new Location(plugin.getServer().getWorld("Hub"), (1374 + 0.5), (79 + 0.3), (-89 + 0.5));
+                        Holograms.createGameHologram(loc, "DR");
+                    } else if (timesran == 2) {
+                        loc = new Location(plugin.getServer().getWorld("Hub"), (1377 + 0.5), (79 + 0.3), (-90 + 0.5));
+                        Holograms.createGameHologram(loc, "OITQ");
+                    } else if (timesran == 3) {
+                        loc = new Location(plugin.getServer().getWorld("Hub"), (1381 + 0.5), (79 + 0.3), (-90 + 0.5));
+                        Holograms.createGameHologram(loc, "PKR");
+                    } else if (timesran == 4) {
+                        cancel();
+                    }
+
+                    timesran++;
+                }
+            }.runTaskTimer(plugin, 2, 2);
+        }
+
+
         //check if the player has joined before
-        if (!p.hasPlayedBefore()) {
+        if (!p.hasPlayedBefore() || j.get(p.getUniqueId() + "Coins") == null) {
             /*DBObject stats = new BasicDBObject("_name", p.getUniqueId()).append("MagicDust", "0").append("OITQCoins", "0").append("KITPVPCoins", "0").append("DRCoins", "0").append("PKRCoins", "0");
             maincollection.findAndRemove(stats);
             maincollection.insert(stats);
@@ -164,9 +192,11 @@ public class JoinLeaveEvent implements Listener {
             j.set(p.getUniqueId() + "PKRWS", String.valueOf(Integer.parseInt("0")));
 
             j.close();
+
+            CreateScoreboard.setScoreboard(p, "Normal", false);
             String achline = CreateGameMenu.translate("&2&m---------------------------------");
             String completed = CreateGameMenu.translate("&2&lACHEIVEMENT COMPLETED &a&lOUR ADVENTURE BEGINS");
-            String coinplus = CreateGameMenu.translate("&6&l+ &e100 COINS");
+            String coinplus = CreateGameMenu.translate("&5&l+ &d100 Magic Dust");
             String tutorial = CreateGameMenu.translate("&fUse the &aTutorial NPC&f, or click the");
             String tutorial2 = CreateGameMenu.translate("&f&aGame Menu &fto get started");
 
@@ -260,6 +290,10 @@ public class JoinLeaveEvent implements Listener {
         } catch (Exception exception) {
             exception.printStackTrace();
             plugin.getServer().getLogger().info("> Failed to update the redis player count, you know what to do.");
+        }
+
+        if (plugin.getServer().getOnlinePlayers().size() == 0 || plugin.getServer().getOnlinePlayers().size() == 1) {
+            Holograms.removeGameHolograms();
         }
     }
 }

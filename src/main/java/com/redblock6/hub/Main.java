@@ -1,17 +1,8 @@
 package com.redblock6.hub;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-
-import java.net.UnknownHostException;
 
 public class Main extends JavaPlugin {
 
@@ -22,7 +13,6 @@ public class Main extends JavaPlugin {
     public static DB database;
     public static DBCollection maincollection;
      */
-    public static ProtocolManager protocolManager;
 
     @Override
     public void onEnable() {
@@ -32,9 +22,6 @@ public class Main extends JavaPlugin {
         Register.registerEvents();
         pool = new JedisPool("192.168.1.242", Integer.parseInt("6379"));
         loadConfigs();
-
-        //get protocol lib
-        protocolManager = ProtocolLibrary.getProtocolManager();
 
         //mongo db
         /* try {

@@ -27,7 +27,7 @@ public class Bar {
     }
 
     public static void createBossBar() {
-        bar = Bukkit.createBossBar(ChatColor.DARK_RED + "" + ChatColor.BOLD + "MCREDBLOCK" + ChatColor.RED + " " + ChatColor.BOLD + "JAVA", BarColor.RED, BarStyle.SOLID);
+        bar = Bukkit.createBossBar(ChatColor.DARK_RED + "" + ChatColor.BOLD + "MCREDBLOCK", BarColor.RED, BarStyle.SOLID);
         bar.setVisible(true);
         // cast();
     }

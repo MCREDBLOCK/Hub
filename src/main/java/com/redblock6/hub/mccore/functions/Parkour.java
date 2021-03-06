@@ -1,10 +1,11 @@
 package com.redblock6.hub.mccore.functions;
 
 import com.redblock6.hub.Main;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -34,33 +35,59 @@ public class Parkour {
 
 
     public void enterParkour() {
-        CreateScoreboard.setScoreboard(p, "Parkour", true);
-        p.sendMessage(CreateGameMenu.translate("&6&l> &fYou joined the parkour"));
-        time = 0;
-        inParkour = true;
-        p.sendTitle(CreateGameMenu.translate("&6&lPARKOUR"), ChatColor.WHITE + "You joined the parkour", 10, 20, 10);
-        Fireworks.spawnFirework1(p.getLocation());
-        otherSound(p);
+        if (!(p.getGameMode().equals(GameMode.CREATIVE))) {
+            CreateScoreboard.setScoreboard(p, "Parkour", true);
+            p.sendMessage(CreateGameMenu.translate("&6&l> &fYou joined the parkour"));
+            time = 0;
+            inParkour = true;
+            p.sendTitle(CreateGameMenu.translate("&6&lPARKOUR"), ChatColor.WHITE + "You joined the parkour", 10, 20, 10);
+            Fireworks.spawnFirework1(p.getLocation());
+            otherSound(p);
+            p.setFlying(false);
+            p.setAllowFlight(false);
+            p.getInventory().clear();
 
-        //make sure they can be collided with
-        p.setCollidable(true);
+            ItemStack carpet = new ItemStack(Material.RED_CARPET, 1);
 
-        playersInParkour.add(p);
-        inParkour = true;
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (inParkour()) {
-                    if (p.isOnline()) {
-                        time++;
+            ItemMeta meta = carpet.getItemMeta();
+            meta.setDisplayName(CreateGameMenu.translate("&4&lBACK TO START"));
+            carpet.setItemMeta(meta);
+            NBTItem nbti = new NBTItem(carpet);
+            nbti.setString("item", "start");
+            nbti.applyNBT(carpet);
 
-                        CreateScoreboard.setScoreboard(p, "Parkour", false);
+            ItemStack bed = new ItemStack(Material.RED_BED, 1);
+
+            ItemMeta meta2 = bed.getItemMeta();
+            meta2.setDisplayName(CreateGameMenu.translate("&4&lEXIT"));
+            bed.setItemMeta(meta2);
+            nbti = new NBTItem(bed);
+            nbti.setString("item", "exit");
+            nbti.applyNBT(bed);
+
+            p.getInventory().setItem(8, bed);
+            p.getInventory().setItem(0, carpet);
+
+            //make sure they can be collided with
+            p.setCollidable(true);
+
+            playersInParkour.add(p);
+            inParkour = true;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (inParkour()) {
+                        if (p.isOnline()) {
+                            time++;
+
+                            CreateScoreboard.setScoreboard(p, "Parkour", false);
+                        }
+                    } else {
+                        cancel();
                     }
-                } else {
-                    cancel();
                 }
-            }
-        }.runTaskTimerAsynchronously(plugin, 0, 20);
+            }.runTaskTimerAsynchronously(plugin, 0, 20);
+        }
     }
 
     public static ArrayList<Player> getOtherPlayers() {
@@ -72,6 +99,19 @@ public class Parkour {
         p.sendMessage(CreateGameMenu.translate("&6&l> &fYou left the parkour"));
         inParkour = false;
         playersInParkour.remove(p);
+
+        p.getInventory().clear();
+
+        ItemStack item = new ItemStack(Material.NETHER_STAR);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lGAME MENU"));
+        item.setItemMeta(meta);
+
+        //get the players inv & give them the gamemenu
+        NBTItem nbti = new NBTItem(item);
+        nbti.setString("item", "gameMenu");
+        nbti.applyNBT(item);
+        p.getInventory().setItem(4, item);
     }
 
     public void finishParkour() {
@@ -92,7 +132,7 @@ public class Parkour {
         return time;
     }
 
-    public int resetTime(Player p) {
+    public int resetTime() {
         time = 0;
         return time;
     }

@@ -13,13 +13,36 @@ public class GameMenuCommand implements Listener, CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("gamemenu")) {
             if (sender instanceof Player) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4&l> &fYou opened the &cGame Menu"));
                 //open the gamemenu
                 CreateGameMenu.newInventory((Player) sender, "GameMenu");
 
             } else {
                 sender.sendMessage("&4&l> &fImagine trying to open the gamemenu from console &cbruh");
                 return true;
+            }
+        } else if (cmd.getName().equalsIgnoreCase("kitpvp")) {
+            if (sender instanceof Player) {
+                CreateGameMenu.newInventory((Player) sender, "KitPvP");
+            } else {
+                sender.sendMessage("&4&l> &fImagine trying to open the KitPvP menu from the console");
+            }
+        } else if (cmd.getName().equalsIgnoreCase("deathrun")) {
+            if (sender instanceof Player) {
+                CreateGameMenu.newInventory((Player) sender, "DR");
+            } else {
+                sender.sendMessage("no");
+            }
+        } else if (cmd.getName().equalsIgnoreCase("oitq")) {
+            if (sender instanceof Player) {
+                CreateGameMenu.newInventory((Player) sender, "OITQ");
+            } else {
+                sender.sendMessage("bruh");
+            }
+        } else if (cmd.getName().equalsIgnoreCase("pkrun")) {
+            if (sender instanceof Player) {
+                CreateGameMenu.newInventory((Player) sender, "PKR");
+            } else {
+                sender.sendMessage("uowiquygeouywqgoey");
             }
         }
         return false;

@@ -13,6 +13,13 @@ public class GiveCoinsXP {
 
     public static void GivePlayerCoins(Player p, int amount) {
         //get the pool
+        int ticks;
+
+        if (amount > 100) {
+            ticks = 1;
+        } else {
+            ticks = 2;
+        }
         try {
             Jedis j = pool.getResource();
 
@@ -25,20 +32,20 @@ public class GiveCoinsXP {
                     if (coinsgiven == amount) {
                         cancel();
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
-                        p.sendMessage(CreateGameMenu.translate("&6&l> &fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins"));
+                        p.sendMessage(CreateGameMenu.translate("&5&l> &fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust"));
                         j.close();
 
-                        p.sendTitle(CreateGameMenu.translate("&6&l☆ &e0 &6&l☆"), CreateGameMenu.translate(CreateGameMenu.translate("&fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins")), 0, 40, 10);
+                        p.sendTitle(CreateGameMenu.translate("&5&l☆ &d0 &5&l☆"), CreateGameMenu.translate(CreateGameMenu.translate("&fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust")), 0, 40, 10);
                         // CreateScoreboard.setScoreboard(p, "Normal", true);
                     } else {
                         coinsgiven++;
-                        p.sendTitle(CreateGameMenu.translate("&6&l★ &e" + (amount - coinsgiven) + " &6&l★"), CreateGameMenu.translate("&fYou now have &e" + j.get(p.getUniqueId() + "Coins") + " coins"), 0, 20, 0);
+                        p.sendTitle(CreateGameMenu.translate("&5&l★ &d" + (amount - coinsgiven) + " &5&l★"), CreateGameMenu.translate("&fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust"), 0, 20, 0);
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
                         j.incrBy(p.getUniqueId() + "Coins", 1);
                         CreateScoreboard.setScoreboard(p, "Normal", false);
                     }
                 }
-            }.runTaskTimerAsynchronously(plugin, 40, 2);
+            }.runTaskTimerAsynchronously(plugin, 40, ticks);
 
             plugin.getServer().getLogger().info("> Added " + amount + " coins for " + p.getUniqueId() + " in redis.");
         } catch (Exception e) {
@@ -49,6 +56,13 @@ public class GiveCoinsXP {
     }
 
     public static void GivePlayerEXP(Player p, int amount) {
+        int ticks;
+
+        if (amount > 100) {
+            ticks = 1;
+        } else {
+            ticks = 2;
+        }
         try {
             Jedis j = pool.getResource();
 
@@ -74,7 +88,7 @@ public class GiveCoinsXP {
                         CreateScoreboard.setScoreboard(p, "Normal", false);
                     }
                 }
-            }.runTaskTimerAsynchronously(plugin, 40, 2);
+            }.runTaskTimerAsynchronously(plugin, 40, ticks);
 
             plugin.getServer().getLogger().info("> Added " + amount + " coins for " + p.getUniqueId() + " in redis.");
         } catch (Exception e) {
@@ -85,6 +99,13 @@ public class GiveCoinsXP {
     }
 
     public static void GivePlayerBoth(Player p, int amountcoins, int amountexp) {
+        int ticks;
+
+        if (amountcoins > 100 || amountexp > 100) {
+            ticks = 1;
+        } else {
+            ticks = 2;
+        }
         try {
             Jedis j = pool.getResource();
 
@@ -123,7 +144,7 @@ public class GiveCoinsXP {
                         }
                     }
                 }
-            }.runTaskTimerAsynchronously(plugin, 40, 2);
+            }.runTaskTimerAsynchronously(plugin, 40, ticks);
 
             plugin.getServer().getLogger().info("> Added " + amountcoins + " Magic Dust and " + amountexp + " exp for " + p.getUniqueId() + " in redis.");
         } catch (Exception e) {

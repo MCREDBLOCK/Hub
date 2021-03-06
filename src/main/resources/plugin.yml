@@ -19,8 +19,16 @@ commands:
     description: Sets your gamemode to adventure
   gmsp:
     description: Sets your gamemode to spectator
-  #getblock:
-  #  description: im TESTING
+  kitpvp:
+    description: Opens the sub-menu for kitpvp
+  pkrun:
+    description: Opens the sub-menu for PKRUN
+  deathrun:
+    description: Opens the sub-menu for deathrun
+  oitq:
+    description: Opens the sub-menu for oitq
+  tutorial:
+    description: Sends the player into tutorial mode
 
 permissions:
   redblock.gamemode.creative:

@@ -31,12 +31,16 @@ public class InvClickEvent implements Listener {
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lDEATH RUN"))) {
                 CreateGameMenu.newInventory(p, "DR");
-            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lOITQ"))) {
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lONE IN THE QUIVER"))) {
                 CreateGameMenu.newInventory(p, "OITQ");
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lPARKOUR RUN"))) {
                 CreateGameMenu.newInventory(p, "PKR");
             }
         } else if (e.getView().getTitle().equals("Select a KITPVP game")) {
+            if (item == null || !item.hasItemMeta()) {
+                return;
+            }
+
             if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-1"))) {
                 ServerConnector.sendServer(p, "KITPVP-1");
                 e.setCancelled(true);
@@ -57,6 +61,10 @@ public class InvClickEvent implements Listener {
                 e.setCancelled(true);
             }
         } else if (e.getView().getTitle().equals("Select a DR game")) {
+            if (item == null || !item.hasItemMeta()) {
+                return;
+            }
+
             if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-1"))) {
                 ServerConnector.sendServer(p, "DR-1");
                 e.setCancelled(true);
@@ -77,6 +85,10 @@ public class InvClickEvent implements Listener {
                 e.setCancelled(true);
             }
         } else if (e.getView().getTitle().equals("Select a OITQ game")) {
+            if (item == null || !item.hasItemMeta()) {
+                return;
+            }
+
             if (item.getItemMeta().getDisplayName().equals(format("&4&lOITQ-1"))) {
                 ServerConnector.sendServer(p, "OITQ-1");
                 e.setCancelled(true);
@@ -97,6 +109,10 @@ public class InvClickEvent implements Listener {
                 e.setCancelled(true);
             }
         } else if (e.getView().getTitle().equals("Select a PKR game")) {
+            if (item == null || !item.hasItemMeta()) {
+                return;
+            }
+
             if (item.getItemMeta().getDisplayName().equals(format("&4&lPKR-1"))) {
                 ServerConnector.sendServer(p, "PKR-1");
                 e.setCancelled(true);
