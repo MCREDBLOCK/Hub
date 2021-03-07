@@ -49,12 +49,7 @@ public class JoinLeaveEvent implements Listener {
             plugin.getServer().getLogger().info("> Failed to update the redis player count, you know what to do.");
         }
         //clear player inventory
-        Inventory inv = p.getInventory();
-        for (int i = 0; i < inv.getSize(); i++) {
-            if (inv.getItem(i) != null) {
-                inv.getItem(i).setAmount(0);
-            }
-        }
+        p.getInventory().clear();
 
         //set their food bar
         p.setFoodLevel(20);
@@ -85,20 +80,6 @@ public class JoinLeaveEvent implements Listener {
         hologram.setCustomName(ChatColor.translateAlternateColorCodes('&', "&4&lICE IS VERY VERY POG"));
         p.addPassenger(hologram); */
 
-        //testing demo
-        /*
-        EffectManager em = new EffectManager(plugin);
-        Effect effect = new WarpEffect(em);
-        effect.setEntity(p);
-        effect.start();
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                em.dispose();
-            }
-        }.runTaskLaterAsynchronously(plugin, 200); */
-
         //create the gamemenu itme
         String player = p.getDisplayName();
         ItemStack item = new ItemStack(Material.NETHER_STAR);
@@ -110,7 +91,7 @@ public class JoinLeaveEvent implements Listener {
         NBTItem nbti = new NBTItem(item);
         nbti.setString("item", "gameMenu");
         nbti.applyNBT(item);
-        inv.setItem(4, item);
+        p.getInventory().setItem(4, item);
         e.setJoinMessage(null);
 
         //get that amazing location :D
