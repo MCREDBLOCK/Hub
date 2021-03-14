@@ -58,6 +58,10 @@ public class InteractEvent implements Listener {
                     park.resetTime();
                     Location loc2 = new Location(plugin.getServer().getWorld("Hub"), 1379, 74, -42);
                     p.teleport(loc2);
+                } else if (nbti.getString("item").equals("hubSelector")) {
+                    if (!(p.getOpenInventory().getType() == InventoryType.CHEST)) {
+                        CreateGameMenu.newInventory(p, "HubSelector");
+                    }
                 }
             }
         } catch (NullPointerException e) {

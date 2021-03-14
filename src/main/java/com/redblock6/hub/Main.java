@@ -34,6 +34,8 @@ public class Main extends JavaPlugin {
         j.set("HUB-" + this.getConfig().get("hub-identifier") + "Status", "ONLINE");
         j.close();
 
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "hub:bungeecord");
+
         Holograms.removeGameHolograms();
 
         new BukkitRunnable() {

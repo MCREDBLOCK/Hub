@@ -222,33 +222,34 @@ public class CreateGameMenu implements Listener {
                 if (j.get("HUB-1Status").equals("OFFLINE")) {
                     i.setItem(10, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lHUB-1"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(10, createGuiItem(Material.EMERALD_BLOCK, ChatColor.translateAlternateColorCodes('&', "&2&lHUB-1"), translate("&2&m-----------------------"), translate("&fFind a game using"), translate("&fthe game menu,"), translate("&fplay with &dMagical Cosmetics&f,"), translate("&for just catch up with friends!"), "", translate("&4&l" + j.get("HUB-1Count") + " PLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(10, createGuiItem(Material.EMERALD_BLOCK, ChatColor.translateAlternateColorCodes('&', "&2&lHUB-1"), translate("&2&m-----------------------"), translate("&fFind a game using"), translate("&fthe game menu,"), translate("&fplay with &dMagical Cosmetics&f,"), translate("&for just catch up with friends!"), "", translate("&2&l" + j.get("HUB-1Count") + " PLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("HUB-2Status") != null) {
                 if (j.get("HUB-2Status").equals("OFFLINE")) {
                     i.setItem(12, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lHUB-2"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(12, createGuiItem(Material.EMERALD_BLOCK, ChatColor.translateAlternateColorCodes('&', "&2&lHUB-2"), translate("&2&m-----------------------"), translate("&fFind a game using"), translate("&fthe game menu,"), translate("&fplay with &dMagical Cosmetics&f,"), translate("&for just catch up with friends!"), "", translate("&4&l" + j.get("HUB-2Count") + " PLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(12, createGuiItem(Material.EMERALD_BLOCK, ChatColor.translateAlternateColorCodes('&', "&2&lHUB-2"), translate("&2&m-----------------------"), translate("&fFind a game using"), translate("&fthe game menu,"), translate("&fplay with &dMagical Cosmetics&f,"), translate("&for just catch up with friends!"), "", translate("&2&l" + j.get("HUB-2Count") + " PLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("HUB-3Status") != null) {
                 if (j.get("HUB-3Status").equals("OFFLINE")) {
                     i.setItem(14, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lHUB-3"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(14, createGuiItem(Material.EMERALD_BLOCK, ChatColor.translateAlternateColorCodes('&', "&2&lHUB-3"), translate("&2&m-----------------------"), translate("&fFind a game using"), translate("&fthe game menu,"), translate("&fplay with &dMagical Cosmetics&f,"), translate("&for just catch up with friends!"), "", translate("&4&l" + j.get("HUB-3Count") + " PLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(14, createGuiItem(Material.EMERALD_BLOCK, ChatColor.translateAlternateColorCodes('&', "&2&lHUB-3"), translate("&2&m-----------------------"), translate("&fFind a game using"), translate("&fthe game menu,"), translate("&fplay with &dMagical Cosmetics&f,"), translate("&for just catch up with friends!"), "", translate("&2&l" + j.get("HUB-3Count") + " PLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("HUB-4Status") != null) {
                 if (j.get("HUB-4Status").equals("OFFLINE")) {
                     i.setItem(10, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lHUB-4"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(10, createGuiItem(Material.EMERALD_BLOCK, ChatColor.translateAlternateColorCodes('&', "&2&lHUB-4"), translate("&2&m-----------------------"), translate("&fFind a game using"), translate("&fthe game menu,"), translate("&fplay with &dMagical Cosmetics&f,"), translate("&for just catch up with friends!"), "", translate("&4&l" + j.get("HUB-4Count") + " PLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(10, createGuiItem(Material.EMERALD_BLOCK, ChatColor.translateAlternateColorCodes('&', "&2&lHUB-4"), translate("&2&m-----------------------"), translate("&fFind a game using"), translate("&fthe game menu,"), translate("&fplay with &dMagical Cosmetics&f,"), translate("&for just catch up with friends!"), "", translate("&2&l" + j.get("HUB-4Count") + " PLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
 
             p.openInventory(i);
+            j.close();
         }
     }
 

@@ -112,11 +112,16 @@ public class JoinLeaveEvent implements Listener {
         p.setInvisible(false);
 
         //create the gamemenu itme
-        String player = p.getDisplayName();
         ItemStack item = new ItemStack(Material.NETHER_STAR);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lGAME MENU"));
         item.setItemMeta(meta);
+
+        //create the hub selector itme
+        ItemStack item2 = new ItemStack(Material.CLOCK);
+        ItemMeta meta2 = item2.getItemMeta();
+        meta2.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lHUB SELECTOR"));
+        item2.setItemMeta(meta2);
 
         //get the players inv & give them the gamemenu
         NBTItem nbti = new NBTItem(item);
@@ -124,6 +129,12 @@ public class JoinLeaveEvent implements Listener {
         nbti.applyNBT(item);
         p.getInventory().setItem(4, item);
         e.setJoinMessage(null);
+
+        //get the players inv & give them the gamemenu
+        NBTItem nbti2 = new NBTItem(item2);
+        nbti2.setString("item", "hubSelector");
+        nbti2.applyNBT(item2);
+        p.getInventory().setItem(8, item2);
 
         //get that amazing location :D
         Location statsloc = new Location(Bukkit.getWorld("Hub"), (1364 + 0.5), 73, (-47 + 0.5), (float) -179.4, (float) 0.7);
@@ -151,7 +162,7 @@ public class JoinLeaveEvent implements Listener {
         String line = ChatColor.translateAlternateColorCodes('&', "&4&m---------------------------------");
         String welcome = ChatColor.translateAlternateColorCodes('&', "&fWelcome to &4&lMCREDBLOCK");
         String blank = "";
-        String name = ChatColor.translateAlternateColorCodes('&', "&4&lNAME &c" + player);
+        String name = ChatColor.translateAlternateColorCodes('&', "&4&lNAME &c" + p.getName());
         String store = ChatColor.translateAlternateColorCodes('&', "&4&lSTORE &chttps://store.redblock6.com");
         String forums = ChatColor.translateAlternateColorCodes('&', "&4&lFORUMS &chttps://forums.redblock6.com");
         String discord = ChatColor.translateAlternateColorCodes('&', "&4&lDISCORD &chttps://discord.com/invite/wcdMgBBhWy");

@@ -1,6 +1,8 @@
 package com.redblock6.hub.mccore.functions;
 
 import com.redblock6.hub.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import redis.clients.jedis.Jedis;
 
@@ -18,17 +20,19 @@ public class ServerConnector {
     private static String server4;
 
     public static void sendServer(Player p, String server) {
+        p = Bukkit.getPlayerExact(p.getName());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         DataOutputStream doutputStream = new DataOutputStream(outputStream);
-        p.sendTitle(CreateGameMenu.translate("&2&lSENDING YOU TO " + server), CreateGameMenu.translate("&fWe're sending you to &a" + server.toUpperCase() + " &fas fast as possible."), 5, 20, 5);
+        p.sendTitle(CreateGameMenu.translate("&2&lSENDING YOU TO " + server), CreateGameMenu.translate("&fWe're sending you to &a" + server.toUpperCase() + " &fas fast as possible."), 5, 40, 5);
         try {
             doutputStream.writeUTF("Connect");
             doutputStream.writeUTF(server);
         } catch (IOException e) {
             e.printStackTrace();
-            p.sendTitle(CreateGameMenu.translate("&4&lERROR"), CreateGameMenu.translate("&fWe couldn't transfer you to &c" + server + " &fplease contact &cRedblock6#6091 &fon discord."), 5, 20, 5);
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+            p.sendTitle(CreateGameMenu.translate("&4&lERROR"), CreateGameMenu.translate("&fWe couldn't transfer you to &c" + server + " &fplease contact &cRedblock6#6091 &fon discord."), 5, 40, 5);
         }
-        p.sendPluginMessage(plugin, "Bungeecord", outputStream.toByteArray());
+        p.sendPluginMessage(plugin, "hub:bungeecord", outputStream.toByteArray());
     }
 
     public static String getPlayerCount(String server) {
