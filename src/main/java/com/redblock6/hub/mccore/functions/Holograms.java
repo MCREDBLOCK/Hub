@@ -170,10 +170,15 @@ public class Holograms {
     }
 
     public static void removeGameHolograms() {
-        gamehologram1.delete();
-        gamehologram2.delete();
-        gamehologram3.delete();
-        gamehologram4.delete();
+        if (gamehologram1 != null) {
+            gamehologram1.delete();
+        } if (gamehologram2 != null) {
+            gamehologram2.delete();
+        } if (gamehologram3 != null) {
+            gamehologram3.delete();
+        } if (gamehologram4 != null) {
+            gamehologram4.delete();
+        }
     }
 
     public static void removeHologramPacket(Hologram holo) {

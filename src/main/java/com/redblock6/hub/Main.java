@@ -2,15 +2,16 @@ package com.redblock6.hub;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.redblock6.hub.mccore.events.JoinLeaveEvent;
+import com.redblock6.hub.mccore.functions.Holograms;
 import de.slikey.effectlib.EffectManager;
 import net.citizensnpcs.Citizens;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-
-import java.util.Iterator;
 
 public class Main extends JavaPlugin {
 
@@ -32,6 +33,29 @@ public class Main extends JavaPlugin {
         Jedis j = pool.getResource();
         j.set("HUB-" + this.getConfig().get("hub-identifier") + "Status", "ONLINE");
         j.close();
+
+        Holograms.removeGameHolograms();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Location loc = new Location(getServer().getWorld("Hub"), (1371 + 0.5), (79 + 0.3), (-88 + 0.5));
+                Holograms.createGameHologram(loc, "KITPVP");
+                loc = new Location(getServer().getWorld("Hub"), (1374 + 0.5), (79 + 0.3), (-89 + 0.5));
+                Holograms.createGameHologram(loc, "DR");
+                loc = new Location(getServer().getWorld("Hub"), (1377 + 0.5), (79 + 0.3), (-90 + 0.5));
+                Holograms.createGameHologram(loc, "OITQ");
+                loc = new Location(getServer().getWorld("Hub"), (1381 + 0.5), (79 + 0.3), (-90 + 0.5));
+                Holograms.createGameHologram(loc, "PKR");
+            }
+        }.runTaskTimer(this, 20, 3600);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Holograms.removeGameHolograms();
+            }
+        }.runTaskTimer(this, 10, 3600);
     }
 
     @Override

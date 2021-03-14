@@ -157,17 +157,6 @@ public class JoinLeaveEvent implements Listener {
         String discord = ChatColor.translateAlternateColorCodes('&', "&4&lDISCORD &chttps://discord.com/invite/wcdMgBBhWy");
         String ip = ChatColor.translateAlternateColorCodes('&', "&4&lmc.redblock6.com");
 
-        if (plugin.getServer().getOnlinePlayers().size() == 1 || plugin.getServer().getOnlinePlayers().size() == 0) {
-            loc = new Location(plugin.getServer().getWorld("Hub"), (1371 + 0.5), (79 + 0.3), (-88 + 0.5));
-            Holograms.createGameHologram(loc, "KITPVP");
-            loc = new Location(plugin.getServer().getWorld("Hub"), (1374 + 0.5), (79 + 0.3), (-89 + 0.5));
-            Holograms.createGameHologram(loc, "DR");
-            loc = new Location(plugin.getServer().getWorld("Hub"), (1377 + 0.5), (79 + 0.3), (-90 + 0.5));
-            Holograms.createGameHologram(loc, "OITQ");
-            loc = new Location(plugin.getServer().getWorld("Hub"), (1381 + 0.5), (79 + 0.3), (-90 + 0.5));
-            Holograms.createGameHologram(loc, "PKR");
-        }
-
         //check if the player has joined before
         if (!p.hasPlayedBefore() || j.get(p.getUniqueId() + "Coins") == null) {
             j.set(p.getUniqueId() + "Coins", String.valueOf(Integer.parseInt("0")));
@@ -385,10 +374,6 @@ public class JoinLeaveEvent implements Listener {
         } catch (Exception exception) {
             exception.printStackTrace();
             plugin.getServer().getLogger().info("> Failed to update the redis player count, you know what to do.");
-        }
-
-        if (plugin.getServer().getOnlinePlayers().size() == 0 || plugin.getServer().getOnlinePlayers().size() == 1) {
-            Holograms.removeGameHolograms();
         }
     }
 
