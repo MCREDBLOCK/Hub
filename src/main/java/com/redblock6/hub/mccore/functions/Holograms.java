@@ -21,7 +21,7 @@ public class Holograms {
     private static Hologram gamehologram3;
     private static Hologram gamehologram4;
 
-    public static void createStatsHologram(Location loc, Player p) {
+    public static Hologram createStatsHologram(Location loc, Player p) {
         Jedis j = pool.getResource();
 
         hologram = HologramsAPI.createHologram(plugin, loc);
@@ -39,6 +39,8 @@ public class Holograms {
         ItemStack item = new ItemStack(Material.RED_WOOL, 1);
         hologram.appendItemLine(item);
         j.close();
+
+        return hologram;
     }
 
     public static void createGameHologram(Location loc, String type) {
@@ -174,7 +176,7 @@ public class Holograms {
         gamehologram4.delete();
     }
 
-    public static void removeHologramPacket() {
-        hologram.delete();
+    public static void removeHologramPacket(Hologram holo) {
+        holo.delete();
     }
 }

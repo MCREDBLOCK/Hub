@@ -30,10 +30,14 @@ public class Regions implements Listener {
 
     @EventHandler
     public void tutorialRegionEnter(RegionEnteredEvent e) {
+        if (e.getPlayer() == null) {
+            return;
+        }
+
         Player p = e.getPlayer();
         Jedis j = pool.getResource();
 
-        if (j.get(p.getUniqueId() + "Tutorial") == null && e.getRegionName().equalsIgnoreCase("tutorial")) {
+        if (j.get(p.getUniqueId() + "Tutorial").equals("Incomplete") && e.getRegionName().equalsIgnoreCase("tutorial")) {
             Location loc = new Location(Bukkit.getWorld("Hub"), (1384 + 0.5), 71, (-58 + 0.5));
 
             holo = HologramsAPI.createHologram(plugin, loc);
@@ -62,9 +66,16 @@ public class Regions implements Listener {
 
     @EventHandler
     public void tutorialRegionLeave(RegionLeftEvent e) {
+        if (e.getPlayer() == null) {
+            return;
+        }
+        if (statuses.get(e.getPlayer()) == null) {
+            return;
+        }
+
         Jedis j = pool.getResource();
         Player p = e.getPlayer();
-        if (j.get(p.getUniqueId() + "Tutorial") == null && e.getRegionName().equalsIgnoreCase("tutorial")) {
+        if (j.get(p.getUniqueId() + "Tutorial").equals("Incomplete") && e.getRegionName().equalsIgnoreCase("tutorial")) {
             Location loc = new Location(Bukkit.getWorld("Hub"), (1384 + 0.5), 71, (-58 + 0.5));
             Hologram newholo = statuses.get(p);
             newholo.teleport(loc);

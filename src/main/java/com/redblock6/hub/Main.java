@@ -1,39 +1,32 @@
 package com.redblock6.hub;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.redblock6.hub.mccore.events.JoinLeaveEvent;
+import de.slikey.effectlib.EffectManager;
+import net.citizensnpcs.Citizens;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+
+import java.util.Iterator;
 
 public class Main extends JavaPlugin {
 
     private static Main instance;
     public static JedisPool pool;
-    /*
-    public static MongoClient mongoClient;
-    public static DB database;
-    public static DBCollection maincollection;
-     */
+    public EffectManager em = new EffectManager(this);
 
     @Override
     public void onEnable() {
-        // This always goes at the top, or
+        // This always goes at the top, or else die
         instance = this;
 
         Register.registerEvents();
+
         pool = new JedisPool("192.168.1.242", Integer.parseInt("6379"));
         loadConfigs();
-
-        //mongo db
-        /* try {
-            mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-            Bukkit.getServer().getLogger().info("> Failed to connect to MongoDB");
-        } finally {
-            Bukkit.getServer().getLogger().info("> Connected to MongoDB, getting databases and stuff");
-            database = mongoClient.getDB("MC_USERS");
-            maincollection = database.getCollection("STATS");
-        } */
 
         //set this hub's status to online
         Jedis j = pool.getResource();
@@ -51,8 +44,16 @@ public class Main extends JavaPlugin {
         //destroy the jedis pool
         pool.destroy();
 
-        //close mongodb
-        // mongoClient.close();
+        em.dispose();
+
+        JoinLeaveEvent.holograms.forEach(Hologram::delete);
+        JoinLeaveEvent.holograms.clear();
+
+        JoinLeaveEvent.playerHologram.clear();
+        JoinLeaveEvent.playerTutorialNPC.clear();
+
+        JoinLeaveEvent.playerEffect.clear();
+
     }
 
     public static Main getInstance() { return instance;}

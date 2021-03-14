@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class NPC implements Listener {
+public class StatsNPC implements Listener {
     /*
     public NPCLocation(String[] Text, Location loc, boolean npc) {
         if (!npc) {

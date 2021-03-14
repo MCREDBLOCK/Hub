@@ -6,7 +6,8 @@ authors: [Redblock6]
 description: Hub plugin for mc.redblock6.com
 website: mc.redblock6.com
 depend: [ProtocolLib]
-softdepend: [HolographicDisplays]
+softdepend: [HolographicDisplays, NBTAPI]
+loadbefore: [Citizens]
 
 commands:
   gamemenu:
@@ -28,6 +29,8 @@ commands:
   oitq:
     description: Opens the sub-menu for oitq
   tutorial:
+    description: Sends the player into tutorial mode
+  stop:
     description: Sends the player into tutorial mode
 
 permissions:

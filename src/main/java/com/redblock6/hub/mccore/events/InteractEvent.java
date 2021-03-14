@@ -5,6 +5,7 @@ import com.redblock6.hub.mccore.functions.CreateGameMenu;
 import com.redblock6.hub.mccore.functions.CreateScoreboard;
 import com.redblock6.hub.mccore.functions.Parkour;
 import de.tr7zw.nbtapi.NBTItem;
+import net.citizensnpcs.api.event.NPCClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

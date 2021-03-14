@@ -35,7 +35,7 @@ public class Parkour {
 
 
     public void enterParkour() {
-        if (!(p.getGameMode().equals(GameMode.CREATIVE))) {
+        if (!(p.getGameMode().equals(GameMode.CREATIVE)) && !(p.getGameMode().equals(GameMode.SPECTATOR))) {
             CreateScoreboard.setScoreboard(p, "Parkour", true);
             p.sendMessage(CreateGameMenu.translate("&6&l> &fYou joined the parkour"));
             time = 0;

@@ -76,6 +76,14 @@
             <id>commons-pool2</id>
             <url>https://mvnrepository.com/artifact/org.apache.commons/commons-pool2</url>
         </repository>
+        <repository>
+            <id>everything</id>
+            <url>http://repo.citizensnpcs.co/</url>
+        </repository>
+        <repository>
+            <id>elmakers-repo</id>
+            <url>http://maven.elmakers.com/repository/ </url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -130,6 +138,19 @@
             <groupId>net.raidstone</groupId>
             <artifactId>WorldGuardEvents</artifactId>
             <version>1.16.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.citizensnpcs</groupId>
+            <artifactId>citizens</artifactId>
+            <version>2.0.27-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.slikey</groupId>
+            <artifactId>EffectLib</artifactId>
+            <version>6.4</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

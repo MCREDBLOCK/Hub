@@ -2,10 +2,14 @@ package com.redblock6.hub;
 
 import com.redblock6.hub.mccore.commands.GameMenuCommand;
 import com.redblock6.hub.mccore.commands.Gamemode;
+import com.redblock6.hub.mccore.commands.StopCommand;
 import com.redblock6.hub.mccore.commands.TutorialCommaned;
 import com.redblock6.hub.mccore.events.*;
 import com.redblock6.hub.mccore.functions.Tutorial;
+import de.slikey.effectlib.EffectLib;
+import de.slikey.effectlib.EffectManager;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import redis.clients.jedis.JedisPool;
 
@@ -13,6 +17,7 @@ public class Register {
 
     private static final Main pl = Main.getInstance();
     private static JedisPool jedisPool;
+    public static EffectManager em = new EffectManager(pl);
 
     public static void registerEvents() {
         PluginManager pm = Bukkit.getPluginManager();
@@ -36,13 +41,10 @@ public class Register {
         pl.getCommand("oitq").setExecutor(new GameMenuCommand());
         pl.getCommand("deathrun").setExecutor(new GameMenuCommand());
         pl.getCommand("tutorial").setExecutor(new TutorialCommaned());
+        pl.getCommand("stop").setExecutor(new StopCommand());
     }
 
-    public static void registerRedis() {
-        jedisPool = new JedisPool("127.0.0.1", Integer.parseInt("6379"));
-    }
-
-    public static void unRegisterRedis() {
-        jedisPool.getResource().close();
+    public static EffectManager getEffectManager() {
+        return em;
     }
 }
