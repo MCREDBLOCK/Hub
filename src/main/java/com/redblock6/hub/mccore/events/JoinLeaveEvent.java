@@ -372,7 +372,9 @@ public class JoinLeaveEvent implements Listener {
         npcArrayList.remove(playerTutorialNPC.get(e.getPlayer()));
         playerTutorialNPC.remove(e.getPlayer());
         Holograms.removeHologramPacket(playerStatsHologram.get(e.getPlayer()));
-        playerEffect.get(e.getPlayer()).cancel();
+        if (playerEffect.get(e.getPlayer()) != null) {
+            playerEffect.get(e.getPlayer()).cancel();
+        }
 
 
         try {

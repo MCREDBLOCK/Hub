@@ -17,7 +17,7 @@ public class Main extends JavaPlugin {
 
     private static Main instance;
     public static JedisPool pool;
-    public EffectManager em = new EffectManager(this);
+    public EffectManager em = new EffectManager(this);;
 
     @Override
     public void onEnable() {
@@ -34,7 +34,7 @@ public class Main extends JavaPlugin {
         j.set("HUB-" + this.getConfig().get("hub-identifier") + "Status", "ONLINE");
         j.close();
 
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "hub:bungeecord");
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         Holograms.removeGameHolograms();
 

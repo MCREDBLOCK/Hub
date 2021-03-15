@@ -20,40 +20,39 @@ public class ServerConnector {
     private static String server4;
 
     public static void sendServer(Player p, String server) {
-        p = Bukkit.getPlayerExact(p.getName());
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        DataOutputStream doutputStream = new DataOutputStream(outputStream);
-        p.sendTitle(CreateGameMenu.translate("&2&lSENDING YOU TO " + server), CreateGameMenu.translate("&fWe're sending you to &a" + server.toUpperCase() + " &fas fast as possible."), 5, 40, 5);
-        try {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+             DataOutputStream doutputStream = new DataOutputStream(outputStream)) {
             doutputStream.writeUTF("Connect");
             doutputStream.writeUTF(server);
+            p.sendPluginMessage(plugin, "BungeeCord", outputStream.toByteArray());
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 1);
+            p.sendTitle(CreateGameMenu.translate("&2&lSENDING YOU TO " + server), CreateGameMenu.translate("&fWe're sending you to &a" + server.toUpperCase() + " &fas fast as possible."), 5, 80, 5);
         } catch (IOException e) {
             e.printStackTrace();
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
-            p.sendTitle(CreateGameMenu.translate("&4&lERROR"), CreateGameMenu.translate("&fWe couldn't transfer you to &c" + server + " &fplease contact &cRedblock6#6091 &fon discord."), 5, 40, 5);
+            p.sendTitle(CreateGameMenu.translate("&4&lERROR"), CreateGameMenu.translate("&fWe couldn't transfer you to &c" + server + " &fplease contact &cRedblock6#6091 &fon discord."), 5, 80, 5);
         }
-        p.sendPluginMessage(plugin, "hub:bungeecord", outputStream.toByteArray());
     }
 
     public static String getPlayerCount(String server) {
         Jedis j = pool.getResource();
-        if (j.get(server + "-1Online") != null) {
-            server1 = j.get(server + "-1Online");
+        if (j.get(server + "-1Count") != null) {
+            server1 = j.get(server + "-1Count");
         } else {
             server1 = String.valueOf(0);
         }
-        if (j.get(server + "-2Online") != null) {
-            server2 = j.get(server + "-2Online");
+        if (j.get(server + "-2Count") != null) {
+            server2 = j.get(server + "-2Count");
         } else {
             server2 = String.valueOf(0);
         }
-        if (j.get(server + "-3Online") != null) {
-            server3 = j.get(server + "-3Online");
+        if (j.get(server + "-3Count") != null) {
+            server3 = j.get(server + "-3Count");
         } else {
             server3 = String.valueOf(0);
         }
-        if (j.get(server + "-4Online") != null) {
-            server4 = j.get(server + "-4Online");
+        if (j.get(server + "-4Count") != null) {
+            server4 = j.get(server + "-4Count");
         } else {
             server4 = String.valueOf(0);
         }
