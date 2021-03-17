@@ -37,21 +37,6 @@ public class CreateGameMenu implements Listener {
 
         return item;
     }
-
-
-    /*
-    public static ItemStack getGameMenuItem(final Material material, final String name) {
-        final ItemStack item = new ItemStack(material, 1);
-        final ItemMeta meta = item.getItemMeta();
-
-        meta.setDisplayName(name);
-
-        NBTItem nbti = new NBTItem(item);
-        nbti.setString("item", "gameMenu");
-        nbti.applyNBT(item);
-        }
-
-        */
 		
     public static void newInventory(Player p, String type) {
         if (type.equals("GameMenu")) {
