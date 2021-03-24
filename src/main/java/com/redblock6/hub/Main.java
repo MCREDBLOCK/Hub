@@ -2,22 +2,57 @@ package com.redblock6.hub;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.redblock6.hub.mccore.events.JoinLeaveEvent;
+import com.redblock6.hub.mccore.functions.CreateGameMenu;
 import com.redblock6.hub.mccore.functions.Holograms;
 import de.slikey.effectlib.EffectManager;
-import net.citizensnpcs.Citizens;
-import net.citizensnpcs.api.CitizensAPI;
-import net.citizensnpcs.api.npc.NPC;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class Main extends JavaPlugin {
 
     private static Main instance;
     public static JedisPool pool;
-    public EffectManager em = new EffectManager(this);;
+    private Connection connection;
+    public String host, database, username, password, global_table, hub_table;
+    public int port;
+    public EffectManager em = new EffectManager(this);
+
+    public void mysqlSetup() {
+        host = "192.168.1.219";
+        port = 3306;
+        username = "mc";
+        database = "mc_user";
+        global_table = "GLOBAL";
+        hub_table = "HUB";
+        password = "minecraft";
+
+        try {
+            if (getConnection() != null && !getConnection().isClosed()) {
+                return;
+            }
+            Class.forName("com.mysql.jdbc.Driver");
+            setConnection(DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password));
+            Bukkit.getConsoleSender().sendMessage(CreateGameMenu.translate("&2&l> &fConnected to &aMySQL &fusing user: &a" + this.username));
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public void onEnable() {
@@ -29,9 +64,12 @@ public class Main extends JavaPlugin {
         pool = new JedisPool("192.168.1.242", Integer.parseInt("6379"));
         loadConfigs();
 
+        mysqlSetup();
+
         //set this hub's status to online
         Jedis j = pool.getResource();
         j.set("HUB-" + this.getConfig().get("hub-identifier") + "Status", "ONLINE");
+        j.set("HUB-" + this.getConfig().get("hub-identifier") + "Count", "0");
         j.close();
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");

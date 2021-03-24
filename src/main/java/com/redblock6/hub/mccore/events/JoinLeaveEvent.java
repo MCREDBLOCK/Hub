@@ -170,6 +170,7 @@ public class JoinLeaveEvent implements Listener {
 
         //check if the player has joined before
         if (!p.hasPlayedBefore() || j.get(p.getUniqueId() + "Coins") == null) {
+            /*
             j.set(p.getUniqueId() + "Coins", String.valueOf(Integer.parseInt("0")));
             j.set(p.getUniqueId() + "Exp", String.valueOf(Integer.parseInt("0")));
             j.set(p.getUniqueId() + "Level", String.valueOf(Integer.parseInt("1")));
@@ -179,6 +180,10 @@ public class JoinLeaveEvent implements Listener {
             j.set(p.getUniqueId() + "DRWS", String.valueOf(Integer.parseInt("0")));
             j.set(p.getUniqueId() + "PKRWS", String.valueOf(Integer.parseInt("0")));
             j.set(p.getUniqueId() + "Tutorial", "Incomplete");
+             */
+
+            MySQLSetterGetter player = new MySQLSetterGetter();
+            player.createPlayer(p.getUniqueId(), p);
 
             CreateScoreboard.setScoreboard(p, "Normal", false);
             String achline = CreateGameMenu.translate("&2&m---------------------------------");
@@ -208,7 +213,7 @@ public class JoinLeaveEvent implements Listener {
                 public void run() {
                     Parkour.otherSound(p);
                     p.sendTitle(CreateGameMenu.translate("&2&l✔ ACHEIVEMENT COMPLETED ✔"), CreateGameMenu.translate("&aOur Adventure Begins"), 10, 20, 0);
-                    GiveCoinsXP.GivePlayerCoins(p, 100);
+                    GiveCoinsXP.GivePlayerDust(p, 100);
                 }
             }.runTaskLaterAsynchronously(plugin, 20);
 

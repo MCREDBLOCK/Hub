@@ -8,13 +8,12 @@ import redis.clients.jedis.Jedis;
 
 import static com.redblock6.hub.Main.pool;
 
-public class GiveCoinsXP {
+public class LegacyGiveCoinsXP {
     private static final Main plugin = Main.getInstance();
-    private static final MySQLSetterGetter mysql = new MySQLSetterGetter();
     private static int currentcoins;
     private static int currentexp;
 
-    public static void GivePlayerDust(Player p, int amount) {
+    public static void GivePlayerCoins(Player p, int amount) {
         //get the pool
         int ticks;
 
@@ -24,7 +23,8 @@ public class GiveCoinsXP {
             ticks = 2;
         }
         try {
-            currentcoins = mysql.getDust(p.getUniqueId());
+            Jedis j = pool.getResource();
+            currentcoins = Integer.parseInt(j.get(p.getUniqueId() + "Coins"));
 
             //play the giving coins sound thingy
             new BukkitRunnable() {
@@ -35,24 +35,25 @@ public class GiveCoinsXP {
                     if (coinsgiven == amount) {
                         cancel();
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
-                        p.sendMessage(CreateGameMenu.translate("&5&l> &fYou now have &d" + mysql.getDust(p.getUniqueId()) + " Magic Dust"));
+                        j.set(p.getUniqueId() + "Coins", String.valueOf(currentcoins + amount));
+                        p.sendMessage(CreateGameMenu.translate("&5&l> &fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust"));
+                        j.close();
 
-                        p.sendTitle(CreateGameMenu.translate("&5&l☆ &d0 &5&l☆"), CreateGameMenu.translate(CreateGameMenu.translate("&fYou now have &d" + mysql.getDust(p.getUniqueId()) + " Magic Dust")), 0, 40, 10);
+                        p.sendTitle(CreateGameMenu.translate("&5&l☆ &d0 &5&l☆"), CreateGameMenu.translate(CreateGameMenu.translate("&fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust")), 0, 40, 10);
                         CreateScoreboard.setScoreboard(p, "Normal", false);
                     } else {
                         coinsgiven++;
-                        mysql.updateDust(p.getUniqueId(), currentcoins + 1);
                         p.sendTitle(CreateGameMenu.translate("&5&l★ &d" + (amount - coinsgiven) + " &5&l★"), CreateGameMenu.translate("&fYou now have &d" + (currentcoins + coinsgiven) + " Magic Dust"), 0, 20, 0);
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
                     }
                 }
             }.runTaskTimerAsynchronously(plugin, 40, ticks);
 
-            plugin.getServer().getLogger().info("> Added " + amount + " coins for " + p.getName() + " in MySQL.");
+            plugin.getServer().getLogger().info("> Added " + amount + " coins for " + p.getUniqueId() + " in redis.");
         } catch (Exception e) {
             e.printStackTrace();
-            p.sendTitle(CreateGameMenu.translate("&4&lWELL THAT'S WEIRD"), CreateGameMenu.translate("&fFailed to contact RYGB services. Please tell &cRedblock6#6091 &fto fix his code."), 0, 140, 0);
-            plugin.getServer().getLogger().info("> Failed to give " + p.getName() + " " + amount + " coins with MySQL.");
+            p.sendTitle(CreateGameMenu.translate("&4&lWELL THAT'S WEIRD..."), CreateGameMenu.translate("&fFailed to contact RYGB services. Please tell &cRedblock6#6091 &fto fix his code."), 0, 40, 0);
+            plugin.getServer().getLogger().info("> Failed to give " + p + " " + amount + " coins with redis.");
         }
     }
 
