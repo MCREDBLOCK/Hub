@@ -84,6 +84,10 @@
             <id>elmakers-repo</id>
             <url>http://maven.elmakers.com/repository/ </url>
         </repository>
+        <repository>
+            <id>purpur</id>
+            <url>https://repo.pl3x.net/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -96,11 +100,6 @@
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api-plugin</artifactId>
             <version>2.7.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.destroystokyo.paper</groupId>
-            <artifactId>paper-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>
@@ -117,12 +116,6 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
             <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
@@ -150,6 +143,12 @@
             <groupId>de.slikey</groupId>
             <artifactId>EffectLib</artifactId>
             <version>6.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.pl3x.purpur</groupId>
+            <artifactId>purpur-api</artifactId>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

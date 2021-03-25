@@ -28,6 +28,7 @@ public class Tutorial implements Listener {
 
     private static final Main plugin = Main.getInstance();
     public static ArrayList<Player> playersInTutorial = new ArrayList<>();
+    private static final MySQLSetterGetter mysql = new MySQLSetterGetter();
 
     public static void startTutorial(Player p) {
         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 100, 1);
@@ -109,10 +110,9 @@ public class Tutorial implements Listener {
                     Location loc = new Location(p.getWorld(), (1379 + 0.5), 117, (-73 + 0.5), (long) -179.8, -90);
                     p.teleport(loc);
                 } else if (timesran == 5) {
-                    Jedis j = pool.getResource();
                     Location loc = new Location(plugin.getServer().getWorld("Hub"), (1383 + 0.5), 74, (-57 + 0.5), (long) -135.9, (long) -3.6);
                     //play teh acheivement sound thingy wingy
-                    if (j.get(p.getUniqueId() + "Tutorial").equals("Incomplete")) {
+                    if (mysql.getTutorial(p.getUniqueId()).equals("Incomplete")) {
                         CreateScoreboard.setScoreboard(p, "Normal", false);
                         String achline = CreateGameMenu.translate("&2&m---------------------------------");
                         String completed = CreateGameMenu.translate("&2&lACHEIVEMENT COMPLETED &a&lTOUR GUIDE");
@@ -128,7 +128,7 @@ public class Tutorial implements Listener {
                         p.sendMessage(tutorial);
                         p.sendMessage(achline);
                         Parkour.otherSound(p);
-                        j.set(p.getUniqueId() + "Tutorial", "Completed");
+                        mysql.completedTutorial(p.getUniqueId());
                         p.sendTitle(CreateGameMenu.translate("&2&l✔"), CreateGameMenu.translate("&aTour Guide"), 10, 80, 0);
                         GiveCoinsXP.GivePlayerBoth(p, 5, 10);
 
@@ -144,7 +144,6 @@ public class Tutorial implements Listener {
                         }.runTaskLater(plugin, 40);
                     }
                     p.teleport(loc);
-                    j.close();
                 } else if (timesran == 7) {
                     cancel();
                     p.setFlying(false);

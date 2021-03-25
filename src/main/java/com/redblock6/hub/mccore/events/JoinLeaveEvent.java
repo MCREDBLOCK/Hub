@@ -36,7 +36,6 @@ import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 
 import static com.redblock6.hub.Main.pool;
 
@@ -52,6 +51,7 @@ public class JoinLeaveEvent implements Listener {
     public static ArrayList<NPC> npcArrayList = new ArrayList<>();
     public static ArrayList<Hologram> holograms = new ArrayList<>();
     public static HashMap<Player, Effect> playerEffect = new HashMap<>();
+    private static final MySQLSetterGetter mysql = new MySQLSetterGetter();
 
     @EventHandler
     public void onHungerDeplete(FoodLevelChangeEvent e) {
@@ -169,7 +169,7 @@ public class JoinLeaveEvent implements Listener {
         String ip = ChatColor.translateAlternateColorCodes('&', "&4&lmc.redblock6.com");
 
         //check if the player has joined before
-        if (!p.hasPlayedBefore() || j.get(p.getUniqueId() + "Coins") == null) {
+        if (!p.hasPlayedBefore() || !mysql.playerExistsGlobal(p.getUniqueId())) {
             /*
             j.set(p.getUniqueId() + "Coins", String.valueOf(Integer.parseInt("0")));
             j.set(p.getUniqueId() + "Exp", String.valueOf(Integer.parseInt("0")));
@@ -213,6 +213,7 @@ public class JoinLeaveEvent implements Listener {
                 public void run() {
                     Parkour.otherSound(p);
                     p.sendTitle(CreateGameMenu.translate("&2&l✔ ACHEIVEMENT COMPLETED ✔"), CreateGameMenu.translate("&aOur Adventure Begins"), 10, 20, 0);
+                    mysql.createPlayer(p.getUniqueId(), p);
                     GiveCoinsXP.GivePlayerDust(p, 100);
                 }
             }.runTaskLaterAsynchronously(plugin, 20);

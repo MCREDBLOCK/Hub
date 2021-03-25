@@ -15,7 +15,6 @@ public class GiveCoinsXP {
     private static int currentexp;
 
     public static void GivePlayerDust(Player p, int amount) {
-        //get the pool
         int ticks;
 
         if (amount > 100) {
@@ -23,32 +22,34 @@ public class GiveCoinsXP {
         } else {
             ticks = 2;
         }
-        try {
-            currentcoins = mysql.getDust(p.getUniqueId());
 
+        try {
             //play the giving coins sound thingy
             new BukkitRunnable() {
                 int coinsgiven = 0;
 
                 @Override
                 public void run() {
-                    if (coinsgiven == amount) {
+                    if (coinsgiven == amount || coinsgiven > amount) {
                         cancel();
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
+                        mysql.updateDust(p.getUniqueId(), amount);
                         p.sendMessage(CreateGameMenu.translate("&5&l> &fYou now have &d" + mysql.getDust(p.getUniqueId()) + " Magic Dust"));
 
-                        p.sendTitle(CreateGameMenu.translate("&5&l☆ &d0 &5&l☆"), CreateGameMenu.translate(CreateGameMenu.translate("&fYou now have &d" + mysql.getDust(p.getUniqueId()) + " Magic Dust")), 0, 40, 10);
+                        p.sendTitle(CreateGameMenu.translate("&5&l☆ &d0 &5&l☆"), CreateGameMenu.translate("&fYou now have &d" + mysql.getDust(p.getUniqueId()) + " Magic Dust"), 0, 40, 10);
                         CreateScoreboard.setScoreboard(p, "Normal", false);
+                        //Bukkit.getLogger().info("FINAL Coins Given: " + coinsgiven + ", Amount " + amount);
                     } else {
+                        //Bukkit.getLogger().info("Coins Given: " + coinsgiven + ", Amount " + amount);
                         coinsgiven++;
-                        mysql.updateDust(p.getUniqueId(), currentcoins + 1);
+                        currentcoins = mysql.getDust(p.getUniqueId());
                         p.sendTitle(CreateGameMenu.translate("&5&l★ &d" + (amount - coinsgiven) + " &5&l★"), CreateGameMenu.translate("&fYou now have &d" + (currentcoins + coinsgiven) + " Magic Dust"), 0, 20, 0);
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
                     }
                 }
             }.runTaskTimerAsynchronously(plugin, 40, ticks);
 
-            plugin.getServer().getLogger().info("> Added " + amount + " coins for " + p.getName() + " in MySQL.");
+            //plugin.getServer().getLogger().info("> Added " + amount + " coins for " + p.getName() + " in MySQL.");
         } catch (Exception e) {
             e.printStackTrace();
             p.sendTitle(CreateGameMenu.translate("&4&lWELL THAT'S WEIRD"), CreateGameMenu.translate("&fFailed to contact RYGB services. Please tell &cRedblock6#6091 &fto fix his code."), 0, 140, 0);
@@ -65,9 +66,6 @@ public class GiveCoinsXP {
             ticks = 2;
         }
         try {
-            Jedis j = pool.getResource();
-            currentexp = Integer.parseInt(j.get(p.getUniqueId() + "Exp"));
-
             //play the giving coins sound thingy
             new BukkitRunnable() {
                 int expgiven = 0;
@@ -76,23 +74,31 @@ public class GiveCoinsXP {
                 public void run() {
                     if (expgiven == amount) {
                         cancel();
+                        mysql.updateEXP(p.getUniqueId(), amount);
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 100, 2);
-                        j.set(p.getUniqueId() + "Exp", String.valueOf((currentexp + amount)));
-                        p.sendMessage(CreateGameMenu.translate("&4&l> &fYou now have &c" + j.get(p.getUniqueId() + "Exp") + "&7/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."));
-                        j.close();
+                        p.sendMessage(CreateGameMenu.translate("&4&l> &fYou now have &c" + mysql.getEXP(p.getUniqueId()) + "&7/&c" + mysql.getEXPMax(p.getUniqueId()) + " &fexperience."));
 
-                        p.sendTitle(CreateGameMenu.translate("&4&l⬞ &c0 &4&l⬞"), CreateGameMenu.translate((currentexp + expgiven) + "&7/&c" + j.get(p.getUniqueId() + "ExpMax")), 0, 40, 10);
+                        p.sendTitle(CreateGameMenu.translate("&4&l⬞ &c0 &4&l⬞"), CreateGameMenu.translate((currentexp + expgiven) + "&7/&c" + mysql.getEXPMax(p.getUniqueId())), 0, 40, 10);
                         CreateScoreboard.setScoreboard(p, "Normal", false);
+                        if (mysql.getEXP(p.getUniqueId()) >= (mysql.getEXPMax(p.getUniqueId()) - 1)) {
+                            levelUp(p);
+                            GivePlayerDust(p, 50);
+                        }
                     } else {
                         expgiven++;
-                        p.sendTitle(CreateGameMenu.translate("&4&l⬝ &c" + (amount - expgiven) + " &4&l⬝"), CreateGameMenu.translate((currentexp + expgiven) + "&7/&c" + j.get(p.getUniqueId() + "ExpMax")), 0, 20, 0);
+                        currentcoins = mysql.getDust(p.getUniqueId());
+                        p.sendTitle(CreateGameMenu.translate("&4&l⬝ &c" + (amount - expgiven) + " &4&l⬝"), CreateGameMenu.translate((currentexp + expgiven) + "&7/&c" + mysql.getEXPMax(p.getUniqueId())), 0, 20, 0);
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 100, 1);
                         // j.incrBy(p.getUniqueId() + "Exp", 1);
+                        if (mysql.getEXP(p.getUniqueId()) >= (mysql.getEXPMax(p.getUniqueId()) - 1)) {
+                            levelUp(p);
+                            GivePlayerDust(p, 50);
+                        }
                     }
                 }
             }.runTaskTimerAsynchronously(plugin, 40, ticks);
 
-            plugin.getServer().getLogger().info("> Added " + amount + " exp for " + p.getUniqueId() + " in redis.");
+            //plugin.getServer().getLogger().info("> Added " + amount + " exp for " + p.getUniqueId() + " in redis.");
         } catch (Exception e) {
             e.printStackTrace();
             p.sendTitle(CreateGameMenu.translate("&4&lWELL THAT'S WEIRD..."), CreateGameMenu.translate("&fFailed to contact RYGB services. Please tell &cRedblock6#6091 &fto fix his code."), 0, 40, 0);
@@ -109,15 +115,10 @@ public class GiveCoinsXP {
             ticks = 2;
         }
         try {
-            Jedis j = pool.getResource();
-            currentexp = Integer.parseInt(j.get(p.getUniqueId() + "Exp"));
-            currentcoins = Integer.parseInt(j.get(p.getUniqueId() + "Coins"));
-
             //play the giving coins sound thingy
             new BukkitRunnable() {
                 int coinsgiven = 0;
                 int expgiven = 0;
-
 
                 @Override
                 public void run() {
@@ -125,15 +126,14 @@ public class GiveCoinsXP {
                         cancel();
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
-                        j.set(p.getUniqueId() + "Coins", String.valueOf((currentcoins + amountcoins)));
-                        j.set(p.getUniqueId() + "Exp", String.valueOf((currentexp + amountexp)));
-                        p.sendMessage(CreateGameMenu.translate("&4&l> &fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."));
-                        j.close();
+                        mysql.updateDust(p.getUniqueId(), amountcoins);
+                        mysql.updateEXP(p.getUniqueId(), amountexp);
+                        p.sendMessage(CreateGameMenu.translate("&4&l> &fYou now have &d" + mysql.getDust(p.getUniqueId()) + " Magic Dust &fand &c" + mysql.getEXP(p.getUniqueId()) + "&7&l/&c" + mysql.getEXPMax(p.getUniqueId()) + " &fexperience."));
                         CreateScoreboard.setScoreboard(p, "Normal", false);
 
-                        p.sendTitle(CreateGameMenu.translate("&5&l★ &5" + "0" + " &5&l★ &7&l- &4&l⬝ &c" + "0" + " &4&l⬝"), CreateGameMenu.translate("&fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."), 0, 40, 10);
+                        p.sendTitle(CreateGameMenu.translate("&5&l★ &5" + "0" + " &5&l★ &7&l- &4&l⬝ &c" + "0" + " &4&l⬝"), CreateGameMenu.translate("&fYou now have &d" + mysql.getDust(p.getUniqueId()) + " Magic Dust &fand &c" + mysql.getEXP(p.getUniqueId()) + "&7&l/&c" + mysql.getEXPMax(p.getUniqueId()) + " &fexperience."), 0, 40, 10);
                     } else {
-                        p.sendTitle(CreateGameMenu.translate("&5&l★ &5" + (amountcoins - coinsgiven) + " &5&l★ &7&l- &4&l⬝ &c" + (amountexp - expgiven) + " &4&l⬝"), CreateGameMenu.translate("&fYou now have &d" + (coinsgiven + amountcoins) + " Magic Dust &fand &c" + (expgiven + amountexp) + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."), 0, 20, 0);
+                        p.sendTitle(CreateGameMenu.translate("&5&l★ &5" + (amountcoins - coinsgiven) + " &5&l★ &7&l- &4&l⬝ &c" + (amountexp - expgiven) + " &4&l⬝"), CreateGameMenu.translate("&fYou now have &d" + (coinsgiven + amountcoins) + " Magic Dust &fand &c" + (expgiven + amountexp) + "&7&l/&c" + mysql.getEXPMax(p.getUniqueId()) + " &fexperience."), 0, 20, 0);
                         if (coinsgiven != amountcoins) {
                             coinsgiven++;
                             // j.incrBy(p.getUniqueId() + "Coins", 1);
@@ -143,7 +143,7 @@ public class GiveCoinsXP {
                             expgiven++;
                             // j.incrBy(p.getUniqueId() + "Exp", 1);
                             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 100, 1);
-                            if (Integer.parseInt(j.get(p.getUniqueId() + "Exp")) >= (Integer.parseInt(j.get(p.getUniqueId() + "ExpMax")) - 1)) {
+                            if (mysql.getEXP(p.getUniqueId()) >= (mysql.getEXPMax(p.getUniqueId()) - 1)) {
                                 levelUp(p);
                                 coinsgiven -= 50;
                             }
@@ -161,22 +161,19 @@ public class GiveCoinsXP {
     }
 
     public static void levelUp(Player p) {
-        Jedis j = pool.getResource();
-
         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 100, 1);
-        j.set(p.getUniqueId() + "Exp", String.valueOf(Integer.parseInt("0")));
-        j.incrBy(p.getUniqueId() + "ExpMax", 100);
-        j.incrBy(p.getUniqueId() + "Level", 1);
-        j.incrBy(p.getUniqueId() + "Coins", 1);
-        p.sendTitle(CreateGameMenu.translate("&2&lLEVEL UP"), CreateGameMenu.translate("&fYou are now level &a" + j.get(p.getUniqueId() + "Exp") + " &fand need &a" + j.get(p.getUniqueId() + "ExpMax") + " &fmore exp to level up."), 0, 20, 10);
+        mysql.resetEXP(p.getUniqueId());
+        mysql.updateEXPMax(p.getUniqueId());
+        mysql.updateLevel(p.getUniqueId());
+        p.sendTitle(CreateGameMenu.translate("&2&lLEVEL UP"), CreateGameMenu.translate("&fYou are now level &a" + mysql.getLevel(p.getUniqueId()) + " &fand need &a" + mysql.getEXPMax(p.getUniqueId()) + " &fmore exp to level up."), 0, 20, 10);
 
         String line = CreateGameMenu.translate("&2&m---------------------------------");
         String levelup = CreateGameMenu.translate("&2&lLEVEL UP");
         String blank = "";
         String reward = CreateGameMenu.translate("&6&l+ &e50 coins");
-        String newchallenge = CreateGameMenu.translate("&fNow you have to get &a" + j.get(p.getUniqueId() + "ExpMax"));
+        String newchallenge = CreateGameMenu.translate("&fNow you have to get &a" + mysql.getEXPMax(p.getUniqueId()));
         String newchallenge2 = CreateGameMenu.translate("&fmore exp to levelup");
-        String nowlevel = CreateGameMenu.translate("&fYou are now &2&lLEVEL &a" + j.get(p.getUniqueId() + "Level"));
+        String nowlevel = CreateGameMenu.translate("&fYou are now &2&lLEVEL &a" + mysql.getLevel(p.getUniqueId()));
 
         p.sendMessage(line);
         p.sendMessage(levelup);
@@ -187,7 +184,5 @@ public class GiveCoinsXP {
         p.sendMessage(newchallenge);
         p.sendMessage(newchallenge2);
         p.sendMessage(line);
-
-        j.close();
     }
 }

@@ -13,6 +13,8 @@ public class CreateScoreboard {
 
     public static Objective o;
     private static final Main plugin = Main.getInstance();
+    private static final MySQLSetterGetter mysql = new MySQLSetterGetter();
+
 
     public static Scoreboard normal(Player p) {
         //get the pool
@@ -44,7 +46,7 @@ public class CreateScoreboard {
         //coins
         Team coins = b.registerNewTeam("c" + p.getName());
         coins.addEntry(ChatColor.YELLOW + "" + ChatColor.YELLOW);
-        String coinsline = ChatColor.translateAlternateColorCodes('&', "&5&lMAGIC DUST &d" + j.get(p.getUniqueId() + "Coins"));
+        String coinsline = ChatColor.translateAlternateColorCodes('&', "&5&lMAGIC DUST &d" + mysql.getDust(p.getUniqueId()));
         coins.setPrefix(coinsline);
         o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(3);
 
@@ -56,14 +58,14 @@ public class CreateScoreboard {
         //exp
         Team exp = b.registerNewTeam("e" + p.getName());
         exp.addEntry(ChatColor.RED + "" + ChatColor.GRAY);
-        String expline = ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + j.get(p.getUniqueId() + "Exp") + "&7/&c" + j.get(p.getUniqueId() + "ExpMax"));
+        String expline = ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + mysql.getEXP(p.getUniqueId()) + "&7/&c" + mysql.getEXPMax(p.getUniqueId()));
         exp.setPrefix(expline);
         o.getScore(ChatColor.RED + "" + ChatColor.GRAY).setScore(5);
 
         //level
         Team level = b.registerNewTeam("l" + p.getName());
         level.addEntry(ChatColor.DARK_RED + "" + ChatColor.RED);
-        String levelline = ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL &c" + j.get(p.getUniqueId() + "Level"));
+        String levelline = ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL &c" + mysql.getLevel(p.getUniqueId()));
         level.setPrefix(levelline);
         o.getScore(ChatColor.DARK_RED + "" + ChatColor.RED).setScore(6);
 
@@ -151,13 +153,13 @@ public class CreateScoreboard {
                     Scoreboard b = p.getScoreboard();
                     String s1 = ChatColor.translateAlternateColorCodes('&', "&4&lHUB-" + plugin.getConfig().getInt("hub-identifier"));
 
-                    b.getTeam("c" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&5&lMAGIC DUST &d" + j.get(p.getUniqueId() + "Coins")));
+                    b.getTeam("c" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&5&lMAGIC DUST &d" + mysql.getDust(p.getUniqueId())));
                     o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(3);
 
-                    b.getTeam("e" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + j.get(p.getUniqueId() + "Exp") + "&7/&c" + j.get(p.getUniqueId() + "ExpMax")));
+                    b.getTeam("e" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + mysql.getEXP(p.getUniqueId()) + "&7/&c" + mysql.getEXPMax(p.getUniqueId())));
                     o.getScore(ChatColor.RED + "" + ChatColor.GRAY).setScore(5);
 
-                    b.getTeam("l" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL &c" + j.get(p.getUniqueId() + "Level")));
+                    b.getTeam("l" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL &c" + mysql.getLevel(p.getUniqueId())));
                     o.getScore(ChatColor.DARK_RED + "" + ChatColor.RED).setScore(6);
 
                     j.close();
