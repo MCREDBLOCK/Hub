@@ -20,6 +20,7 @@ public class Holograms {
     private static Hologram gamehologram2;
     private static Hologram gamehologram3;
     private static Hologram gamehologram4;
+    private static final MySQLSetterGetter mysql = new MySQLSetterGetter();
 
     public static Hologram createStatsHologram(Location loc, Player p) {
         Jedis j = pool.getResource();
@@ -31,7 +32,7 @@ public class Holograms {
         visibilityManager.setVisibleByDefault(false);
 
         hologram.appendTextLine(CreateGameMenu.translate("&4&lYOUR STATS OVERVIEW"));
-        hologram.appendTextLine(CreateGameMenu.translate("&fKitPvP Kills: &c" + j.get(p.getUniqueId() + "KitKills")));
+        hologram.appendTextLine(CreateGameMenu.translate("&fKitPvP Kills: &c" + mysql.getKitKills(p.getUniqueId())));
         hologram.appendTextLine(CreateGameMenu.translate("&fDR Winstreak: &c" + j.get(p.getUniqueId() + "DRWS")));
         hologram.appendTextLine(CreateGameMenu.translate("&fOITQ Winstreak: &c" + j.get(p.getUniqueId() + "OITQWS")));
         hologram.appendTextLine(CreateGameMenu.translate("&fPKR Winstreak: &c" + j.get(p.getUniqueId() + "PKRWS")));

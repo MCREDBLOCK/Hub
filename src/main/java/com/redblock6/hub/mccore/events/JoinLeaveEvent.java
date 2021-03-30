@@ -60,22 +60,20 @@ public class JoinLeaveEvent implements Listener {
 
     @EventHandler
     public void npcRightClick(NPCRightClickEvent e) {
-        Jedis j = pool.getResource();
         if (e.getNPC().equals(playerTutorialNPC.get(e.getClicker()))) {
-            if (j.get(e.getClicker().getUniqueId() + "Tutorial").equals("Incomplete")) {
+            if (mysql.getTutorial(e.getClicker().getUniqueId()).equals("Incomplete")) {
                 Tutorial.startTutorial(e.getClicker());
             } else {
                 AchievementLibrary.openMenu(e.getClicker());
             }
         }
-        j.close();
     }
 
     @EventHandler
     public void npcLeftClick(NPCLeftClickEvent e) {
         Jedis j = pool.getResource();
         if (e.getNPC().equals(playerTutorialNPC.get(e.getClicker()))) {
-            if (j.get(e.getClicker().getUniqueId() + "Tutorial").equals("Incomplete")) {
+            if (mysql.getTutorial(e.getClicker().getUniqueId()).equals("Incomplete")) {
                 Tutorial.startTutorial(e.getClicker());
             } else {
                 AchievementLibrary.openMenu(e.getClicker());
@@ -96,6 +94,8 @@ public class JoinLeaveEvent implements Listener {
         } catch (Exception exception) {
             exception.printStackTrace();
             plugin.getServer().getLogger().info("> Failed to update the redis player count, you know what to do.");
+        } finally {
+            j.close();
         }
         //clear player inventory
         p.getInventory().clear();
@@ -110,6 +110,8 @@ public class JoinLeaveEvent implements Listener {
         p.setAllowFlight(true);
         p.setFlying(false);
         p.setInvisible(false);
+
+        mysql.createPlayer(p.getUniqueId(), p);
 
         //create the gamemenu itme
         ItemStack item = new ItemStack(Material.NETHER_STAR);
@@ -213,7 +215,6 @@ public class JoinLeaveEvent implements Listener {
                 public void run() {
                     Parkour.otherSound(p);
                     p.sendTitle(CreateGameMenu.translate("&2&l✔ ACHEIVEMENT COMPLETED ✔"), CreateGameMenu.translate("&aOur Adventure Begins"), 10, 20, 0);
-                    mysql.createPlayer(p.getUniqueId(), p);
                     GiveCoinsXP.GivePlayerDust(p, 100);
                 }
             }.runTaskLaterAsynchronously(plugin, 20);
@@ -259,7 +260,7 @@ public class JoinLeaveEvent implements Listener {
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 0);
         }
 
-        if (j.get(p.getUniqueId() + "Tutorial").equals("Incomplete") && !(playerHologram.containsValue(p)) && !(playerTutorialNPC.containsValue(p))) {
+        if (mysql.getTutorial(p.getUniqueId()).equals("Incomplete") && !(playerHologram.containsValue(p)) && !(playerTutorialNPC.containsValue(p))) {
             Location tutloc = new Location(Bukkit.getWorld("Hub"), 1386.500, 78.000, -59.500);
 
             Hologram holo = HologramsAPI.createHologram(plugin, tutloc);
@@ -297,7 +298,7 @@ public class JoinLeaveEvent implements Listener {
 
             playerTutorialNPC.put(p, tutNpc);
 
-            if (j.get(p.getUniqueId() + "Tutorial").equals("Incomplete")) {
+            if (mysql.getTutorial(p.getUniqueId()).equals("Incomplete")) {
                 startTutorialAnimation(p, j);
             }
         } else {
@@ -324,7 +325,6 @@ public class JoinLeaveEvent implements Listener {
             JoinLeaveEvent.playerHologram.put(p, holo);
             JoinLeaveEvent.holograms.add(holo);
         }
-        j.close();
 
         new BukkitRunnable() {
             @Override
@@ -402,7 +402,7 @@ public class JoinLeaveEvent implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (p.isOnline() && j.get(p.getUniqueId() + "Tutorial").equals("Incomplete")) {
+                if (p.isOnline() && mysql.getTutorial(p.getUniqueId()).equals("Incomplete")) {
                     PlayerConnection connection2 = ((CraftPlayer) p).getHandle().playerConnection;
                     connection2.sendPacket(new PacketPlayOutAnimation(((CraftEntity) tutNpc.getEntity()).getHandle(), 0));
                 } else {
@@ -418,7 +418,7 @@ public class JoinLeaveEvent implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (p.isOnline() && j.get(p.getUniqueId() + "Tutorial").equals("Incomplete")) {
+                if (p.isOnline() && mysql.getTutorial(p.getUniqueId()).equals("Incomplete")) {
                     PlayerConnection connection2 = ((CraftPlayer) p).getHandle().playerConnection;
                     connection2.sendPacket(new PacketPlayOutAnimation(((CraftEntity) tutNpc.getEntity()).getHandle(), 0));
                 } else {

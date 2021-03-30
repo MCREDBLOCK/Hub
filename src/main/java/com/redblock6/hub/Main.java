@@ -21,7 +21,7 @@ public class Main extends JavaPlugin {
     private static Main instance;
     public static JedisPool pool;
     private Connection connection;
-    public String host, database, username, password, global_table, hub_table;
+    public String host, database, username, password, global_table, hub_table, kitpvp_table;
     public int port;
     public EffectManager em = new EffectManager(this);
 
@@ -32,6 +32,7 @@ public class Main extends JavaPlugin {
         database = "mc_user";
         global_table = "GLOBAL";
         hub_table = "HUB";
+        kitpvp_table = "KITPVP";
         password = "minecraft";
 
         try {

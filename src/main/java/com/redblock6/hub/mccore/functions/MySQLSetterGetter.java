@@ -27,6 +27,21 @@ public class MySQLSetterGetter {
         return false;
     }
 
+    public boolean playerExistsKit(UUID uuid) {
+        try {
+            PreparedStatement global_statement = pl.getConnection().prepareStatement("SELECT * FROM " + pl.kitpvp_table + " WHERE UUID=?");
+            global_statement.setString(1, uuid.toString());
+
+            ResultSet results = global_statement.executeQuery();
+            if (results.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public void createPlayer(final UUID uuid, Player p) {
         try {
             PreparedStatement global_statement = pl.getConnection().prepareStatement("SELECT * FROM " + pl.global_table + " WHERE UUID=?");
@@ -43,6 +58,19 @@ public class MySQLSetterGetter {
                 insert.setInt(5, 0);
                 insert.setInt(6, 100);
                 insert.setString(7, "Incomplete");
+
+                insert.executeUpdate();
+            } if (!playerExistsKit(uuid)) {
+                PreparedStatement insert = pl.getConnection().prepareStatement("INSERT INTO " + pl.kitpvp_table + " (UUID,NAME,KITLEVEL,KITEXP,KITEXPMAX,KITCOINS,KITKILLS,KITDEATHS,NPCEVENTS) VALUES (?,?,?,?,?,?,?,?,?)");
+                insert.setString(1, uuid.toString());
+                insert.setString(2, p.getName());
+                insert.setInt(3, 1);
+                insert.setInt(4, 0);
+                insert.setInt(5, 100);
+                insert.setInt(6, 0);
+                insert.setInt(7, 0);
+                insert.setInt(8, 0);
+                insert.setBoolean(9, false);
 
                 insert.executeUpdate();
             }
@@ -204,6 +232,209 @@ public class MySQLSetterGetter {
             results.next();
 
             return results.getString("TUTORIAL");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updateKitCoins(UUID uuid, int amount) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("UPDATE " + pl.kitpvp_table + " SET KITCOINS=? WHERE UUID=?");
+            statement.setInt(1, (getKitCoins(uuid) + amount));
+            statement.setString(2, uuid.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Integer getKitCoins(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("SELECT * FROM " + pl.kitpvp_table + " WHERE UUID=?");
+            statement.setString(1, uuid.toString());
+            results = statement.executeQuery();
+            results.next();
+
+            return results.getInt("KITCOINS");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updateKitEXP(UUID uuid, int amount) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("UPDATE " + pl.kitpvp_table + " SET KITEXP=? WHERE UUID=?");
+            statement.setInt(1, (getKitEXP(uuid) + amount));
+            statement.setString(2, uuid.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void resetKitEXP(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("UPDATE " + pl.kitpvp_table + " SET KITEXP=? WHERE UUID=?");
+            statement.setInt(1, 0);
+            statement.setString(2, uuid.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Integer getKitEXP(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("SELECT * FROM " + pl.kitpvp_table + " WHERE UUID=?");
+            statement.setString(1, uuid.toString());
+            results = statement.executeQuery();
+            results.next();
+
+            return results.getInt("KITEXP");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updateKitEXPMax(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("UPDATE " + pl.kitpvp_table + " SET KITEXPMAX=? WHERE UUID=?");
+            statement.setInt(1, (getKitEXPMax(uuid) + 100));
+            statement.setString(2, uuid.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Integer getKitEXPMax(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("SELECT * FROM " + pl.kitpvp_table + " WHERE UUID=?");
+            statement.setString(1, uuid.toString());
+            results = statement.executeQuery();
+            results.next();
+
+            return results.getInt("KITEXPMAX");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updateKitLevel(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("UPDATE " + pl.kitpvp_table + " SET KITLEVEL=? WHERE UUID=?");
+            statement.setInt(1, (getKitLevel(uuid) + 1));
+            statement.setString(2, uuid.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Integer getKitLevel(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("SELECT * FROM " + pl.kitpvp_table + " WHERE UUID=?");
+            statement.setString(1, uuid.toString());
+            results = statement.executeQuery();
+            results.next();
+
+            return results.getInt("KITLEVEL");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updateKitKills(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("UPDATE " + pl.kitpvp_table + " SET KITKILLS=? WHERE UUID=?");
+            statement.setInt(1, (getKitKills(uuid) + 1));
+            statement.setString(2, uuid.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Integer getKitKills(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("SELECT * FROM " + pl.kitpvp_table + " WHERE UUID=?");
+            statement.setString(1, uuid.toString());
+            results = statement.executeQuery();
+            results.next();
+
+            return results.getInt("KITKILLS");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updateKitDeaths(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("UPDATE " + pl.kitpvp_table + " SET KITDEATHS=? WHERE UUID=?");
+            statement.setInt(1, (getKitDeaths(uuid) + 1));
+            statement.setString(2, uuid.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Integer getKitDeaths(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("SELECT * FROM " + pl.kitpvp_table + " WHERE UUID=?");
+            statement.setString(1, uuid.toString());
+            results = statement.executeQuery();
+            results.next();
+
+            return results.getInt("KITDEATHS");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Boolean getNpcEvents(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("SELECT * FROM " + pl.kitpvp_table + " WHERE UUID=?");
+            statement.setString(1, uuid.toString());
+            results = statement.executeQuery();
+            results.next();
+
+            return results.getBoolean("NPCEVENTS");
         } catch (SQLException e) {
             e.printStackTrace();
         }

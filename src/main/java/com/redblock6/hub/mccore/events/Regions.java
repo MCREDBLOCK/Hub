@@ -5,6 +5,7 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import com.redblock6.hub.Main;
 import com.redblock6.hub.mccore.functions.CreateGameMenu;
+import com.redblock6.hub.mccore.functions.MySQLSetterGetter;
 import com.redblock6.hub.mccore.functions.Parkour;
 import net.raidstone.wgevents.events.RegionEnteredEvent;
 import net.raidstone.wgevents.events.RegionLeftEvent;
@@ -25,6 +26,7 @@ import static com.redblock6.hub.Main.pool;
 public class Regions implements Listener {
     private final Main plugin = Main.getInstance();
     public static HashMap<Player, Hologram> statuses = new HashMap<>();
+    private static final MySQLSetterGetter mysql = new MySQLSetterGetter();
 
     private static Hologram holo;
 
@@ -35,9 +37,8 @@ public class Regions implements Listener {
         }
 
         Player p = e.getPlayer();
-        Jedis j = pool.getResource();
 
-        if (j.get(p.getUniqueId() + "Tutorial").equals("Incomplete") && e.getRegionName().equalsIgnoreCase("tutorial")) {
+        if (mysql.getTutorial(p.getUniqueId()).equals("Incomplete") && e.getRegionName().equalsIgnoreCase("tutorial")) {
             Location loc = new Location(Bukkit.getWorld("Hub"), (1384 + 0.5), 71, (-58 + 0.5));
 
             holo = HologramsAPI.createHologram(plugin, loc);
@@ -61,7 +62,6 @@ public class Regions implements Listener {
                 }
             }.runTaskLater(plugin, 5);
         }
-        j.close();
     }
 
     @EventHandler
@@ -73,9 +73,8 @@ public class Regions implements Listener {
             return;
         }
 
-        Jedis j = pool.getResource();
         Player p = e.getPlayer();
-        if (j.get(p.getUniqueId() + "Tutorial").equals("Incomplete") && e.getRegionName().equalsIgnoreCase("tutorial")) {
+        if (mysql.getTutorial(p.getUniqueId()).equals("Incomplete") && e.getRegionName().equalsIgnoreCase("tutorial")) {
             Location loc = new Location(Bukkit.getWorld("Hub"), (1384 + 0.5), 71, (-58 + 0.5));
             Hologram newholo = statuses.get(p);
             newholo.teleport(loc);
@@ -87,7 +86,6 @@ public class Regions implements Listener {
                 }
             }.runTaskLater(plugin, 5);
         }
-        j.close();
     }
 
     @EventHandler
