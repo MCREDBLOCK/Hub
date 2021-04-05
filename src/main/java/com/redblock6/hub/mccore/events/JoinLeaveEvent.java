@@ -177,7 +177,7 @@ public class JoinLeaveEvent implements Listener {
         String ip = ChatColor.translateAlternateColorCodes('&', "&4&lmc.redblock6.com");
 
         //check if the player has joined before
-        if (!p.hasPlayedBefore() || !mysql.playerExistsGlobal(p.getUniqueId())) {
+        if (!p.hasPlayedBefore()) {
             /*
             j.set(p.getUniqueId() + "Coins", String.valueOf(Integer.parseInt("0")));
             j.set(p.getUniqueId() + "Exp", String.valueOf(Integer.parseInt("0")));

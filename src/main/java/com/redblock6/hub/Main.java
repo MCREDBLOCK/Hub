@@ -62,7 +62,7 @@ public class Main extends JavaPlugin {
 
         Register.registerEvents();
 
-        pool = new JedisPool("192.168.1.219", Integer.parseInt("6379"));
+        pool = new JedisPool("192.168.1.222", Integer.parseInt("6379"));
         loadConfigs();
 
         mysqlSetup();
