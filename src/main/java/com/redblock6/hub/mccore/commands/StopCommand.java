@@ -2,6 +2,7 @@ package com.redblock6.hub.mccore.commands;
 
 import com.redblock6.hub.Main;
 import com.redblock6.hub.mccore.events.JoinLeaveEvent;
+import com.redblock6.hub.mccore.functions.CreateGameMenu;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.Bukkit;
@@ -15,6 +16,12 @@ public class StopCommand implements CommandExecutor, Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
             if (command.getName().equalsIgnoreCase("stop")) {
+                if (!sender.hasPermission("redblock.stopthedangserver")) {
+                    sender.sendMessage(CreateGameMenu.translate("&4&l> &fYou don't have permission to do this."));
+
+                    return true;
+                }
+
                 JoinLeaveEvent.npcArrayList.forEach(NPC::despawn);
                 JoinLeaveEvent.npcArrayList.forEach(NPC::destroy);
                 for (NPC npc : JoinLeaveEvent.npcArrayList) {

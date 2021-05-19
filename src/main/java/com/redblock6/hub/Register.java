@@ -1,9 +1,6 @@
 package com.redblock6.hub;
 
-import com.redblock6.hub.mccore.commands.GameMenuCommand;
-import com.redblock6.hub.mccore.commands.Gamemode;
-import com.redblock6.hub.mccore.commands.StopCommand;
-import com.redblock6.hub.mccore.commands.TutorialCommaned;
+import com.redblock6.hub.mccore.commands.*;
 import com.redblock6.hub.mccore.events.*;
 import com.redblock6.hub.mccore.functions.Tutorial;
 import de.slikey.effectlib.EffectLib;
@@ -42,6 +39,7 @@ public class Register {
         pl.getCommand("deathrun").setExecutor(new GameMenuCommand());
         pl.getCommand("tutorial").setExecutor(new TutorialCommaned());
         pl.getCommand("stop").setExecutor(new StopCommand());
+        pl.getCommand("warnreboot").setExecutor(new WarnReboot());
     }
 
     public static EffectManager getEffectManager() {

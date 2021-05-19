@@ -61,7 +61,7 @@ public class MySQLSetterGetter {
 
                 insert.executeUpdate();
             } if (!playerExistsKit(uuid)) {
-                PreparedStatement insert = pl.getConnection().prepareStatement("INSERT INTO " + pl.kitpvp_table + " (UUID,NAME,KITLEVEL,KITEXP,KITEXPMAX,KITCOINS,KITKILLS,KITDEATHS,NPCEVENTS) VALUES (?,?,?,?,?,?,?,?,?)");
+                PreparedStatement insert = pl.getConnection().prepareStatement("INSERT INTO " + pl.kitpvp_table + " (UUID,NAME,KITLEVEL,KITEXP,KITEXPMAX,KITCOINS,KITKILLS,KITDEATHS,NPCEVENTS,BBB) VALUES (?,?,?,?,?,?,?,?,?,?)");
                 insert.setString(1, uuid.toString());
                 insert.setString(2, p.getName());
                 insert.setInt(3, 1);
@@ -71,6 +71,7 @@ public class MySQLSetterGetter {
                 insert.setInt(7, 0);
                 insert.setInt(8, 0);
                 insert.setBoolean(9, false);
+                insert.setBoolean(10, false);
 
                 insert.executeUpdate();
             }
@@ -281,6 +282,19 @@ public class MySQLSetterGetter {
 
     }
 
+    public void setKitEXP(UUID uuid, int amount) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("UPDATE " + pl.kitpvp_table + " SET KITEXP=? WHERE UUID=?");
+            statement.setInt(1, amount);
+            statement.setString(2, uuid.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void resetKitEXP(UUID uuid) {
         try {
             PreparedStatement statement = pl.getConnection()
@@ -440,5 +454,47 @@ public class MySQLSetterGetter {
         }
 
         return null;
+    }
+
+    public void updateNpcEvents(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("UPDATE " + pl.kitpvp_table + " SET NPCEVENTS=? WHERE UUID=?");
+            statement.setBoolean(1, true);
+            statement.setString(2, uuid.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Boolean getBBB(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("SELECT * FROM " + pl.kitpvp_table + " WHERE UUID=?");
+            statement.setString(1, uuid.toString());
+            results = statement.executeQuery();
+            results.next();
+
+            return results.getBoolean("BBB");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updateBBB(UUID uuid) {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("UPDATE " + pl.kitpvp_table + " SET BBB=? WHERE UUID=?");
+            statement.setBoolean(1, true);
+            statement.setString(2, uuid.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

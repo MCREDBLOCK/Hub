@@ -45,14 +45,34 @@ public class InvClickEvent implements Listener {
             if (item.getItemMeta().getDisplayName().equals(format("&2&lKITPVP-1"))) {
                 ServerConnector.sendServer(p, "KITPVP-1");
                 e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-1"))) {
+                CreateGameMenu.newInventory(p, "KitPvP");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
+                e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&2&lKITPVP-2"))) {
                 ServerConnector.sendServer(p, "KITPVP-2");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-2"))) {
+                CreateGameMenu.newInventory(p, "KitPvP");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&2&lKITPVP-3"))) {
                 ServerConnector.sendServer(p, "KITPVP-3");
                 e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-3"))) {
+                CreateGameMenu.newInventory(p, "KitPvP");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
+                e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&2&lKITPVP-4"))) {
                 ServerConnector.sendServer(p, "KITPVP-4");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-4"))) {
+                CreateGameMenu.newInventory(p, "KitPvP");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lBACK"))) {
                 CreateGameMenu.newInventory(p, "GameMenu");
