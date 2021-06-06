@@ -27,7 +27,7 @@ public class Main extends JavaPlugin {
     public EffectManager em = new EffectManager(this);
 
     public void mysqlSetup() {
-        host = "192.168.1.252";
+        host = "192.168.1.223";
         port = 3306;
         username = "mc";
         database = "mc_user";
