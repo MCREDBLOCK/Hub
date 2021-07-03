@@ -32,7 +32,7 @@ public class GiveCoinsXP {
                 public void run() {
                     if (coinsgiven == amount || coinsgiven > amount) {
                         cancel();
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 2);
                         mysql.updateDust(p.getUniqueId(), amount);
                         p.sendMessage(CreateGameMenu.translate("&5&l> &fYou now have &d" + mysql.getDust(p.getUniqueId()) + " Magic Dust"));
 
@@ -44,7 +44,7 @@ public class GiveCoinsXP {
                         coinsgiven++;
                         currentcoins = mysql.getDust(p.getUniqueId());
                         p.sendTitle(CreateGameMenu.translate("&5&l★ &d" + (amount - coinsgiven) + " &5&l★"), CreateGameMenu.translate("&fYou now have &d" + (currentcoins + coinsgiven) + " Magic Dust"), 0, 20, 0);
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                     }
                 }
             }.runTaskTimerAsynchronously(plugin, 40, ticks);
@@ -75,7 +75,7 @@ public class GiveCoinsXP {
                     if (expgiven == amount) {
                         cancel();
                         mysql.updateEXP(p.getUniqueId(), amount);
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 100, 2);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASEDRUM, 100, 2);
                         p.sendMessage(CreateGameMenu.translate("&4&l> &fYou now have &c" + mysql.getEXP(p.getUniqueId()) + "&7/&c" + mysql.getEXPMax(p.getUniqueId()) + " &fexperience."));
 
                         p.sendTitle(CreateGameMenu.translate("&4&l⬞ &c0 &4&l⬞"), CreateGameMenu.translate((currentexp + expgiven) + "&7/&c" + mysql.getEXPMax(p.getUniqueId())), 0, 40, 10);
@@ -88,7 +88,7 @@ public class GiveCoinsXP {
                         expgiven++;
                         currentcoins = mysql.getDust(p.getUniqueId());
                         p.sendTitle(CreateGameMenu.translate("&4&l⬝ &c" + (amount - expgiven) + " &4&l⬝"), CreateGameMenu.translate((currentexp + expgiven) + "&7/&c" + mysql.getEXPMax(p.getUniqueId())), 0, 20, 0);
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 100, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASEDRUM, 100, 1);
                         // j.incrBy(p.getUniqueId() + "Exp", 1);
                         if (mysql.getEXP(p.getUniqueId()) >= (mysql.getEXPMax(p.getUniqueId()) - 1)) {
                             levelUp(p);
@@ -124,8 +124,8 @@ public class GiveCoinsXP {
                 public void run() {
                     if (coinsgiven == amountcoins && expgiven == amountexp) {
                         cancel();
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 2);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 2);
                         mysql.updateDust(p.getUniqueId(), amountcoins);
                         mysql.updateEXP(p.getUniqueId(), amountexp);
                         p.sendMessage(CreateGameMenu.translate("&4&l> &fYou now have &d" + mysql.getDust(p.getUniqueId()) + " Magic Dust &fand &c" + mysql.getEXP(p.getUniqueId()) + "&7&l/&c" + mysql.getEXPMax(p.getUniqueId()) + " &fexperience."));
@@ -137,12 +137,12 @@ public class GiveCoinsXP {
                         if (coinsgiven != amountcoins) {
                             coinsgiven++;
                             // j.incrBy(p.getUniqueId() + "Coins", 1);
-                            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                         }
                         if (expgiven != amountexp) {
                             expgiven++;
                             // j.incrBy(p.getUniqueId() + "Exp", 1);
-                            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 100, 1);
+                            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASEDRUM, 100, 1);
                             if (mysql.getEXP(p.getUniqueId()) >= (mysql.getEXPMax(p.getUniqueId()) - 1)) {
                                 levelUp(p);
                                 coinsgiven -= 50;

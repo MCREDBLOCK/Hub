@@ -18,11 +18,11 @@ public class ServerConnector {
             doutputStream.writeUTF("Connect");
             doutputStream.writeUTF(server);
             p.sendPluginMessage(plugin, "BungeeCord", outputStream.toByteArray());
-            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 1);
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 1);
             // p.sendTitle(CreateGameMenu.translate("&2&lSENDING YOU TO " + server), CreateGameMenu.translate("&fWe're sending you to &a" + server.toUpperCase() + " &fas fast as possible."), 5, 80, 5);
         } catch (IOException e) {
             e.printStackTrace();
-            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
             p.sendTitle(CreateGameMenu.translate("&4&lERROR"), CreateGameMenu.translate("&fWe couldn't transfer you to &c" + server + " &fplease contact &cRedblock6#6091 &fon discord."), 5, 80, 5);
         }
     }

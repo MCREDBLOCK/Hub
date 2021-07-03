@@ -26,6 +26,7 @@ public class Register {
         pm.registerEvents(new InvClickEvent(), pl);
         pm.registerEvents(new MoveEvent(), pl);
         pm.registerEvents(new Regions(), pl);
+        pm.registerEvents(new BlockEvent(), pl);
 
         // Register commands
         pl.getCommand("gamemenu").setExecutor(new GameMenuCommand());
@@ -40,6 +41,8 @@ public class Register {
         pl.getCommand("tutorial").setExecutor(new TutorialCommaned());
         pl.getCommand("stop").setExecutor(new StopCommand());
         pl.getCommand("warnreboot").setExecutor(new WarnReboot());
+        pl.getCommand("ignorebuildwarnings").setExecutor(new BuilderModeCommand());
+        pl.getCommand("build").setExecutor(new BuilderModeCommand());
     }
 
     public static EffectManager getEffectManager() {

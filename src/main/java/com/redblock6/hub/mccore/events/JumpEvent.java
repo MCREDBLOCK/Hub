@@ -27,8 +27,8 @@ public class JumpEvent implements Listener {
                     player.getLocation().getZ(),
                     (float) -179.9, (float) -1.5);
 
-            player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_FLAP, 100, 1);
-            player.spawnParticle(Particle.ASH, player.getLocation(), 10);
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, 100, 1);
+            // player.spawnParticle(Particle.ASH, player.getLocation(), 10);
 
             Vector dir = player.getLocation().getDirection();
             player.setVelocity(dir.multiply(3));

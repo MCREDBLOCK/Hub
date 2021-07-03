@@ -4,6 +4,7 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import com.redblock6.hub.Main;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -37,7 +38,7 @@ public class Holograms {
         hologram.appendTextLine(CreateGameMenu.translate("&fOITQ Winstreak: &c" + j.get(p.getUniqueId() + "OITQWS")));
         hologram.appendTextLine(CreateGameMenu.translate("&fPKR Winstreak: &c" + j.get(p.getUniqueId() + "PKRWS")));
 
-        ItemStack item = new ItemStack(Material.RED_WOOL, 1);
+        ItemStack item = new ItemStack(Material.WOOL, 1, DyeColor.RED.getWoolData());
         hologram.appendItemLine(item);
         j.close();
 
@@ -56,19 +57,25 @@ public class Holograms {
                 gamehologram1.appendTextLine(CreateGameMenu.translate("&fKitPvP"));
                 gamehologram1.appendTextLine(CreateGameMenu.translate("&a" + ServerConnector.getPlayerCount("KITPVP") + " &2&lPLAYERS"));
 
-                ItemStack item = new ItemStack(Material.DIAMOND_SWORD, 1);
+                ItemStack item = new ItemStack(Material.IRON_SWORD, 1);
                 gamehologram1.appendItemLine(item);
-            } else if (!getMajorityOnline("KITPVP")) {
+            } else {
                 gamehologram1 = HologramsAPI.createHologram(plugin, loc);
                 VisibilityManager visibilityManager = gamehologram1.getVisibilityManager();
-
                 visibilityManager.setVisibleByDefault(true);
+                ItemStack item = new ItemStack(Material.WOOL, 1, DyeColor.RED.getWoolData());;
 
-                gamehologram1.appendTextLine(CreateGameMenu.translate("&4&lCLICK TO PLAY"));
-                gamehologram1.appendTextLine(CreateGameMenu.translate("&fKitPvP"));
-                gamehologram1.appendTextLine(CreateGameMenu.translate("&4&lMAJORITY OFFLINE"));
+                if (getServersOnline("KITPVP") == 0) {
+                    gamehologram1.appendTextLine(CreateGameMenu.translate("&4&lCLICK TO PLAY"));
+                    gamehologram1.appendTextLine(CreateGameMenu.translate("&fKitPvP"));
+                    gamehologram1.appendTextLine(CreateGameMenu.translate("&4&lOFFLINE"));
+                } else if (getServersOnline("KITPVP") == 1 || getServersOnline("KITPVP") == 2) {
+                    gamehologram1.appendTextLine(CreateGameMenu.translate("&a&lCLICK TO PLAY"));
+                    gamehologram1.appendTextLine(CreateGameMenu.translate("&fKitPvP"));
+                    gamehologram1.appendTextLine(CreateGameMenu.translate("&a&l" + ServerConnector.getPlayerCount("KITPVP") + " PLAYERS"));
+                    item = new ItemStack(Material.IRON_SWORD, 1);
+                }
 
-                ItemStack item = new ItemStack(Material.RED_WOOL, 1);
                 gamehologram1.appendItemLine(item);
             }
         } else if (type.equalsIgnoreCase("DR")) {
@@ -82,19 +89,25 @@ public class Holograms {
                 gamehologram2.appendTextLine(CreateGameMenu.translate("&fDeath Run"));
                 gamehologram2.appendTextLine(CreateGameMenu.translate("&a" + ServerConnector.getPlayerCount("DR") + " &2&lPLAYERS"));
 
-                ItemStack item = new ItemStack(Material.SKELETON_SKULL, 1);
+                ItemStack item = new ItemStack(Material.SKULL, 1);
                 gamehologram2.appendItemLine(item);
             } else if (!getMajorityOnline("DR")) {
                 gamehologram2 = HologramsAPI.createHologram(plugin, loc);
                 VisibilityManager visibilityManager = gamehologram2.getVisibilityManager();
-
                 visibilityManager.setVisibleByDefault(true);
+                ItemStack item = new ItemStack(Material.WOOL, 1, DyeColor.RED.getWoolData());
 
-                gamehologram2.appendTextLine(CreateGameMenu.translate("&4&lCLICK TO PLAY"));
-                gamehologram2.appendTextLine(CreateGameMenu.translate("&fDeath Run"));
-                gamehologram2.appendTextLine(CreateGameMenu.translate("&4&lMAJORITY OFFLINE"));
+                if (getServersOnline("DR") == 0) {
+                    gamehologram2.appendTextLine(CreateGameMenu.translate("&4&lCLICK TO PLAY"));
+                    gamehologram2.appendTextLine(CreateGameMenu.translate("&fDeath Run"));
+                    gamehologram2.appendTextLine(CreateGameMenu.translate("&4&lOFFLINE"));
+                } else if (getServersOnline("DR") == 1 || getServersOnline("DR") == 2) {
+                    gamehologram2.appendTextLine(CreateGameMenu.translate("&a&lCLICK TO PLAY"));
+                    gamehologram2.appendTextLine(CreateGameMenu.translate("&fDeath Run"));
+                    gamehologram2.appendTextLine(CreateGameMenu.translate("&a&l" + ServerConnector.getPlayerCount("DR") + " PLAYERS"));
+                    item = new ItemStack(Material.SKULL, 1);
+                }
 
-                ItemStack item = new ItemStack(Material.RED_WOOL, 1);
                 gamehologram2.appendItemLine(item);
             }
         } else if (type.equalsIgnoreCase("OITQ")) {
@@ -113,21 +126,26 @@ public class Holograms {
             } else if (!getMajorityOnline("OITQ")) {
                 gamehologram3 = HologramsAPI.createHologram(plugin, loc);
                 VisibilityManager visibilityManager = gamehologram3.getVisibilityManager();
-
                 visibilityManager.setVisibleByDefault(true);
+                ItemStack item = new ItemStack(Material.WOOL, 1, DyeColor.RED.getWoolData());
 
-                gamehologram3.appendTextLine(CreateGameMenu.translate("&4&lCLICK TO PLAY"));
-                gamehologram3.appendTextLine(CreateGameMenu.translate("&fOITQ"));
-                gamehologram3.appendTextLine(CreateGameMenu.translate("&4&lMAJORITY OFFLINE"));
+                if (getServersOnline("OITQ") == 0) {
+                    gamehologram3.appendTextLine(CreateGameMenu.translate("&4&lCLICK TO PLAY"));
+                    gamehologram3.appendTextLine(CreateGameMenu.translate("&fOITQ"));
+                    gamehologram3.appendTextLine(CreateGameMenu.translate("&4&lOFFLINE"));
+                } else if (getServersOnline("OITQ") == 1 || getServersOnline("OITQ") == 2) {
+                    gamehologram3.appendTextLine(CreateGameMenu.translate("&a&lCLICK TO PLAY"));
+                    gamehologram3.appendTextLine(CreateGameMenu.translate("&fOITQ"));
+                    gamehologram3.appendTextLine(CreateGameMenu.translate("&a&l" + ServerConnector.getPlayerCount("OITQ") + " &aPLAYERS"));
+                    item = new ItemStack(Material.BOW, 1);
+                }
 
-                ItemStack item = new ItemStack(Material.RED_WOOL, 1);
                 gamehologram3.appendItemLine(item);
             }
         } else if (type.equalsIgnoreCase("PKR")) {
             if (getMajorityOnline("PKR")) {
                 gamehologram4 = HologramsAPI.createHologram(plugin, loc);
                 VisibilityManager visibilityManager = gamehologram4.getVisibilityManager();
-
                 visibilityManager.setVisibleByDefault(true);
 
                 gamehologram4.appendTextLine(CreateGameMenu.translate("&2&lCLICK TO PLAY"));
@@ -139,14 +157,20 @@ public class Holograms {
             } else if (!getMajorityOnline("PKR")) {
                 gamehologram4 = HologramsAPI.createHologram(plugin, loc);
                 VisibilityManager visibilityManager = gamehologram4.getVisibilityManager();
-
                 visibilityManager.setVisibleByDefault(true);
+                ItemStack item = new ItemStack(Material.WOOL, 1, DyeColor.RED.getWoolData());
 
-                gamehologram4.appendTextLine(CreateGameMenu.translate("&4&lCLICK TO PLAY"));
-                gamehologram4.appendTextLine(CreateGameMenu.translate("&fParkour Run"));
-                gamehologram4.appendTextLine(CreateGameMenu.translate("&4&lMAJORITY OFFLINE"));
+                if (getServersOnline("PKR") == 0) {
+                    gamehologram4.appendTextLine(CreateGameMenu.translate("&4&lCLICK TO PLAY"));
+                    gamehologram4.appendTextLine(CreateGameMenu.translate("&fParkour Run"));
+                    gamehologram4.appendTextLine(CreateGameMenu.translate("&4&lOFFLINE"));
+                } else if (getServersOnline("PKR") == 1 || getServersOnline("PKR") == 2) {
+                    gamehologram4.appendTextLine(CreateGameMenu.translate("&a&lCLICK TO PLAY"));
+                    gamehologram4.appendTextLine(CreateGameMenu.translate("&fParkour Run"));
+                    gamehologram4.appendTextLine(CreateGameMenu.translate("&a&l" + ServerConnector.getPlayerCount("PKR") + " PLAYERS"));
+                    item = new ItemStack(Material.GOLD_BOOTS, 1);
+                }
 
-                ItemStack item = new ItemStack(Material.RED_WOOL, 1);
                 gamehologram4.appendItemLine(item);
             }
         }
@@ -168,6 +192,24 @@ public class Holograms {
 
         j.close();
         return online > 2;
+    }
+
+    public static int getServersOnline(String type) {
+        Jedis j = pool.getResource();
+        int online = 0;
+
+        if (j.get(type.toUpperCase() + "-1Status") != null && j.get(type.toUpperCase() + "-1Status").equals("ONLINE")) {
+            online++;
+        } if (j.get(type.toUpperCase() + "-2Status") != null && j.get(type.toUpperCase() + "-2Status").equals("ONLINE")) {
+            online++;
+        } if (j.get(type.toUpperCase() + "-3Status") != null && j.get(type.toUpperCase() + "-3Status").equals("ONLINE")) {
+            online++;
+        } if (j.get(type.toUpperCase() + "-4Status") != null && j.get(type.toUpperCase() + "-4Status").equals("ONLINE")) {
+            online++;
+        }
+
+        j.close();
+        return online;
     }
 
     public static void removeGameHolograms() {

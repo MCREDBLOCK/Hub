@@ -7,14 +7,14 @@ import com.redblock6.hub.Main;
 import com.redblock6.hub.mccore.functions.CreateGameMenu;
 import com.redblock6.hub.mccore.functions.MySQLSetterGetter;
 import com.redblock6.hub.mccore.functions.Parkour;
-import net.raidstone.wgevents.events.RegionEnteredEvent;
-import net.raidstone.wgevents.events.RegionLeftEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.Jedis;
@@ -29,6 +29,8 @@ public class Regions implements Listener {
     private static final MySQLSetterGetter mysql = new MySQLSetterGetter();
 
     private static Hologram holo;
+
+    /*
 
     @EventHandler
     public void tutorialRegionEnter(RegionEnteredEvent e) {
@@ -87,22 +89,21 @@ public class Regions implements Listener {
             }.runTaskLater(plugin, 5);
         }
     }
+     */
 
     @EventHandler
-    public void regionLeave(RegionLeftEvent e) {
+    public void regionLeave(PlayerMoveEvent e) {
         Player p = e.getPlayer();
         Parkour park = Parkour.getParkourStatus(p);
-        String regionname = e.getRegionName();
 
-        if (regionname.equalsIgnoreCase("parkour")) {
-            if (park.inParkour()) {
-                if (!(e.getPlayer().getLocation().getY() < 1)) {
-                    park.exitParkour();
-                }
+        if (park.inParkour()) {
+            if (!(e.getPlayer().getLocation().getZ() >= -50)) {
+                park.exitParkour();
             }
         }
     }
 
+    /*
     @EventHandler
     public void regionEnter(RegionEnteredEvent e) {
         Player p = e.getPlayer();
@@ -114,6 +115,17 @@ public class Regions implements Listener {
                 Location loc2 = new Location(plugin.getServer().getWorld("Hub"), 1379, 74, -42);
                 e.getPlayer().teleport(loc2);
             }
+        }
+    }
+
+     */
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e) {
+        Player p = e.getPlayer();
+        Parkour park = Parkour.getParkourStatus(p);
+        if (park.inParkour()) {
+            park.exitParkour();
         }
     }
 }

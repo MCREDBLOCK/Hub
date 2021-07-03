@@ -47,122 +47,122 @@ public class WarnReboot implements CommandExecutor {
                 if (secondsTilRestart == 15 * 60) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c15 minutes &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 10 * 60) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c10 minutes &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 5 * 60) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c5 minutes &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 4 * 60) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c4 minutes &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 3 * 60) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c3 minutes &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 2 * 60) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c2 minutes &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 1 * 60) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c1 minute &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                     secondsTilRestart = 60;
                 }
                 if (secondsTilRestart == 45) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c45 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 30) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c30 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 15) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c15 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 10) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c10 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 9) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c9 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 8) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c8 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 7) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c7 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 6) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c6 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 5) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c5 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 4) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c4 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 3) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c3 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
                     }
                 }
                 if (secondsTilRestart == 2) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c2 seconds &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 2);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 2);
                     }
                 }
                 if (secondsTilRestart == 1) {
                     Bukkit.getServer().broadcastMessage(CreateGameMenu.translate("&4&l> &c1 second &funtil server restart"));
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 2);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 2);
                     }
                 }
                 if (secondsTilRestart == 0) {

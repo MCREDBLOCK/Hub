@@ -8,6 +8,7 @@ import org.bukkit.scoreboard.*;
 import redis.clients.jedis.Jedis;
 
 import static com.redblock6.hub.Main.pool;
+import static com.redblock6.hub.mccore.functions.CreateGameMenu.translate;
 
 public class CreateScoreboard {
 
@@ -24,7 +25,7 @@ public class CreateScoreboard {
         Scoreboard b = Bukkit.getScoreboardManager().getNewScoreboard();
 
         String s1 = ChatColor.translateAlternateColorCodes('&', "&4&lHUB-" + plugin.getConfig().getInt("hub-identifier"));
-        Objective o = b.registerNewObjective("HUB", "dummy", s1);
+        Objective o = b.registerNewObjective("HUB", "dummy");
         o.setDisplaySlot(DisplaySlot.SIDEBAR);
         o.setDisplayName(s1);
 
@@ -39,15 +40,17 @@ public class CreateScoreboard {
         ipline.setScore(1);
 
         //blank
-        String blank2 = CreateGameMenu.translate("&4&l&c&m");
+        String blank2 = translate("&4&l&c&m");
         Score blankline2 = o.getScore(blank2);
         blankline2.setScore(2);
 
         //coins
         Team coins = b.registerNewTeam("c" + p.getName());
         coins.addEntry(ChatColor.YELLOW + "" + ChatColor.YELLOW);
-        String coinsline = ChatColor.translateAlternateColorCodes('&', "&5&lMAGIC DUST &d" + mysql.getDust(p.getUniqueId()));
-        coins.setPrefix(coinsline);
+        String coinsprefix = ChatColor.translateAlternateColorCodes('&', "&5&lMAGIC DUST");
+        String coinssuffix = ChatColor.translateAlternateColorCodes('&', " &d" + mysql.getDust(p.getUniqueId()));
+        coins.setPrefix(coinsprefix);
+        coins.setSuffix(coinssuffix);
         o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(3);
 
         //blank
@@ -58,15 +61,19 @@ public class CreateScoreboard {
         //exp
         Team exp = b.registerNewTeam("e" + p.getName());
         exp.addEntry(ChatColor.RED + "" + ChatColor.GRAY);
-        String expline = ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + mysql.getEXP(p.getUniqueId()) + "&7/&c" + mysql.getEXPMax(p.getUniqueId()));
-        exp.setPrefix(expline);
+        String expprefix = ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + mysql.getEXP(p.getUniqueId()));
+        String expsuffix = ChatColor.translateAlternateColorCodes('&', "&7/&c" + mysql.getEXPMax(p.getUniqueId()));
+        exp.setPrefix(expprefix);
+        exp.setSuffix(expsuffix);
         o.getScore(ChatColor.RED + "" + ChatColor.GRAY).setScore(5);
 
         //level
         Team level = b.registerNewTeam("l" + p.getName());
         level.addEntry(ChatColor.DARK_RED + "" + ChatColor.RED);
-        String levelline = ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL &c" + mysql.getLevel(p.getUniqueId()));
-        level.setPrefix(levelline);
+        String levelprefix = ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL");
+        String levelsuffix = ChatColor.translateAlternateColorCodes('&', " &c" + mysql.getLevel(p.getUniqueId()));
+        level.setPrefix(levelprefix);
+        level.setSuffix(levelsuffix);
         o.getScore(ChatColor.DARK_RED + "" + ChatColor.RED).setScore(6);
 
         //top line
@@ -84,7 +91,7 @@ public class CreateScoreboard {
         Scoreboard b = Bukkit.getScoreboardManager().getNewScoreboard();
 
         String s1 = ChatColor.translateAlternateColorCodes('&', "&6&lPARKOUR");
-        Objective o = b.registerNewObjective("PK", "dummy", s1);
+        Objective o = b.registerNewObjective("PK", "dummy");
         o.setDisplaySlot(DisplaySlot.SIDEBAR);
         o.setDisplayName(s1);
 
@@ -116,19 +123,21 @@ public class CreateScoreboard {
         o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(3);
 
         //blank
-        String blank2 = CreateGameMenu.translate("&4&l&c&m");
+        String blank2 = translate("&4&l&c&m");
         Score blankline2 = o.getScore(blank2);
         blankline2.setScore(5);
 
         //actual players playing with you
         Team aotherplayers = b.registerNewTeam("playingwithyou");
         aotherplayers.addEntry(ChatColor.YELLOW + "" + ChatColor.WHITE);
-        String aotherplayersline = ChatColor.translateAlternateColorCodes('&', "&e" + Parkour.getOtherPlayers() + " &fother players");
+        String aotherplayersline = ChatColor.translateAlternateColorCodes('&', "&e" + Parkour.getOtherPlayers());
+        String aotherplayerssuffix = ChatColor.translateAlternateColorCodes('&', " &fother players");
         aotherplayers.setPrefix(aotherplayersline);
+        aotherplayers.setSuffix(aotherplayerssuffix);
         o.getScore(ChatColor.YELLOW + "" + ChatColor.WHITE).setScore(6);
 
         //other players playing with you
-        String otherplayers = ChatColor.translateAlternateColorCodes('&', "&6&lYOU'RE PLAYING &e&lPK &6&lWITH");
+        String otherplayers = ChatColor.translateAlternateColorCodes('&', "&fPlaying with:");
         Score otherplayersline = o.getScore(otherplayers);
         otherplayersline.setScore(7);
 
@@ -148,21 +157,30 @@ public class CreateScoreboard {
                 Parkour park = Parkour.getParkourStatus(p);
                 if (!park.inParkour()) {
                     //get the pool
-                    Jedis j = pool.getResource();
+                    // Jedis j = pool.getResource();
 
                     Scoreboard b = p.getScoreboard();
-                    String s1 = ChatColor.translateAlternateColorCodes('&', "&4&lHUB-" + plugin.getConfig().getInt("hub-identifier"));
+                    // String s1 = ChatColor.translateAlternateColorCodes('&', "&4&lHUB-" + plugin.getConfig().getInt("hub-identifier"));
 
-                    b.getTeam("c" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&5&lMAGIC DUST &d" + mysql.getDust(p.getUniqueId())));
+                    Team dust = b.getTeam("c" + p.getName());
+                    Team xp = b.getTeam("e" + p.getName());
+                    Team level = b.getTeam("l" + p.getName());
+
+                    dust.setPrefix(ChatColor.translateAlternateColorCodes('&', "&5&lMAGIC DUST"));
+                    dust.setSuffix(ChatColor.translateAlternateColorCodes('&', " &d" + mysql.getDust(p.getUniqueId())));
                     o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(3);
 
-                    b.getTeam("e" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + mysql.getEXP(p.getUniqueId()) + "&7/&c" + mysql.getEXPMax(p.getUniqueId())));
+                    String expprefix = ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + mysql.getEXP(p.getUniqueId()));
+                    String expsuffix = ChatColor.translateAlternateColorCodes('&', "&7/&c" + mysql.getEXPMax(p.getUniqueId()));
+                    xp.setPrefix(expprefix);
+                    xp.setPrefix(expsuffix);
                     o.getScore(ChatColor.RED + "" + ChatColor.GRAY).setScore(5);
 
-                    b.getTeam("l" + p.getName()).setPrefix(ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL &c" + mysql.getLevel(p.getUniqueId())));
+                    level.setPrefix(translate("&4&lLEVEL"));
+                    level.setSuffix(translate(" &c" + mysql.getLevel(p.getUniqueId())));
                     o.getScore(ChatColor.DARK_RED + "" + ChatColor.RED).setScore(6);
 
-                    j.close();
+                    // j.close();
                 }
             } else if (setscoreboard.equals(true)) {
                 p.setScoreboard(new CreateScoreboard().normal(p));
@@ -172,10 +190,11 @@ public class CreateScoreboard {
                 Parkour park = Parkour.getParkourStatus(p);
 
                 Scoreboard b = p.getScoreboard();
-                String s1 = CreateGameMenu.translate("&6&lPARKOUR");
+                String s1 = translate("&6&lPARKOUR");
                 b.getTeam("time").setPrefix(ChatColor.translateAlternateColorCodes('&', "&e" + park.getTime()));
                 o.getScore(ChatColor.YELLOW + "" + ChatColor.YELLOW).setScore(4);
-                b.getTeam("playingwithyou").setPrefix(ChatColor.translateAlternateColorCodes('&', "&e" + (Parkour.getOtherPlayers().size() - 1) + " &fother players"));
+                b.getTeam("playingwithyou").setPrefix(ChatColor.translateAlternateColorCodes('&', "&e" + (Parkour.getOtherPlayers().size() - 1)));
+                b.getTeam("playingwithyou").setSuffix(ChatColor.translateAlternateColorCodes('&', " &fother players"));
                 o.getScore(ChatColor.YELLOW + "" + ChatColor.WHITE).setScore(6);
             } else if (setscoreboard.equals(true)) {
                 p.setScoreboard(new CreateScoreboard().parkour());

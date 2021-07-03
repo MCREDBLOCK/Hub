@@ -5,6 +5,7 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import com.redblock6.hub.Main;
 import com.redblock6.hub.Register;
+import com.redblock6.hub.mccore.extensions.McPlayer;
 import com.redblock6.hub.mccore.functions.*;
 import com.redblock6.hub.mccore.functions.NMS.StatsNPC;
 import de.slikey.effectlib.Effect;
@@ -14,14 +15,14 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.NPCLeftClickEvent;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
-import net.minecraft.server.v1_16_R3.EntityPlayer;
-import net.minecraft.server.v1_16_R3.PacketPlayOutAnimation;
-import net.minecraft.server.v1_16_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_16_R3.PlayerConnection;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.PacketPlayOutAnimation;
+import net.minecraft.server.v1_12_R1.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_12_R1.PlayerConnection;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftVillager;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftVillager;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.redblock6.hub.Main.pool;
+import static com.redblock6.hub.mccore.functions.CreateGameMenu.translate;
 
 public class JoinLeaveEvent implements Listener {
     private static final Main plugin = Main.getInstance();
@@ -115,7 +117,7 @@ public class JoinLeaveEvent implements Listener {
         // flight
         p.setAllowFlight(true);
         p.setFlying(false);
-        p.setInvisible(false);
+        // p.setInvisible(false);
 
         mysql.createPlayer(p.getUniqueId(), p);
 
@@ -126,7 +128,7 @@ public class JoinLeaveEvent implements Listener {
         item.setItemMeta(meta);
 
         //create the hub selector itme
-        ItemStack item2 = new ItemStack(Material.CLOCK);
+        ItemStack item2 = new ItemStack(Material.WATCH);
         ItemMeta meta2 = item2.getItemMeta();
         meta2.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lHUB SELECTOR"));
         item2.setItemMeta(meta2);
@@ -147,24 +149,29 @@ public class JoinLeaveEvent implements Listener {
         //get that amazing location :D
         Location statsloc = new Location(Bukkit.getWorld("Hub"), (1364 + 0.5), 73, (-47 + 0.5), (float) -179.4, (float) 0.7);
         //create that npc
+        /*
         npc = StatsNPC.addNpcPacket(StatsNPC.createPlayerNpc(Bukkit.getWorld("Hub"), statsloc, p.getName(), p, ""), p, false);
         npc.setNoGravity(true);
         npc.setInvulnerable(true);
         npc.setCustomNameVisible(false);
 
+         */
+
         //create a scoreboard for the player
         CreateScoreboard.setScoreboard(p, "Normal", true);
 
         //create a bossbar for the player
+        /*
         Bar.createBossBar();
         if (!bar.getBar().getPlayers().contains(e.getPlayer())) bar.addPlayer(p);
+         */
 
         //get a world and teleport the player to it
         Location loc = new Location(plugin.getServer().getWorld("Hub"), plugin.getServer().getWorld("Hub").getSpawnLocation().getX() + 0.5, plugin.getServer().getWorld("Hub").getSpawnLocation().getY() + 0.5, plugin.getServer().getWorld("Hub").getSpawnLocation().getZ() + 0.5, (float) -179, (float) -1);
         p.teleport(loc);
 
         //send the player a title
-        p.sendTitle(ChatColor.translateAlternateColorCodes('&', "&4&lHUB"), ChatColor.translateAlternateColorCodes('&', "&fmc.redblock6.com"), 5, 20, 5);
+        McPlayer.sendTitle(p, translate( "&4&lHUB"), ChatColor.translateAlternateColorCodes('&', "&fmc.redblock6.com"), 5, 20, 5);
 
         //set message strings
         String line = ChatColor.translateAlternateColorCodes('&', "&4&m---------------------------------");
@@ -194,11 +201,11 @@ public class JoinLeaveEvent implements Listener {
             player.createPlayer(p.getUniqueId(), p);
 
             CreateScoreboard.setScoreboard(p, "Normal", false);
-            String achline = CreateGameMenu.translate("&2&m---------------------------------");
-            String completed = CreateGameMenu.translate("&2&lACHEIVEMENT COMPLETED &a&lOUR ADVENTURE BEGINS");
-            String coinplus = CreateGameMenu.translate("&5&l+ &d100 Magic Dust");
-            String tutorial = CreateGameMenu.translate("&fUse the &aTutorial NPC&f, or click the");
-            String tutorial2 = CreateGameMenu.translate("&f&aGame Menu &fto get started");
+            String achline = translate("&2&m---------------------------------");
+            String completed = translate("&2&lACHEIVEMENT COMPLETED &a&lOUR ADVENTURE BEGINS");
+            String coinplus = translate("&5&l+ &d100 Magic Dust");
+            String tutorial = translate("&fUse the &aTutorial NPC&f, or click the");
+            String tutorial2 = translate("&f&aGame Menu &fto get started");
 
             //send the messages
             p.sendMessage(achline);
@@ -220,7 +227,7 @@ public class JoinLeaveEvent implements Listener {
                 @Override
                 public void run() {
                     Parkour.otherSound(p);
-                    p.sendTitle(CreateGameMenu.translate("&2&l✔ ACHEIVEMENT COMPLETED ✔"), CreateGameMenu.translate("&aOur Adventure Begins"), 10, 20, 0);
+                    McPlayer.sendTitle(p, translate("&2&l✔"), translate("&aOur Adventure Begins"), 10, 20, 0);
                     GiveCoinsXP.GivePlayerDust(p, 100);
                 }
             }.runTaskLaterAsynchronously(plugin, 20);
@@ -241,7 +248,7 @@ public class JoinLeaveEvent implements Listener {
                     p.sendMessage(ip);
                     p.sendMessage(line);
                     //play a sound
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 0);
+                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 0);
                 }
             }.runTaskLaterAsynchronously(plugin, 360);
         } else {
@@ -258,12 +265,12 @@ public class JoinLeaveEvent implements Listener {
             p.sendMessage(line);
 
             //and those holograms
-            Location hololoc = new Location(p.getWorld(), (1364 + 0.5), 76.7, (-47 + 0.5));
+            Location hololoc = new Location(p.getWorld(), 1396 + 0.5, 76, -64 + 0.5);
             Hologram holo = Holograms.createStatsHologram(hololoc, p);
             playerStatsHologram.put(p, holo);
 
             //play a sound
-            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 0);
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 0);
         }
 
         if (mysql.getTutorial(p.getUniqueId()).equals("Incomplete") && !(playerHologram.containsValue(p)) && !(playerTutorialNPC.containsValue(p))) {
@@ -275,9 +282,9 @@ public class JoinLeaveEvent implements Listener {
             visibilityManager.setVisibleByDefault(false);
             visibilityManager.showTo(p);
 
-            holo.appendTextLine(CreateGameMenu.translate("&4&lCLICK TO PLAY"));
-            holo.appendTextLine(CreateGameMenu.translate("&fTutorial"));
-            ItemStack holoitem = new ItemStack(Material.RED_WOOL);
+            holo.appendTextLine(translate("&4&lCLICK TO PLAY"));
+            holo.appendTextLine(translate("&fTour"));
+            ItemStack holoitem = new ItemStack(Material.WOOL, 1, DyeColor.RED.getWoolData());
             holo.appendItemLine(holoitem);
             playerHologram.put(p, holo);
             holograms.add(holo);
@@ -324,9 +331,9 @@ public class JoinLeaveEvent implements Listener {
             visibilityManager.setVisibleByDefault(false);
             visibilityManager.showTo(p);
 
-            holo.appendTextLine(CreateGameMenu.translate("&4&lCLICK TO VIEW"));
-            holo.appendTextLine(CreateGameMenu.translate("&fAchievements"));
-            ItemStack holoitem = new ItemStack(Material.RED_WOOL);
+            holo.appendTextLine(translate("&4&lCLICK TO VIEW"));
+            holo.appendTextLine(translate("&fAchievements"));
+            ItemStack holoitem = new ItemStack(Material.WOOL, 1, DyeColor.RED.getWoolData());
             holo.appendItemLine(holoitem);
             JoinLeaveEvent.playerHologram.put(p, holo);
             JoinLeaveEvent.holograms.add(holo);
@@ -372,7 +379,7 @@ public class JoinLeaveEvent implements Listener {
             park.exitParkour();
         }
 
-        StatsNPC.removeNpcPacket(npc, e.getPlayer());
+        // StatsNPC.removeNpcPacket(npc, e.getPlayer());
         if (playerTutorialNPC.get(e.getPlayer()) != null) {
             playerTutorialNPC.get(e.getPlayer()).destroy();
         }

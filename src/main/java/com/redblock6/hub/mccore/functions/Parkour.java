@@ -1,6 +1,7 @@
 package com.redblock6.hub.mccore.functions;
 
 import com.redblock6.hub.Main;
+import com.redblock6.hub.mccore.extensions.McPlayer;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -10,6 +11,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static com.redblock6.hub.mccore.functions.CreateGameMenu.translate;
 
 public class Parkour {
     private static final Main plugin = Main.getInstance();
@@ -37,29 +40,32 @@ public class Parkour {
     public void enterParkour() {
         if (!(p.getGameMode().equals(GameMode.CREATIVE)) && !(p.getGameMode().equals(GameMode.SPECTATOR))) {
             CreateScoreboard.setScoreboard(p, "Parkour", true);
-            p.sendMessage(CreateGameMenu.translate("&6&l> &fYou joined the parkour"));
+            p.sendMessage(translate("&6&l> &fYou joined the parkour"));
             time = 0;
             inParkour = true;
-            p.sendTitle(CreateGameMenu.translate("&6&lPARKOUR"), ChatColor.WHITE + "You joined the parkour", 10, 20, 10);
+            McPlayer.sendTitle(p, translate("&6&lPARKOUR"), ChatColor.WHITE + "You joined the parkour", 10, 20, 10);
+            for (Player p : getOtherPlayers()) {
+                p.sendMessage(translate("&6&l> &e" + p.getName() + " &fjoined the parkour"));
+            }
             Fireworks.spawnFirework1(p.getLocation());
             otherSound(p);
             p.setFlying(false);
             p.setAllowFlight(false);
             p.getInventory().clear();
 
-            ItemStack carpet = new ItemStack(Material.RED_CARPET, 1);
+            ItemStack carpet = new ItemStack(Material.CARPET, 1, DyeColor.RED.getWoolData());
 
             ItemMeta meta = carpet.getItemMeta();
-            meta.setDisplayName(CreateGameMenu.translate("&4&lBACK TO START"));
+            meta.setDisplayName(translate("&4&lBACK TO START"));
             carpet.setItemMeta(meta);
             NBTItem nbti = new NBTItem(carpet);
             nbti.setString("item", "start");
             nbti.applyNBT(carpet);
 
-            ItemStack bed = new ItemStack(Material.RED_BED, 1);
+            ItemStack bed = new ItemStack(Material.BED, 1);
 
             ItemMeta meta2 = bed.getItemMeta();
-            meta2.setDisplayName(CreateGameMenu.translate("&4&lEXIT"));
+            meta2.setDisplayName(translate("&4&lEXIT"));
             bed.setItemMeta(meta2);
             nbti = new NBTItem(bed);
             nbti.setString("item", "exit");
@@ -69,7 +75,7 @@ public class Parkour {
             p.getInventory().setItem(0, carpet);
 
             //make sure they can be collided with
-            p.setCollidable(true);
+            // p.setCollidable(true);
 
             playersInParkour.add(p);
             inParkour = true;
@@ -96,7 +102,7 @@ public class Parkour {
 
     public void exitParkour() {
         CreateScoreboard.setScoreboard(p, "Normal", true);
-        p.sendMessage(CreateGameMenu.translate("&6&l> &fYou left the parkour"));
+        p.sendMessage(translate("&6&l> &fYou left the parkour"));
         inParkour = false;
         playersInParkour.remove(p);
 
@@ -115,18 +121,19 @@ public class Parkour {
     }
 
     public void finishParkour() {
-        p.sendTitle(CreateGameMenu.translate("&b&lPARKOUR"), ChatColor.WHITE + "You finished the parkour", 10, 20, 10);
+        McPlayer.sendTitle(p, translate("&b&lPARKOUR"), ChatColor.WHITE + "You finished the parkour", 10, 20, 10);
         otherSound(p);
-        p.sendMessage(CreateGameMenu.translate("&b&l> &fYou finished the parkour in &b" +  getTime() + " seconds"));
+        p.sendMessage(translate("&b&l> &fYou finished the parkour in &b" +  getTime() + " seconds"));
         Fireworks.spawnFirework2(p.getLocation());
         Location loc = new Location(plugin.getServer().getWorld("Hub"), plugin.getServer().getWorld("Hub").getSpawnLocation().getX(), plugin.getServer().getWorld("Hub").getSpawnLocation().getY(), plugin.getServer().getWorld("Hub").getSpawnLocation().getZ(), (float) -179.9, (float) -1.5);
         p.teleport(loc);
+        for (Player p : getOtherPlayers()) {
+            p.sendMessage(translate("&b&l> &b" + p.getName() + " &ffinished the parkour in &b" + getTime() + " seconds"));
+        }
         playersInParkour.remove(p);
         CreateScoreboard.setScoreboard(p, "Normal", true);
         inParkour = false;
     }
-
-    //idk ig
 
     public int getTime() {
         return time;
@@ -146,11 +153,11 @@ public class Parkour {
     }
 
     public static void otherSound(Player p) {
-        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 1);
+        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 1);
         new BukkitRunnable() {
             @Override
             public void run() {
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 2);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 2);
             }
         }.runTaskLaterAsynchronously(plugin, 2);
     }

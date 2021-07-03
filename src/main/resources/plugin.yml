@@ -1,7 +1,7 @@
 name: Hub
 version: ${project.version}
 main: com.redblock6.hub.Main
-api-version: 1.16
+api-version: 1.12
 authors: [Redblock6]
 description: Hub plugin for mc.redblock6.com
 website: mc.redblock6.com
@@ -34,6 +34,10 @@ commands:
     description: Sends the player into tutorial mode
   warnreboot:
     description: Warn players of a reboot
+  build:
+    description: Build mode
+  ignorebuildwarnings:
+    description: Build mode
 
 permissions:
   redblock.gamemode.creative:
@@ -48,3 +52,5 @@ permissions:
     description: Warn players of a reboot
   redblock.stopthedangserver:
     description: Stop the server the right way
+  redblock.builder:
+    description: Builder permissions

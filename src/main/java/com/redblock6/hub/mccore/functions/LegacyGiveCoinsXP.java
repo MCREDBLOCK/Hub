@@ -34,7 +34,7 @@ public class LegacyGiveCoinsXP {
                 public void run() {
                     if (coinsgiven == amount) {
                         cancel();
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 2);
                         j.set(p.getUniqueId() + "Coins", String.valueOf(currentcoins + amount));
                         p.sendMessage(CreateGameMenu.translate("&5&l> &fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust"));
                         j.close();
@@ -44,7 +44,7 @@ public class LegacyGiveCoinsXP {
                     } else {
                         coinsgiven++;
                         p.sendTitle(CreateGameMenu.translate("&5&l★ &d" + (amount - coinsgiven) + " &5&l★"), CreateGameMenu.translate("&fYou now have &d" + (currentcoins + coinsgiven) + " Magic Dust"), 0, 20, 0);
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                     }
                 }
             }.runTaskTimerAsynchronously(plugin, 40, ticks);
@@ -77,7 +77,7 @@ public class LegacyGiveCoinsXP {
                 public void run() {
                     if (expgiven == amount) {
                         cancel();
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 100, 2);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASEDRUM, 100, 2);
                         j.set(p.getUniqueId() + "Exp", String.valueOf((currentexp + amount)));
                         p.sendMessage(CreateGameMenu.translate("&4&l> &fYou now have &c" + j.get(p.getUniqueId() + "Exp") + "&7/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."));
                         j.close();
@@ -87,7 +87,7 @@ public class LegacyGiveCoinsXP {
                     } else {
                         expgiven++;
                         p.sendTitle(CreateGameMenu.translate("&4&l⬝ &c" + (amount - expgiven) + " &4&l⬝"), CreateGameMenu.translate((currentexp + expgiven) + "&7/&c" + j.get(p.getUniqueId() + "ExpMax")), 0, 20, 0);
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 100, 1);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASEDRUM, 100, 1);
                         // j.incrBy(p.getUniqueId() + "Exp", 1);
                     }
                 }
@@ -124,8 +124,8 @@ public class LegacyGiveCoinsXP {
                 public void run() {
                     if (coinsgiven == amountcoins && expgiven == amountexp) {
                         cancel();
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 2);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 2);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 2);
                         j.set(p.getUniqueId() + "Coins", String.valueOf((currentcoins + amountcoins)));
                         j.set(p.getUniqueId() + "Exp", String.valueOf((currentexp + amountexp)));
                         p.sendMessage(CreateGameMenu.translate("&4&l> &fYou now have &d" + j.get(p.getUniqueId() + "Coins") + " Magic Dust &fand &c" + j.get(p.getUniqueId() + "Exp") + "&7&l/&c" + j.get(p.getUniqueId() + "ExpMax") + " &fexperience."));
@@ -138,12 +138,12 @@ public class LegacyGiveCoinsXP {
                         if (coinsgiven != amountcoins) {
                             coinsgiven++;
                             // j.incrBy(p.getUniqueId() + "Coins", 1);
-                            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                         }
                         if (expgiven != amountexp) {
                             expgiven++;
                             // j.incrBy(p.getUniqueId() + "Exp", 1);
-                            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 100, 1);
+                            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASEDRUM, 100, 1);
                             if (Integer.parseInt(j.get(p.getUniqueId() + "Exp")) >= (Integer.parseInt(j.get(p.getUniqueId() + "ExpMax")) - 1)) {
                                 levelUp(p);
                                 coinsgiven -= 50;

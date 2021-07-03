@@ -6,14 +6,14 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.redblock6.hub.Main;
 import com.redblock6.hub.mccore.functions.CreateGameMenu;
-import net.minecraft.server.v1_16_R3.*;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_16_R3.scoreboard.CraftScoreboard;
+import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.scoreboard.CraftScoreboard;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -36,7 +36,7 @@ public class StatsNPC implements Listener {
 
     public static EntityPlayer createPlayerNpc(World world, Location location, String skin, Player p, String npcname) {
         MinecraftServer nmsServer = ((CraftServer) Bukkit.getServer()).getServer();
-        net.minecraft.server.v1_16_R3.WorldServer nmsWorld = ((CraftWorld)Bukkit.getWorld(world.getName())).getHandle();
+        net.minecraft.server.v1_12_R1.WorldServer nmsWorld = ((CraftWorld)Bukkit.getWorld(world.getName())).getHandle();
         GameProfile gameProfile = new GameProfile(UUID.randomUUID(), npcname); // Change "playername" to the name the NPC should have, max 16 characters.
         EntityPlayer npc = new EntityPlayer(nmsServer, nmsWorld, gameProfile, new PlayerInteractManager(nmsWorld)); // This will be the EntityPlayer (NPC) we send with the sendNPCPacket method.
         npc.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());

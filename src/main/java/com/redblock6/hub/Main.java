@@ -90,14 +90,21 @@ public class Main extends JavaPlugin {
                 loc = new Location(getServer().getWorld("Hub"), (1381 + 0.5), (79 + 0.3), (-90 + 0.5));
                 Holograms.createGameHologram(loc, "PKR");
             }
-        }.runTaskTimer(this, 20, 3600);
+        }.runTaskTimer(this, 20, 1200);
 
         new BukkitRunnable() {
             @Override
             public void run() {
                 Holograms.removeGameHolograms();
             }
-        }.runTaskTimer(this, 10, 3600);
+        }.runTaskTimer(this, 10, 1200);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                WarnReboot.startCountdown(1);
+            }
+        }.runTaskLaterAsynchronously(this, 432000);
     }
 
     @Override

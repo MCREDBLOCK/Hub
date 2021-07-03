@@ -47,7 +47,7 @@ public class InvClickEvent implements Listener {
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-1"))) {
                 CreateGameMenu.newInventory(p, "KitPvP");
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                 p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&2&lKITPVP-2"))) {
@@ -55,7 +55,7 @@ public class InvClickEvent implements Listener {
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-2"))) {
                 CreateGameMenu.newInventory(p, "KitPvP");
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                 p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&2&lKITPVP-3"))) {
@@ -63,7 +63,7 @@ public class InvClickEvent implements Listener {
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-3"))) {
                 CreateGameMenu.newInventory(p, "KitPvP");
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                 p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&2&lKITPVP-4"))) {
@@ -71,7 +71,7 @@ public class InvClickEvent implements Listener {
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lKITPVP-4"))) {
                 CreateGameMenu.newInventory(p, "KitPvP");
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                 p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lBACK"))) {
@@ -159,38 +159,38 @@ public class InvClickEvent implements Listener {
             }
 
             if (item.getItemMeta().getDisplayName().equals(format("&4&lHUB-1"))) {
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                 p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline!"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&2&lHUB-1"))) {
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 1);
                 p.closeInventory();
                 ServerConnector.sendServer(p, "HUB-1");
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lHUB-2"))) {
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                 p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline!"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&2&lHUB-2"))) {
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 1);
                 p.closeInventory();
                 ServerConnector.sendServer(p, "HUB-2");
                 e.setCancelled(true);
             } if (item.getItemMeta().getDisplayName().equals(format("&4&lHUB-3"))) {
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                 p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline!"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&2&lHUB-3"))) {
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 1);
                 p.closeInventory();
                 ServerConnector.sendServer(p, "HUB-3");
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lHUB-4"))) {
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                 p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline!"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&2&lHUB-4"))) {
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 1);
                 p.closeInventory();
                 ServerConnector.sendServer(p, "HUB-4");
                 e.setCancelled(true);

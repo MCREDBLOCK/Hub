@@ -6,13 +6,15 @@ import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import com.redblock6.hub.Main;
 import com.redblock6.hub.mccore.events.JoinLeaveEvent;
 import com.redblock6.hub.mccore.events.MoveEvent;
+import com.redblock6.hub.mccore.extensions.McPlayer;
 import net.citizensnpcs.Citizens;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
-import net.minecraft.server.v1_16_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_16_R3.PlayerConnection;
+import net.minecraft.server.v1_12_R1.EnumParticle;
+import net.minecraft.server.v1_12_R1.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_12_R1.PlayerConnection;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -23,6 +25,7 @@ import redis.clients.jedis.Jedis;
 import java.util.ArrayList;
 
 import static com.redblock6.hub.Main.pool;
+import static com.redblock6.hub.mccore.functions.CreateGameMenu.translate;
 
 public class Tutorial implements Listener {
 
@@ -46,35 +49,35 @@ public class Tutorial implements Listener {
                     cancel();
                 }
                 if (timesran == 0) {
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 100, 1);
-                    p.sendTitle(CreateGameMenu.translate("&4&lWELCOME"), CreateGameMenu.translate("&fWe'll try to keep this tour quick so you can start playing."), 10, 80, 10);
+                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_HAT, 100, 1);
+                    McPlayer.sendTitle(p, translate("&4&lWELCOME!"), translate("&fWe'll try to keep this tour quick so you can start playing."), 10, 80, 10);
 
-                    p.sendMessage(CreateGameMenu.translate("&4&m---------------------------------"));
-                    p.sendMessage(CreateGameMenu.translate("&4&lWELCOME TO MCREDBLOCK!"));
+                    p.sendMessage(translate("&4&m---------------------------------"));
+                    p.sendMessage(translate("&4&lWELCOME TO MCREDBLOCK!"));
                     p.sendMessage("");
-                    p.sendMessage(CreateGameMenu.translate("&fWe will try and keep this tutorial"));
-                    p.sendMessage(CreateGameMenu.translate("&fso that you can collect your reward"));
-                    p.sendMessage(CreateGameMenu.translate("&fand get straight to gaming."));
-                    p.sendMessage(CreateGameMenu.translate("&4&m---------------------------------"));
+                    p.sendMessage(translate("&fWe'll try and keep this tour short"));
+                    p.sendMessage(translate("&fso that you can collect your reward"));
+                    p.sendMessage(translate("&fand get straight to playing."));
+                    p.sendMessage(translate("&4&m---------------------------------"));
 
                 } else if (timesran == 1) {
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 100, 1);
-                    p.sendTitle("", CreateGameMenu.translate("&4&lVARIETY OF GAMES &fWe have a wide range of games to choose from"), 10, 80, 10);
+                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_HAT, 100, 1);
+                    McPlayer.sendTitle(p, "&4&lSELECT A GAME", translate("&fUse the NPC's or the nether star in your inventory to select a game"), 10, 80, 10);
 
-                    p.sendMessage(CreateGameMenu.translate("&4&m---------------------------------"));
-                    p.sendMessage(CreateGameMenu.translate("&4&lVARIETY OF GAMES"));
+                    p.sendMessage(translate("&4&m---------------------------------"));
+                    p.sendMessage(translate("&4&lSELECT A GAME"));
                     p.sendMessage("");
-                    p.sendMessage(CreateGameMenu.translate("&fWe have a range of games"));
-                    p.sendMessage(CreateGameMenu.translate("&fto choose from, and we will keep"));
-                    p.sendMessage(CreateGameMenu.translate("&fadding more games. Report bugs on the discord:"));
-                    p.sendMessage(CreateGameMenu.translate("&chttps://discord.gg/3uWDrz4fnY"));
-                    p.sendMessage(CreateGameMenu.translate("&4&m---------------------------------"));
+                    p.sendMessage(translate("&fUse the NPC's or the "));
+                    p.sendMessage(translate("&fnether stars in your inventory"));
+                    p.sendMessage(translate("&fto select a game."));
+                    p.sendMessage(translate("&4&m---------------------------------"));
 
                     Location loc = new Location(p.getWorld(), (1379 + 0.5), 76, (-76 + 0.5), -178, -1);
                     p.teleport(loc);
-                } else if (timesran == 2) {
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 100, 1);
-                    p.sendTitle("", CreateGameMenu.translate("&4&lCHECK YOUR STATS &fYou can quickly check your stats overview right at the hub."), 10, 80, 10);
+                } /*
+                else if (timesran == 2) {
+                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_HAT, 100, 1);
+                    McPlayer.sendTitle(p, "", CreateGameMenu.translate("&4&lCHECK YOUR STATS &fYou can quickly check your stats overview right at the hub."), 10, 80, 10);
 
                     p.sendMessage(CreateGameMenu.translate("&4&m---------------------------------"));
                     p.sendMessage(CreateGameMenu.translate("&4&lCHECK YOUR STATS"));
@@ -85,27 +88,28 @@ public class Tutorial implements Listener {
 
                     Location loc = new Location(p.getWorld(), (1364 + 0.5), 73, (-51 + 0.5), (long) -0.5, (long) -0.3);
                     p.teleport(loc);
-                } else if (timesran == 3) {
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 100, 1);
-                    p.sendTitle("", CreateGameMenu.translate("&4&lUP FOR A CHALLENGE? &fTry to beat the parkour in the fastest time"), 10, 80, 10);
+                }
+                */else if (timesran == 2) {
+                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_HAT, 100, 1);
+                    McPlayer.sendTitle(p,translate("&4&lUP FOR A CHALLENGE?"), translate("&fTry to beat the parkour in the fastest time"), 10, 80, 10);
 
-                    p.sendMessage(CreateGameMenu.translate("&4&m---------------------------------"));
-                    p.sendMessage(CreateGameMenu.translate("&4&lUP FOR A CHALLENGE?"));
+                    p.sendMessage(translate("&4&m---------------------------------"));
+                    p.sendMessage(translate("&4&lUP FOR A CHALLENGE?"));
                     p.sendMessage("");
-                    p.sendMessage(CreateGameMenu.translate("&fTry to beat the parkour challenge"));
-                    p.sendMessage(CreateGameMenu.translate("&fthe fastest. We'll give you a reward"));
-                    p.sendMessage(CreateGameMenu.translate("&fwhen you finish the parkour for the first time."));
-                    p.sendMessage(CreateGameMenu.translate("&4&m---------------------------------"));
+                    p.sendMessage(translate("&fTry to beat the parkour challenge"));
+                    p.sendMessage(translate("&fin the fastest time."));
+                    //p.sendMessage(translate("&fwhen you finish the parkour for the first time &7Coming Soon&f."));
+                    p.sendMessage(translate("&4&m---------------------------------"));
 
                     Location loc = new Location(p.getWorld(), (1379 + 0.5), 74, (-46 + 0.5), -1, -0);
                     p.teleport(loc);
                 } else if (timesran == 4) {
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 100, 1);
-                    p.sendTitle("", CreateGameMenu.translate("&4&lTHAT'S IT"), 10, 80, 10);
+                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_HAT, 100, 1);
+                    McPlayer.sendTitle(p, "", translate("&4&lTHAT'S IT"), 10, 80, 10);
 
-                    p.sendMessage(CreateGameMenu.translate("&4&m---------------------------------"));
-                    p.sendMessage(CreateGameMenu.translate("&4&lTHAT'S IT"));
-                    p.sendMessage(CreateGameMenu.translate("&4&m---------------------------------"));
+                    p.sendMessage(translate("&4&m---------------------------------"));
+                    p.sendMessage(translate("&4&lTHAT'S IT"));
+                    p.sendMessage(translate("&4&m---------------------------------"));
 
                     Location loc = new Location(p.getWorld(), (1379 + 0.5), 117, (-73 + 0.5), (long) -179.8, -90);
                     p.teleport(loc);
@@ -114,11 +118,11 @@ public class Tutorial implements Listener {
                     //play teh acheivement sound thingy wingy
                     if (mysql.getTutorial(p.getUniqueId()).equals("Incomplete")) {
                         CreateScoreboard.setScoreboard(p, "Normal", false);
-                        String achline = CreateGameMenu.translate("&2&m---------------------------------");
-                        String completed = CreateGameMenu.translate("&2&lACHEIVEMENT COMPLETED &a&lTOUR GUIDE");
-                        String expplus = CreateGameMenu.translate("&4&l+ &c10 EXP");
-                        String coinplus = CreateGameMenu.translate("&5&l+ &d5 Magic Dust");
-                        String tutorial = CreateGameMenu.translate("&fComplete the tutorial");
+                        String achline = translate("&2&m---------------------------------");
+                        String completed = translate("&2&l✔ &aTour Guide");
+                        String expplus = translate("&4&l+ &c10 EXP");
+                        String coinplus = translate("&5&l+ &d5 Magic Dust");
+                        String tutorial = translate("&fComplete the tutorial");
                         p.sendMessage(achline);
                         p.sendMessage(completed);
                         p.sendMessage("");
@@ -129,7 +133,7 @@ public class Tutorial implements Listener {
                         p.sendMessage(achline);
                         Parkour.otherSound(p);
                         mysql.completedTutorial(p.getUniqueId());
-                        p.sendTitle(CreateGameMenu.translate("&2&l✔"), CreateGameMenu.translate("&aTour Guide"), 10, 80, 0);
+                        McPlayer.sendTitle(p, translate("&2&l✔"), translate("&aTour Guide"), 10, 80, 0);
                         GiveCoinsXP.GivePlayerBoth(p, 5, 10);
 
                         new BukkitRunnable() {
@@ -166,8 +170,8 @@ public class Tutorial implements Listener {
             @Override
             public void run() {
                 if (timesran != 50) {
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 100, 1);
-                    p.spawnParticle(Particle.CLOUD, new Location(Bukkit.getWorld("Hub"), 1386.500, 76.000, -59.500), 1);
+                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
+                    McPlayer.spawnParticle(p, EnumParticle.CLOUD, new Location(Bukkit.getWorld("Hub"), 1386.500, 76.000, -59.500));
                     timesran++;
                 } else {
                     cancel();
@@ -206,10 +210,10 @@ public class Tutorial implements Listener {
                 vis4.showTo(p);
 
                 //add lines
-                holo1.appendTextLine(CreateGameMenu.translate("&4&l★"));
-                holo2.appendTextLine(CreateGameMenu.translate("&c&l★"));
-                holo3.appendTextLine(CreateGameMenu.translate("&c&l★"));
-                holo4.appendTextLine(CreateGameMenu.translate("&f&l★"));
+                holo1.appendTextLine(translate("&4&l★"));
+                holo2.appendTextLine(translate("&c&l★"));
+                holo3.appendTextLine(translate("&c&l★"));
+                holo4.appendTextLine(translate("&f&l★"));
 
                 //teleport
                 new BukkitRunnable() {
@@ -256,9 +260,9 @@ public class Tutorial implements Listener {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        p.spawnParticle(Particle.ASH, new Location(Bukkit.getWorld("Hub"), 1386.500,76.000,-59.500),1);
+                        McPlayer.spawnParticle(p, EnumParticle.CLOUD, new Location(Bukkit.getWorld("Hub"), 1386.500,76.000,-59.500));
                         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 100, 0);
-                        p.sendTitle(CreateGameMenu.translate("&2&lNPC UNLOCKED"), CreateGameMenu.translate("&fYou unlocked the &aAchievements Npc"),5, 15, 5);
+                        McPlayer.sendTitle(p, translate("&2&lNPC UNLOCKED"), translate("&fYou unlocked the &aAchievements Npc"),5, 15, 5);
                         Location tutnpcloc = new Location(Bukkit.getWorld("Hub"), 1386.500, 75.000, -59.500, 46, (float) 0.3);
                         Location tutloc = new Location(Bukkit.getWorld("Hub"), 1386.500, 78.400, -59.500);
                         NPC quests = CitizensAPI.getNPCRegistry().createNPC(EntityType.VILLAGER, "");
@@ -275,9 +279,9 @@ public class Tutorial implements Listener {
                         visibilityManager.setVisibleByDefault(false);
                         visibilityManager.showTo(p);
 
-                        holo.appendTextLine(CreateGameMenu.translate("&4&lCLICK TO VIEW"));
-                        holo.appendTextLine(CreateGameMenu.translate("&fAchievements"));
-                        ItemStack holoitem = new ItemStack(Material.RED_WOOL);
+                        holo.appendTextLine(translate("&4&lCLICK TO VIEW"));
+                        holo.appendTextLine(translate("&fAchievements"));
+                        ItemStack holoitem = new ItemStack(Material.WOOL, 1, DyeColor.RED.getWoolData());
                         holo.appendItemLine(holoitem);
                         JoinLeaveEvent.playerHologram.put(p, holo);
                         JoinLeaveEvent.holograms.add(holo);
@@ -302,9 +306,9 @@ public class Tutorial implements Listener {
 
                         holo1.teleport(tutloc);
                         holo1.clearLines();
-                        holo1.appendTextLine(CreateGameMenu.translate("&4&l+ &c5 EXP"));
+                        holo1.appendTextLine(translate("&4&l+ &c5 EXP"));
 
-                        ItemStack item = new ItemStack(Material.RED_WOOL, 1);
+                        ItemStack item = new ItemStack(Material.WOOL, 1, DyeColor.RED.getWoolData());
                         holo1.appendItemLine(item);
                         GiveCoinsXP.GivePlayerEXP(p, 5);
                     }
