@@ -38,6 +38,12 @@ commands:
     description: Build mode
   ignorebuildwarnings:
     description: Build mode
+  ach:
+    description: Achievements
+  achievements:
+    description: Achievements
+  acheivements:
+    description: Achievements
 
 permissions:
   redblock.gamemode.creative:

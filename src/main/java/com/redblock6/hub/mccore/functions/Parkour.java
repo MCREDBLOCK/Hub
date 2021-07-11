@@ -1,6 +1,9 @@
 package com.redblock6.hub.mccore.functions;
 
 import com.redblock6.hub.Main;
+import com.redblock6.hub.mccore.achievements.AchDatabase;
+import com.redblock6.hub.mccore.achievements.AchLibrary;
+import com.redblock6.hub.mccore.achievements.HAchType;
 import com.redblock6.hub.mccore.extensions.McPlayer;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.*;
@@ -122,7 +125,6 @@ public class Parkour {
 
     public void finishParkour() {
         McPlayer.sendTitle(p, translate("&b&lPARKOUR"), ChatColor.WHITE + "You finished the parkour", 10, 20, 10);
-        otherSound(p);
         p.sendMessage(translate("&b&l> &fYou finished the parkour in &b" +  getTime() + " seconds"));
         Fireworks.spawnFirework2(p.getLocation());
         Location loc = new Location(plugin.getServer().getWorld("Hub"), plugin.getServer().getWorld("Hub").getSpawnLocation().getX(), plugin.getServer().getWorld("Hub").getSpawnLocation().getY(), plugin.getServer().getWorld("Hub").getSpawnLocation().getZ(), (float) -179.9, (float) -1.5);
@@ -133,6 +135,23 @@ public class Parkour {
         playersInParkour.remove(p);
         CreateScoreboard.setScoreboard(p, "Normal", true);
         inParkour = false;
+        AchDatabase database = new AchDatabase(p);
+        if (!database.getHubAch().contains(HAchType.Complete_The_Parkour)) {
+            AchLibrary.grantHubAchievement(p, HAchType.Complete_The_Parkour);
+        }
+
+        p.getInventory().clear();
+
+        ItemStack item = new ItemStack(Material.NETHER_STAR);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lGAME MENU"));
+        item.setItemMeta(meta);
+
+        //get the players inv & give them the gamemenu
+        NBTItem nbti = new NBTItem(item);
+        nbti.setString("item", "gameMenu");
+        nbti.applyNBT(item);
+        p.getInventory().setItem(4, item);
     }
 
     public int getTime() {

@@ -17,12 +17,6 @@ public class GiveCoinsXP {
     public static void GivePlayerDust(Player p, int amount) {
         int ticks;
 
-        if (amount > 100) {
-            ticks = 1;
-        } else {
-            ticks = 2;
-        }
-
         try {
             //play the giving coins sound thingy
             new BukkitRunnable() {
@@ -47,7 +41,7 @@ public class GiveCoinsXP {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
                     }
                 }
-            }.runTaskTimerAsynchronously(plugin, 40, ticks);
+            }.runTaskTimerAsynchronously(plugin, 40, 1);
 
             //plugin.getServer().getLogger().info("> Added " + amount + " coins for " + p.getName() + " in MySQL.");
         } catch (Exception e) {
@@ -58,13 +52,6 @@ public class GiveCoinsXP {
     }
 
     public static void GivePlayerEXP(Player p, int amount) {
-        int ticks;
-
-        if (amount > 100) {
-            ticks = 1;
-        } else {
-            ticks = 2;
-        }
         try {
             //play the giving coins sound thingy
             new BukkitRunnable() {
@@ -96,7 +83,7 @@ public class GiveCoinsXP {
                         }
                     }
                 }
-            }.runTaskTimerAsynchronously(plugin, 40, ticks);
+            }.runTaskTimerAsynchronously(plugin, 40, 1);
 
             //plugin.getServer().getLogger().info("> Added " + amount + " exp for " + p.getUniqueId() + " in redis.");
         } catch (Exception e) {
@@ -107,13 +94,6 @@ public class GiveCoinsXP {
     }
 
     public static void GivePlayerBoth(Player p, int amountcoins, int amountexp) {
-        int ticks;
-
-        if (amountcoins > 100 || amountexp > 100) {
-            ticks = 1;
-        } else {
-            ticks = 2;
-        }
         try {
             //play the giving coins sound thingy
             new BukkitRunnable() {
@@ -150,7 +130,7 @@ public class GiveCoinsXP {
                         }
                     }
                 }
-            }.runTaskTimerAsynchronously(plugin, 40, ticks);
+            }.runTaskTimerAsynchronously(plugin, 40, 1);
 
             plugin.getServer().getLogger().info("> Added " + amountcoins + " Magic Dust and " + amountexp + " exp for " + p.getUniqueId() + " in redis.");
         } catch (Exception e) {

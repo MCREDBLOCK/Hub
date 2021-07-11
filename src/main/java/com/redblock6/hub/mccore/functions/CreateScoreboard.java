@@ -137,7 +137,7 @@ public class CreateScoreboard {
         o.getScore(ChatColor.YELLOW + "" + ChatColor.WHITE).setScore(6);
 
         //other players playing with you
-        String otherplayers = ChatColor.translateAlternateColorCodes('&', "&fPlaying with:");
+        String otherplayers = ChatColor.translateAlternateColorCodes('&', "&6&lPLAYING WITH");
         Score otherplayersline = o.getScore(otherplayers);
         otherplayersline.setScore(7);
 
@@ -173,7 +173,7 @@ public class CreateScoreboard {
                     String expprefix = ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + mysql.getEXP(p.getUniqueId()));
                     String expsuffix = ChatColor.translateAlternateColorCodes('&', "&7/&c" + mysql.getEXPMax(p.getUniqueId()));
                     xp.setPrefix(expprefix);
-                    xp.setPrefix(expsuffix);
+                    xp.setSuffix(expsuffix);
                     o.getScore(ChatColor.RED + "" + ChatColor.GRAY).setScore(5);
 
                     level.setPrefix(translate("&4&lLEVEL"));

@@ -4,6 +4,8 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import com.redblock6.hub.Main;
+import com.redblock6.hub.mccore.achievements.AchDatabase;
+import com.redblock6.hub.mccore.achievements.HAchType;
 import com.redblock6.hub.mccore.events.JoinLeaveEvent;
 import com.redblock6.hub.mccore.events.MoveEvent;
 import com.redblock6.hub.mccore.extensions.McPlayer;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import static com.redblock6.hub.Main.pool;
 import static com.redblock6.hub.mccore.functions.CreateGameMenu.translate;
 
-public class Tutorial implements Listener {
+public class TourGuide implements Listener {
 
     private static final Main plugin = Main.getInstance();
     public static ArrayList<Player> playersInTutorial = new ArrayList<>();
@@ -116,8 +118,10 @@ public class Tutorial implements Listener {
                 } else if (timesran == 5) {
                     Location loc = new Location(plugin.getServer().getWorld("Hub"), (1383 + 0.5), 74, (-57 + 0.5), (long) -135.9, (long) -3.6);
                     //play teh acheivement sound thingy wingy
-                    if (mysql.getTutorial(p.getUniqueId()).equals("Incomplete")) {
+                    AchDatabase database = new AchDatabase(p);
+                    if (mysql.getTutorial(p.getUniqueId()).equals("Incomplete") || !database.getHubAch().contains(HAchType.Tour_Guide)) {
                         CreateScoreboard.setScoreboard(p, "Normal", false);
+                        database.addHAch(HAchType.Tour_Guide);
                         String achline = translate("&2&m---------------------------------");
                         String completed = translate("&2&l✔ &aTour Guide");
                         String expplus = translate("&4&l+ &c10 EXP");
@@ -171,7 +175,7 @@ public class Tutorial implements Listener {
             public void run() {
                 if (timesran != 50) {
                     p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
-                    McPlayer.spawnParticle(p, EnumParticle.CLOUD, new Location(Bukkit.getWorld("Hub"), 1386.500, 76.000, -59.500));
+                    McPlayer.spawnParticle(p, EnumParticle.CLOUD, new Location(Bukkit.getWorld("Hub"), 1386 + 0.5, 76, -60 + 0.5));
                     timesran++;
                 } else {
                     cancel();
@@ -184,9 +188,11 @@ public class Tutorial implements Listener {
             public void run() {
                 //create all of the locations
                 Location loc1 = new Location(Bukkit.getWorld("Hub"), 1375, 79, -67);
-                Location loc2 = new Location(Bukkit.getWorld("Hub"), 1376, 80, -55);
-                Location loc3 = new Location(Bukkit.getWorld("Hub"), 1381, 79, -51);
-                Location loc4 = new Location(Bukkit.getWorld("Hub"), 1381, 79, -51);
+                Location loc2 = new Location(Bukkit.getWorld("Hub"), 1372 + 0.5, 79, -61 + 0.5);
+                Location loc3 = new Location(Bukkit.getWorld("Hub"), 1376 + 0.5, 79, -55 + 0.5);
+                Location loc4 = new Location(Bukkit.getWorld("Hub"), 1378 + 0.5, 78, -53 + 0.5);
+                Location loc5 = new Location(Bukkit.getWorld("Hub"), 1381 + 0.5, 78, -51 + 0.5);
+                Location loc6 = new Location(Bukkit.getWorld("Hub"), 1387 + 0.5, 78, -53 + 0.5);
                 Location massLoc = new Location(Bukkit.getWorld("Hub"), 1386.500, 76.000, -59.500);
 
                 //create all of the holograms
@@ -194,26 +200,36 @@ public class Tutorial implements Listener {
                 Hologram holo2 = HologramsAPI.createHologram(plugin, loc2);
                 Hologram holo3 = HologramsAPI.createHologram(plugin, loc3);
                 Hologram holo4 = HologramsAPI.createHologram(plugin, loc4);
+                Hologram holo5 = HologramsAPI.createHologram(plugin, loc5);
+                Hologram holo6 = HologramsAPI.createHologram(plugin, loc6);
 
                 //get all of the visibility managers
                 VisibilityManager vis1 = holo1.getVisibilityManager();
                 VisibilityManager vis2 = holo2.getVisibilityManager();
                 VisibilityManager vis3 = holo3.getVisibilityManager();
                 VisibilityManager vis4 = holo4.getVisibilityManager();
+                VisibilityManager vis5 = holo5.getVisibilityManager();
+                VisibilityManager vis6 = holo6.getVisibilityManager();
                 vis1.setVisibleByDefault(false);
                 vis2.setVisibleByDefault(false);
                 vis3.setVisibleByDefault(false);
                 vis4.setVisibleByDefault(false);
+                vis5.setVisibleByDefault(false);
+                vis6.setVisibleByDefault(false);
                 vis1.showTo(p);
                 vis2.showTo(p);
                 vis3.showTo(p);
                 vis4.showTo(p);
+                vis5.showTo(p);
+                vis6.showTo(p);
 
                 //add lines
                 holo1.appendTextLine(translate("&4&l★"));
-                holo2.appendTextLine(translate("&c&l★"));
+                holo2.appendTextLine(translate("&4&l★"));
                 holo3.appendTextLine(translate("&c&l★"));
-                holo4.appendTextLine(translate("&f&l★"));
+                holo4.appendTextLine(translate("&c&l★"));
+                holo5.appendTextLine(translate("&f&l★"));
+                holo6.appendTextLine(translate("&f&l★"));
 
                 //teleport
                 new BukkitRunnable() {
@@ -240,6 +256,18 @@ public class Tutorial implements Listener {
                         holo4.teleport(massLoc);
                     }
                 }.runTaskLater(plugin, 20);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        holo5.teleport(massLoc);
+                    }
+                }.runTaskLater(plugin, 25);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        holo6.teleport(massLoc);
+                    }
+                }.runTaskLater(plugin, 30);
 
                 new BukkitRunnable() {
                     @Override
@@ -248,6 +276,8 @@ public class Tutorial implements Listener {
                         holo2.teleport(loc2);
                         holo3.teleport(loc3);
                         holo4.teleport(loc4);
+                        holo5.teleport(loc5);
+                        holo6.teleport(loc6);
                         p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 100, 1);
                         if (JoinLeaveEvent.playerTutorialNPC.get(p) != null) {
                             JoinLeaveEvent.playerTutorialNPC.get(p).despawn();
@@ -301,6 +331,8 @@ public class Tutorial implements Listener {
                         holo2.delete();
                         holo3.delete();
                         holo4.delete();
+                        holo5.delete();
+                        holo6.delete();
 
                         Location tutloc = new Location(Bukkit.getWorld("Hub"), 1386.500, 79.500, -59.500);
 

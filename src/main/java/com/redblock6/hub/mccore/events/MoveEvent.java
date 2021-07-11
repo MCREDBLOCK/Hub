@@ -1,7 +1,7 @@
 package com.redblock6.hub.mccore.events;
 
 import com.redblock6.hub.mccore.functions.Parkour;
-import com.redblock6.hub.mccore.functions.Tutorial;
+import com.redblock6.hub.mccore.functions.TourGuide;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,8 +28,8 @@ public class MoveEvent implements Listener {
             }
         }
 
-        if (Tutorial.playersInTutorial != null) {
-            if (Tutorial.playersInTutorial.contains(p)) {
+        if (TourGuide.playersInTutorial != null) {
+            if (TourGuide.playersInTutorial.contains(p)) {
                 e.setCancelled(true);
             }
         }
