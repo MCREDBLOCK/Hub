@@ -97,7 +97,7 @@ public class Regions implements Listener {
         Parkour park = Parkour.getParkourStatus(p);
 
         if (park.inParkour()) {
-            if (!(e.getPlayer().getLocation().getZ() >= -50)) {
+            if (!(e.getPlayer().getLocation().getZ() >= -57)) {
                 park.exitParkour();
             }
         }

@@ -5,9 +5,11 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import com.redblock6.hub.Main;
 import com.redblock6.hub.Register;
+import com.redblock6.hub.mccore.achievements.AchDatabase;
+import com.redblock6.hub.mccore.achievements.AchLibrary;
+import com.redblock6.hub.mccore.achievements.HAchType;
 import com.redblock6.hub.mccore.extensions.McPlayer;
 import com.redblock6.hub.mccore.functions.*;
-import com.redblock6.hub.mccore.functions.NMS.StatsNPC;
 import de.slikey.effectlib.Effect;
 import de.slikey.effectlib.effect.CircleEffect;
 import de.tr7zw.nbtapi.NBTItem;
@@ -69,25 +71,25 @@ public class JoinLeaveEvent implements Listener {
     @EventHandler
     public void npcRightClick(NPCRightClickEvent e) {
         if (e.getNPC().equals(playerTutorialNPC.get(e.getClicker()))) {
-            if (mysql.getTutorial(e.getClicker().getUniqueId()).equals("Incomplete")) {
-                Tutorial.startTutorial(e.getClicker());
+            AchDatabase database = new AchDatabase(e.getClicker());
+            if (mysql.getTutorial(e.getClicker().getUniqueId()).equals("Incomplete") || !database.getHubAch().contains(HAchType.Tour_Guide)) {
+                TourGuide.startTutorial(e.getClicker());
             } else {
-                AchievementLibrary.openMenu(e.getClicker());
+                AchLibrary.hub(e.getClicker());
             }
         }
     }
 
     @EventHandler
     public void npcLeftClick(NPCLeftClickEvent e) {
-        Jedis j = pool.getResource();
-        if (e.getNPC().equals(playerTutorialNPC.get(e.getClicker()))) {
+        AchDatabase database = new AchDatabase(e.getClicker());
+        if (e.getNPC().equals(playerTutorialNPC.get(e.getClicker())) || !database.getHubAch().contains(HAchType.Tour_Guide)) {
             if (mysql.getTutorial(e.getClicker().getUniqueId()).equals("Incomplete")) {
-                Tutorial.startTutorial(e.getClicker());
+                TourGuide.startTutorial(e.getClicker());
             } else {
-                AchievementLibrary.openMenu(e.getClicker());
+                AchLibrary.hub(e.getClicker());
             }
         }
-        j.close();
     }
 
     @EventHandler
@@ -184,7 +186,8 @@ public class JoinLeaveEvent implements Listener {
         String ip = ChatColor.translateAlternateColorCodes('&', "&4&lmc.redblock6.com");
 
         //check if the player has joined before
-        if (!p.hasPlayedBefore()) {
+        AchDatabase database = new AchDatabase(p);
+        if (!p.hasPlayedBefore() || !database.getHubAch().contains(HAchType.Our_Adventure_Begins)) {
             /*
             j.set(p.getUniqueId() + "Coins", String.valueOf(Integer.parseInt("0")));
             j.set(p.getUniqueId() + "Exp", String.valueOf(Integer.parseInt("0")));
@@ -201,21 +204,6 @@ public class JoinLeaveEvent implements Listener {
             player.createPlayer(p.getUniqueId(), p);
 
             CreateScoreboard.setScoreboard(p, "Normal", false);
-            String achline = translate("&2&m---------------------------------");
-            String completed = translate("&2&lACHEIVEMENT COMPLETED &a&lOUR ADVENTURE BEGINS");
-            String coinplus = translate("&5&l+ &d100 Magic Dust");
-            String tutorial = translate("&fUse the &aTutorial NPC&f, or click the");
-            String tutorial2 = translate("&f&aGame Menu &fto get started");
-
-            //send the messages
-            p.sendMessage(achline);
-            p.sendMessage(completed);
-            p.sendMessage(blank);
-            p.sendMessage(coinplus);
-            p.sendMessage(blank);
-            p.sendMessage(tutorial);
-            p.sendMessage(tutorial2);
-            p.sendMessage(achline);
 
             //and those holograms
             Location hololoc = new Location(p.getWorld(), (1364 + 0.5), 76.7, (-47 + 0.5));
@@ -226,9 +214,7 @@ public class JoinLeaveEvent implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    Parkour.otherSound(p);
-                    McPlayer.sendTitle(p, translate("&2&l✔"), translate("&aOur Adventure Begins"), 10, 20, 0);
-                    GiveCoinsXP.GivePlayerDust(p, 100);
+                    AchLibrary.grantHubAchievement(p, HAchType.Our_Adventure_Begins);
                 }
             }.runTaskLaterAsynchronously(plugin, 20);
 
@@ -273,7 +259,7 @@ public class JoinLeaveEvent implements Listener {
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 0);
         }
 
-        if (mysql.getTutorial(p.getUniqueId()).equals("Incomplete") && !(playerHologram.containsValue(p)) && !(playerTutorialNPC.containsValue(p))) {
+        if (mysql.getTutorial(p.getUniqueId()).equals("Incomplete") || !database.getHubAch().contains(HAchType.Tour_Guide) && !(playerHologram.containsValue(p)) && !(playerTutorialNPC.containsValue(p))) {
             Location tutloc = new Location(Bukkit.getWorld("Hub"), 1386.500, 78.000, -59.500);
 
             Hologram holo = HologramsAPI.createHologram(plugin, tutloc);
@@ -283,7 +269,7 @@ public class JoinLeaveEvent implements Listener {
             visibilityManager.showTo(p);
 
             holo.appendTextLine(translate("&4&lCLICK TO PLAY"));
-            holo.appendTextLine(translate("&fTour"));
+            holo.appendTextLine(translate("&fTour Guide"));
             ItemStack holoitem = new ItemStack(Material.WOOL, 1, DyeColor.RED.getWoolData());
             holo.appendItemLine(holoitem);
             playerHologram.put(p, holo);
