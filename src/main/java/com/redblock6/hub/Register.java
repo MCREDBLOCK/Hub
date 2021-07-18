@@ -5,6 +5,8 @@ import com.redblock6.hub.mccore.achievements.AchEvent;
 import com.redblock6.hub.mccore.achievements.AchLibrary;
 import com.redblock6.hub.mccore.commands.*;
 import com.redblock6.hub.mccore.events.*;
+import com.redblock6.hub.mccore.profiles.ProfileCommand;
+import com.redblock6.hub.mccore.profiles.Profiles;
 import de.slikey.effectlib.EffectManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -29,6 +31,7 @@ public class Register {
         pm.registerEvents(new BlockEvent(), pl);
         pm.registerEvents(new AchEvent(), pl);
         pm.registerEvents(new AchLibrary(), pl);
+        pm.registerEvents(new Profiles(), pl);
 
         // Register commands
         pl.getCommand("gamemenu").setExecutor(new GameMenuCommand());
@@ -48,6 +51,7 @@ public class Register {
         pl.getCommand("ach").setExecutor(new AchCommand());
         pl.getCommand("achievements").setExecutor(new AchCommand());
         pl.getCommand("acheivements").setExecutor(new AchCommand());
+        pl.getCommand("profile").setExecutor(new ProfileCommand());
     }
 
     public static EffectManager getEffectManager() {

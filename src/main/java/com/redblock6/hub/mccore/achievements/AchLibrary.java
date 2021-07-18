@@ -2,6 +2,7 @@ package com.redblock6.hub.mccore.achievements;
 
 import com.redblock6.hub.Main;
 import com.redblock6.hub.mccore.functions.GiveCoinsXP;
+import com.redblock6.hub.mccore.functions.MySQLSetterGetter;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -84,6 +85,23 @@ public class AchLibrary implements Listener {
         p.sendMessage(translate("&5&l+ &d25 Magic Dust"));
         p.sendMessage(translate("&2&m---------------------------------"));
         GiveCoinsXP.GivePlayerBoth(p, 25, 15);
+    }
+
+    public static void revokeHubAchievement(Player p, HAchType ach) {
+        p.playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 100, 1);
+        MySQLSetterGetter mysql = new MySQLSetterGetter();
+        AchDatabase database = new AchDatabase(p);
+        database.revokeHAch(ach);
+        p.sendTitle(translate("&4&l✖"), translate("&f" + getFormattedName(ach.toString())), 10, 20, 10);
+        p.sendMessage(translate("&4&m---------------------------------"));
+        p.sendMessage(translate("&4&l✖ &c" + getFormattedName(ach.toString())));
+        p.sendMessage(translate(""));
+        p.sendMessage(translate("&4&l- &c15 XP"));
+        p.sendMessage(translate("&5&l- &d25 Magic Dust"));
+        p.sendMessage(translate(""));
+        p.sendMessage(translate("&fAchievement Revoked!"));
+        p.sendMessage(translate("&4&m---------------------------------"));
+        mysql.updateEXP(p.getUniqueId(), mysql.getEXP(p.getUniqueId()) - 15);
     }
 
     @EventHandler

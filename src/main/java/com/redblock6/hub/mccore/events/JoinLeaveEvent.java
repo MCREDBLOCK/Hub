@@ -187,6 +187,12 @@ public class JoinLeaveEvent implements Listener {
 
         //check if the player has joined before
         AchDatabase database = new AchDatabase(p);
+        Jedis j2 = pool.getResource();
+        if (database.getHubAch().contains(HAchType.Link_Your_Account_With_Core) && j2.get(p.getUniqueId() + "Discord") == null) {
+            AchLibrary.revokeHubAchievement(p, HAchType.Link_Your_Account_With_Core);
+        }
+        j2.close();
+
         if (!p.hasPlayedBefore() || !database.getHubAch().contains(HAchType.Our_Adventure_Begins)) {
             /*
             j.set(p.getUniqueId() + "Coins", String.valueOf(Integer.parseInt("0")));
