@@ -44,6 +44,8 @@ commands:
     description: Achievements
   acheivements:
     description: Achievements
+  profile:
+    description: Profile Menu
 
 permissions:
   redblock.gamemode.creative:
