@@ -22,7 +22,7 @@ public class Main extends JavaPlugin {
     private static Main instance;
     public static JedisPool pool;
     private Connection connection;
-    public String host, database, username, password, global_table, hub_table, kitpvp_table;
+    public String host, database, username, password, global_table, hub_table, kitpvp_table, oitq_table;
     public int port;
     public EffectManager em = new EffectManager(this);
 
@@ -34,6 +34,7 @@ public class Main extends JavaPlugin {
         global_table = "GLOBAL";
         hub_table = "HUB";
         kitpvp_table = "KITPVP";
+        oitq_table = "OITQ";
         password = "minecraft";
 
         try {
@@ -104,7 +105,7 @@ public class Main extends JavaPlugin {
             public void run() {
                 WarnReboot.startCountdown(1);
             }
-        }.runTaskLaterAsynchronously(this, 432000);
+        }.runTaskLaterAsynchronously(this, 288000);
     }
 
     @Override

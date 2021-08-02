@@ -34,9 +34,9 @@ public class Holograms {
 
         hologram.appendTextLine(CreateGameMenu.translate("&4&lYOUR STATS OVERVIEW"));
         hologram.appendTextLine(CreateGameMenu.translate("&fKitPvP Kills: &c" + mysql.getKitKills(p.getUniqueId())));
-        hologram.appendTextLine(CreateGameMenu.translate("&fDR Winstreak: &c" + j.get(p.getUniqueId() + "DRWS")));
-        hologram.appendTextLine(CreateGameMenu.translate("&fOITQ Winstreak: &c" + j.get(p.getUniqueId() + "OITQWS")));
-        hologram.appendTextLine(CreateGameMenu.translate("&fPKR Winstreak: &c" + j.get(p.getUniqueId() + "PKRWS")));
+        hologram.appendTextLine(CreateGameMenu.translate("&fDR Wins: &c???"));
+        hologram.appendTextLine(CreateGameMenu.translate("&fOITQ Wins: &c" + mysql.getQuiverWins(p.getUniqueId())));
+        hologram.appendTextLine(CreateGameMenu.translate("&fPKR Wins: &c???"));
 
         ItemStack item = new ItemStack(Material.WOOL, 1, DyeColor.RED.getWoolData());
         hologram.appendItemLine(item);
@@ -136,7 +136,7 @@ public class Holograms {
                 } else if (getServersOnline("OITQ") == 1 || getServersOnline("OITQ") == 2) {
                     gamehologram3.appendTextLine(CreateGameMenu.translate("&a&lCLICK TO PLAY"));
                     gamehologram3.appendTextLine(CreateGameMenu.translate("&fOITQ"));
-                    gamehologram3.appendTextLine(CreateGameMenu.translate("&a&l" + ServerConnector.getPlayerCount("OITQ") + " &aPLAYERS"));
+                    gamehologram3.appendTextLine(CreateGameMenu.translate("&a&l" + ServerConnector.getPlayerCount("OITQ") + " &a&lPLAYERS"));
                     item = new ItemStack(Material.BOW, 1);
                 }
 

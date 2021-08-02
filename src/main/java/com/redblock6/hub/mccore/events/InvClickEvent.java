@@ -110,17 +110,37 @@ public class InvClickEvent implements Listener {
                 return;
             }
 
-            if (item.getItemMeta().getDisplayName().equals(format("&4&lOITQ-1"))) {
+            if (item.getItemMeta().getDisplayName().equals(format("&2&lOITQ-1"))) {
                 ServerConnector.sendServer(p, "OITQ-1");
                 e.setCancelled(true);
-            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lOITQ-2"))) {
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lOITQ-1"))) {
+                CreateGameMenu.newInventory(p, "OITQ");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&2&lOITQ-2"))) {
                 ServerConnector.sendServer(p, "OITQ-2");
                 e.setCancelled(true);
-            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lOITQ-3"))) {
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lOITQ-2"))) {
+                CreateGameMenu.newInventory(p, "OITQ");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&2&lOITQ-3"))) {
                 ServerConnector.sendServer(p, "OITQ-3");
                 e.setCancelled(true);
-            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lOITQ-4"))) {
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lOITQ-3"))) {
+                CreateGameMenu.newInventory(p, "OITQ");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&2&lOITQ-4"))) {
                 ServerConnector.sendServer(p, "OITQ-4");
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lOITQ-4"))) {
+                CreateGameMenu.newInventory(p, "OITQ");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lBACK"))) {
                 CreateGameMenu.newInventory(p, "GameMenu");

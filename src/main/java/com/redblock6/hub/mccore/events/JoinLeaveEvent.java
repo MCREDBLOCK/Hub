@@ -113,6 +113,12 @@ public class JoinLeaveEvent implements Listener {
         //set their food bar
         p.setFoodLevel(20);
 
+        if (mysql.getEXP(p.getUniqueId()) < 0) {
+            mysql.resetEXP(p.getUniqueId());
+        } else if (mysql.getDust(p.getUniqueId()) < 0) {
+            mysql.resetDust(p.getUniqueId());
+        }
+
         //set gamemode
         p.setGameMode(GameMode.ADVENTURE);
 
