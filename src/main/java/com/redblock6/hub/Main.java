@@ -1,11 +1,13 @@
 package com.redblock6.hub;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.redblock6.hub.mccore.bot.BotMain;
 import com.redblock6.hub.mccore.commands.WarnReboot;
 import com.redblock6.hub.mccore.events.JoinLeaveEvent;
 import com.redblock6.hub.mccore.functions.CreateGameMenu;
 import com.redblock6.hub.mccore.functions.Holograms;
 import de.slikey.effectlib.EffectManager;
+import net.dv8tion.jda.api.entities.Guild;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +27,8 @@ public class Main extends JavaPlugin {
     public String host, database, username, password, global_table, hub_table, kitpvp_table, oitq_table;
     public int port;
     public EffectManager em = new EffectManager(this);
+    public static BotMain bot;
+    public static Guild rygb;
 
     public void mysqlSetup() {
         host = "192.168.1.223";
@@ -66,13 +70,14 @@ public class Main extends JavaPlugin {
 
         pool = new JedisPool("192.168.1.222", Integer.parseInt("6379"));
         loadConfigs();
+        bot = new BotMain(this);
+        rygb = getBot().bot.getGuildById("614942507452596240");
 
         mysqlSetup();
 
         //set this hub's status to online
         Jedis j = pool.getResource();
         j.set("HUB-" + this.getConfig().get("hub-identifier") + "Status", "ONLINE");
-        j.set("HUB-" + this.getConfig().get("hub-identifier") + "Count", "0");
         j.close();
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -91,14 +96,14 @@ public class Main extends JavaPlugin {
                 loc = new Location(getServer().getWorld("Hub"), (1381 + 0.5), (79 + 0.3), (-90 + 0.5));
                 Holograms.createGameHologram(loc, "PKR");
             }
-        }.runTaskTimer(this, 20, 1200);
+        }.runTaskTimer(this, 20, 600);
 
         new BukkitRunnable() {
             @Override
             public void run() {
                 Holograms.removeGameHolograms();
             }
-        }.runTaskTimer(this, 10, 1200);
+        }.runTaskTimer(this, 10, 600);
 
         new BukkitRunnable() {
             @Override
@@ -131,6 +136,9 @@ public class Main extends JavaPlugin {
     }
 
     public static Main getInstance() { return instance;}
+    public static BotMain getBot() {
+        return bot;
+    }
 
     public void loadConfigs() {
         getConfig().options().copyDefaults(true);

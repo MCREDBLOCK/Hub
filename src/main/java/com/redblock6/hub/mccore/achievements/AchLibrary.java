@@ -2,7 +2,6 @@ package com.redblock6.hub.mccore.achievements;
 
 import com.redblock6.hub.Main;
 import com.redblock6.hub.mccore.functions.GiveCoinsXP;
-import com.redblock6.hub.mccore.functions.MySQLSetterGetter;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -14,6 +13,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import tech.rygb.core.mccore.functions.MySQLSetterGetter;
 
 import static com.redblock6.hub.mccore.functions.CreateGameMenu.createGuiItem;
 import static com.redblock6.hub.mccore.functions.CreateGameMenu.translate;
@@ -92,16 +92,17 @@ public class AchLibrary implements Listener {
         MySQLSetterGetter mysql = new MySQLSetterGetter();
         AchDatabase database = new AchDatabase(p);
         database.revokeHAch(ach);
-        p.sendTitle(translate("&4&l✖"), translate("&f" + getFormattedName(ach.toString())), 10, 20, 10);
-        p.sendMessage(translate("&4&m---------------------------------"));
-        p.sendMessage(translate("&4&l✖ &c" + getFormattedName(ach.toString())));
-        p.sendMessage(translate(""));
-        p.sendMessage(translate("&4&l- &c15 XP"));
-        p.sendMessage(translate("&5&l- &d25 Magic Dust"));
-        p.sendMessage(translate(""));
-        p.sendMessage(translate("&fAchievement Revoked!"));
-        p.sendMessage(translate("&4&m---------------------------------"));
-        mysql.updateEXP(p.getUniqueId(), mysql.getEXP(p.getUniqueId()) - 15);
+        p.sendTitle(tech.rygb.core.Main.translate("&4&l✖"), tech.rygb.core.Main.translate("&f" + getFormattedName(ach.toString())), 10, 20, 10);
+        p.sendMessage(tech.rygb.core.Main.translate("&4&m---------------------------------"));
+        p.sendMessage(tech.rygb.core.Main.translate("&4&l✖ &c" + getFormattedName(ach.toString())));
+        p.sendMessage(tech.rygb.core.Main.translate(""));
+        p.sendMessage(tech.rygb.core.Main.translate("&4&l- &c15 XP"));
+        p.sendMessage(tech.rygb.core.Main.translate("&5&l- &d25 Magic Dust"));
+        p.sendMessage(tech.rygb.core.Main.translate(""));
+        p.sendMessage(tech.rygb.core.Main.translate("&fAchievement Revoked!"));
+        p.sendMessage(tech.rygb.core.Main.translate("&4&m---------------------------------"));
+        mysql.updateEXP(p.getUniqueId(), -15);
+        mysql.updateDust(p.getUniqueId(), -25);
     }
 
     @EventHandler

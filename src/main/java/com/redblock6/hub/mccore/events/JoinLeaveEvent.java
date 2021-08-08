@@ -40,7 +40,9 @@ import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
+import static com.redblock6.hub.Main.getBot;
 import static com.redblock6.hub.Main.pool;
 import static com.redblock6.hub.mccore.functions.CreateGameMenu.translate;
 
@@ -92,6 +94,28 @@ public class JoinLeaveEvent implements Listener {
         }
     }
 
+    public static String getTag(UUID uuid) {
+        Jedis j = pool.getResource();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                j.close();
+            }
+        }.runTaskLater(Main.getInstance(), 1);
+        return j.get(uuid + "DiscordTag");
+    }
+
+    public static net.dv8tion.jda.api.entities.User getUser(UUID uuid) {
+        Jedis j = pool.getResource();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                j.close();
+            }
+        }.runTaskLater(Main.getInstance(), 1);
+        return getBot().bot.getUserById(j.get(uuid + "DiscordID"));
+    }
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
@@ -101,6 +125,9 @@ public class JoinLeaveEvent implements Listener {
             //update the player count
             j.set("HUB-" + plugin.getConfig().getInt("hub-identifier") + "Count", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()));
             plugin.getServer().getLogger().info("> Updated the redis player count!");
+            if (j.get(p.getName() + "IBW") == null) {
+                j.set(p.getName() + "IBW", "FALSE");
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             plugin.getServer().getLogger().info("> Failed to update the redis player count, you know what to do.");
