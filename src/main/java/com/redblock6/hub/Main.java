@@ -110,7 +110,7 @@ public class Main extends JavaPlugin {
             public void run() {
                 WarnReboot.startCountdown(1);
             }
-        }.runTaskLaterAsynchronously(this, 288000);
+        }.runTaskLaterAsynchronously(this, 432000);
     }
 
     @Override

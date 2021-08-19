@@ -8,6 +8,7 @@ import com.redblock6.hub.Register;
 import com.redblock6.hub.mccore.achievements.AchDatabase;
 import com.redblock6.hub.mccore.achievements.AchLibrary;
 import com.redblock6.hub.mccore.achievements.HAchType;
+import com.redblock6.hub.mccore.bot.IssueTracker;
 import com.redblock6.hub.mccore.extensions.McPlayer;
 import com.redblock6.hub.mccore.functions.*;
 import de.slikey.effectlib.Effect;
@@ -35,6 +36,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.Jedis;
 
@@ -140,12 +142,27 @@ public class JoinLeaveEvent implements Listener {
         //set their food bar
         p.setFoodLevel(20);
 
-        if (mysql.getEXP(p.getUniqueId()) < 0) {
-            mysql.resetEXP(p.getUniqueId());
-        } else if (mysql.getDust(p.getUniqueId()) < 0) {
-            mysql.resetDust(p.getUniqueId());
+
+        try {
+            mysql.createPlayer(p.getUniqueId(), p);
+        } catch (NullPointerException ex) {
+            Main.getInstance().mysqlSetup();
+            mysql.createPlayer(p.getUniqueId(), p);
+            IssueTracker.reportSolvedIssue(p, "Database Timeout", "HUB" + plugin.getConfig().getInt("hub-identifier"));
+            ex.printStackTrace();
         }
 
+        try {
+            if (mysql.getEXP(p.getUniqueId()) < 0) {
+                mysql.resetEXP(p.getUniqueId());
+            } else if (mysql.getDust(p.getUniqueId()) < 0) {
+                mysql.resetDust(p.getUniqueId());
+            }
+
+        } catch (NullPointerException ex) {
+            IssueTracker.reportIssue(p, "Could not connect to database", "HUB" + plugin.getConfig().getInt("hub-identifier"));
+            ex.printStackTrace();
+        }
         //set gamemode
         p.setGameMode(GameMode.ADVENTURE);
 
@@ -154,7 +171,7 @@ public class JoinLeaveEvent implements Listener {
         p.setFlying(false);
         // p.setInvisible(false);
 
-        mysql.createPlayer(p.getUniqueId(), p);
+
 
         //create the gamemenu itme
         ItemStack item = new ItemStack(Material.NETHER_STAR);
@@ -168,12 +185,25 @@ public class JoinLeaveEvent implements Listener {
         meta2.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lHUB SELECTOR"));
         item2.setItemMeta(meta2);
 
+        ItemStack playerskull = new ItemStack(Material.SKULL_ITEM,1, (short) SkullType.PLAYER.ordinal());
+        SkullMeta meta3 = (SkullMeta) playerskull.getItemMeta();
+
+        meta3.setOwningPlayer(p);
+        meta3.setDisplayName(translate("&4&lYOUR PROFILE"));
+
+        playerskull.setItemMeta(meta3);
+
+        NBTItem nbti3 = new NBTItem(playerskull);
+        nbti3.setString("item", "profileMenu");
+        nbti3.applyNBT(playerskull);
+        p.getInventory().setItem(0, playerskull);
+        e.setJoinMessage(null);
+
         //get the players inv & give them the gamemenu
         NBTItem nbti = new NBTItem(item);
         nbti.setString("item", "gameMenu");
         nbti.applyNBT(item);
         p.getInventory().setItem(4, item);
-        e.setJoinMessage(null);
 
         //get the players inv & give them the gamemenu
         NBTItem nbti2 = new NBTItem(item2);

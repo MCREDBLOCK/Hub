@@ -130,7 +130,7 @@ public class CreateScoreboard {
         //actual players playing with you
         Team aotherplayers = b.registerNewTeam("playingwithyou");
         aotherplayers.addEntry(ChatColor.YELLOW + "" + ChatColor.WHITE);
-        String aotherplayersline = ChatColor.translateAlternateColorCodes('&', "&e" + Parkour.getOtherPlayers());
+        String aotherplayersline = ChatColor.translateAlternateColorCodes('&', "&e" + (Parkour.getOtherPlayers().size() - 1));
         String aotherplayerssuffix = ChatColor.translateAlternateColorCodes('&', " &fother players");
         aotherplayers.setPrefix(aotherplayersline);
         aotherplayers.setSuffix(aotherplayerssuffix);
