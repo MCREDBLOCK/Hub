@@ -10,6 +10,7 @@ import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -111,16 +112,42 @@ public class Parkour {
 
         p.getInventory().clear();
 
+        //create the gamemenu itme
         ItemStack item = new ItemStack(Material.NETHER_STAR);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lGAME MENU"));
         item.setItemMeta(meta);
+
+        //create the hub selector itme
+        ItemStack item2 = new ItemStack(Material.WATCH);
+        ItemMeta meta2 = item2.getItemMeta();
+        meta2.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lHUB SELECTOR"));
+        item2.setItemMeta(meta2);
+
+        ItemStack playerskull = new ItemStack(Material.SKULL_ITEM,1, (short) SkullType.PLAYER.ordinal());
+        SkullMeta meta3 = (SkullMeta) playerskull.getItemMeta();
+
+        meta3.setOwningPlayer(p);
+        meta3.setDisplayName(translate("&4&lYOUR PROFILE"));
+
+        playerskull.setItemMeta(meta3);
+
+        NBTItem nbti3 = new NBTItem(playerskull);
+        nbti3.setString("item", "profileMenu");
+        nbti3.applyNBT(playerskull);
+        p.getInventory().setItem(0, playerskull);
 
         //get the players inv & give them the gamemenu
         NBTItem nbti = new NBTItem(item);
         nbti.setString("item", "gameMenu");
         nbti.applyNBT(item);
         p.getInventory().setItem(4, item);
+
+        //get the players inv & give them the gamemenu
+        NBTItem nbti2 = new NBTItem(item2);
+        nbti2.setString("item", "hubSelector");
+        nbti2.applyNBT(item2);
+        p.getInventory().setItem(8, item2);
     }
 
     public void finishParkour() {

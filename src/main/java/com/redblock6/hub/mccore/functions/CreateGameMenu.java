@@ -270,28 +270,28 @@ public class CreateGameMenu implements Listener {
                 if (j.get("OITQ-1Status").equals("OFFLINE")) {
                     i.setItem(10, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-1"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-1"), translate("&2&m-----------------------"), translate("&fMaps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + ServerConnector.getPlayerCount("OITQ", 1) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(10, createGuiItem(Material.BOW, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-1"), translate("&2&m-----------------------"), translate("&fMaps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + ServerConnector.getPlayerCount("OITQ", 1) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("OITQ-2Status") != null) {
                 if (j.get("OITQ-2Status").equals("OFFLINE")) {
                     i.setItem(12, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-2"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(12, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-2"), translate("&2&m-----------------------"), translate("&fMaps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + ServerConnector.getPlayerCount("OITQ", 2) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(12, createGuiItem(Material.BOW, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-2"), translate("&2&m-----------------------"), translate("&fMaps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + ServerConnector.getPlayerCount("OITQ", 2) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("OITQ-3Status") != null) {
                 if (j.get("OITQ-3Status").equals("OFFLINE")) {
                     i.setItem(14, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-3"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(14, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-3"), translate("&2&m-----------------------"), translate("&fMaps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + ServerConnector.getPlayerCount("OITQ", 3) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(14, createGuiItem(Material.BOW, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-3"), translate("&2&m-----------------------"), translate("&fMaps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + ServerConnector.getPlayerCount("OITQ", 3) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("OITQ-4Status") != null) {
                 if (j.get("OITQ-4Status").equals("OFFLINE")) {
                     i.setItem(16, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lOITQ-4"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(16, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-4"), translate("&2&m-----------------------"), translate("&fMaps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + ServerConnector.getPlayerCount("OITQ", 4) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(16, createGuiItem(Material.BOW, ChatColor.translateAlternateColorCodes('&', "&2&lOITQ-4"), translate("&2&m-----------------------"), translate("&fMaps:"), translate("&aIce Cavern"), translate("&aDowntown"), "", translate("&a" + ServerConnector.getPlayerCount("OITQ", 4) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));
