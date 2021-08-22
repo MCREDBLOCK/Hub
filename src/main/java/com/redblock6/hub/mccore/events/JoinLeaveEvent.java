@@ -148,7 +148,7 @@ public class JoinLeaveEvent implements Listener {
         } catch (NullPointerException ex) {
             Main.getInstance().mysqlSetup();
             mysql.createPlayer(p.getUniqueId(), p);
-            IssueTracker.reportSolvedIssue(p, "Database Timeout", "HUB" + plugin.getConfig().getInt("hub-identifier"));
+            IssueTracker.reportSolvedIssue(p, "Database Timeout", "HUB-" + plugin.getConfig().getInt("hub-identifier"));
             ex.printStackTrace();
         }
 
@@ -160,7 +160,7 @@ public class JoinLeaveEvent implements Listener {
             }
 
         } catch (NullPointerException ex) {
-            IssueTracker.reportIssue(p, "Could not connect to database", "HUB" + plugin.getConfig().getInt("hub-identifier"));
+            IssueTracker.reportIssue(p, "Could not connect to database", "HUB-" + plugin.getConfig().getInt("hub-identifier"));
             ex.printStackTrace();
         }
         //set gamemode
