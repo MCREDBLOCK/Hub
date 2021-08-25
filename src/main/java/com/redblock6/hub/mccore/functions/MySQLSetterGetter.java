@@ -154,6 +154,16 @@ public class MySQLSetterGetter {
         return null;
     }
 
+    public void keepAlive() {
+        try {
+            PreparedStatement statement = pl.getConnection()
+                    .prepareStatement("SELECT * FROM " + pl.global_table);
+            results = statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void updateEXP(UUID uuid, int amount) {
         try {
             PreparedStatement statement = pl.getConnection()

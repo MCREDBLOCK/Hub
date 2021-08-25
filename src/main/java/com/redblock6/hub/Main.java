@@ -6,6 +6,9 @@ import com.redblock6.hub.mccore.commands.WarnReboot;
 import com.redblock6.hub.mccore.events.JoinLeaveEvent;
 import com.redblock6.hub.mccore.functions.CreateGameMenu;
 import com.redblock6.hub.mccore.functions.Holograms;
+import com.redblock6.hub.mccore.functions.MySQLSetterGetter;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import de.slikey.effectlib.EffectManager;
 import net.dv8tion.jda.api.entities.Guild;
 import org.bukkit.Bukkit;
@@ -24,11 +27,30 @@ public class Main extends JavaPlugin {
     private static Main instance;
     public static JedisPool pool;
     private Connection connection;
+    private static HikariDataSource ds;
     public String host, database, username, password, global_table, hub_table, kitpvp_table, oitq_table;
     public int port;
     public EffectManager em = new EffectManager(this);
     public static BotMain bot;
     public static Guild rygb;
+
+    public void hikariSetup() {
+        host = "192.168.1.223";
+        port = 3306;
+        username = "mc";
+        database = "mc_user";
+        global_table = "GLOBAL";
+        hub_table = "HUB";
+        kitpvp_table = "KITPVP";
+        oitq_table = "OITQ";
+        password = "minecraft";
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database);
+        config.setUsername(this.username);
+        config.setPassword(this.password);
+        config.addDataSourceProperty("autoReconnect", true);
+        ds = new HikariDataSource(config);
+    }
 
     public void mysqlSetup() {
         host = "192.168.1.223";
@@ -72,7 +94,6 @@ public class Main extends JavaPlugin {
         loadConfigs();
         bot = new BotMain(this);
         rygb = getBot().bot.getGuildById("614942507452596240");
-
         mysqlSetup();
 
         //set this hub's status to online
