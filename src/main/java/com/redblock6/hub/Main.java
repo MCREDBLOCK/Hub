@@ -6,9 +6,6 @@ import com.redblock6.hub.mccore.commands.WarnReboot;
 import com.redblock6.hub.mccore.events.JoinLeaveEvent;
 import com.redblock6.hub.mccore.functions.CreateGameMenu;
 import com.redblock6.hub.mccore.functions.Holograms;
-import com.redblock6.hub.mccore.functions.MySQLSetterGetter;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import de.slikey.effectlib.EffectManager;
 import net.dv8tion.jda.api.entities.Guild;
 import org.bukkit.Bukkit;
@@ -27,13 +24,14 @@ public class Main extends JavaPlugin {
     private static Main instance;
     public static JedisPool pool;
     private Connection connection;
-    private static HikariDataSource ds;
+    // private static HikariDataSource ds;
     public String host, database, username, password, global_table, hub_table, kitpvp_table, oitq_table;
     public int port;
     public EffectManager em = new EffectManager(this);
     public static BotMain bot;
     public static Guild rygb;
 
+    /*
     public void hikariSetup() {
         host = "192.168.1.223";
         port = 3306;
@@ -51,6 +49,8 @@ public class Main extends JavaPlugin {
         config.addDataSourceProperty("autoReconnect", true);
         ds = new HikariDataSource(config);
     }
+
+     */
 
     public void mysqlSetup() {
         host = "192.168.1.223";
@@ -129,9 +129,10 @@ public class Main extends JavaPlugin {
         new BukkitRunnable() {
             @Override
             public void run() {
-                WarnReboot.startCountdown(1);
+                WarnReboot.startCountdown(120);
             }
-        }.runTaskLaterAsynchronously(this, 432000);
+        }.runTaskLater(this, 20);
+        
     }
 
     @Override

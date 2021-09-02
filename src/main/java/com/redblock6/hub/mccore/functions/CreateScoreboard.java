@@ -45,7 +45,7 @@ public class CreateScoreboard {
         blankline2.setScore(2);
 
         //coins
-        Team coins = b.registerNewTeam("c" + p.getName());
+        Team coins = b.registerNewTeam("c");
         coins.addEntry(ChatColor.YELLOW + "" + ChatColor.YELLOW);
         String coinsprefix = ChatColor.translateAlternateColorCodes('&', "&5&lMAGIC DUST");
         String coinssuffix = ChatColor.translateAlternateColorCodes('&', " &d" + mysql.getDust(p.getUniqueId()));
@@ -59,7 +59,7 @@ public class CreateScoreboard {
         blankline.setScore(4);
 
         //exp
-        Team exp = b.registerNewTeam("e" + p.getName());
+        Team exp = b.registerNewTeam("e");
         exp.addEntry(ChatColor.RED + "" + ChatColor.GRAY);
         String expprefix = ChatColor.translateAlternateColorCodes('&', "&4╚═ &c" + mysql.getEXP(p.getUniqueId()));
         String expsuffix = ChatColor.translateAlternateColorCodes('&', "&7/&c" + mysql.getEXPMax(p.getUniqueId()));
@@ -68,7 +68,7 @@ public class CreateScoreboard {
         o.getScore(ChatColor.RED + "" + ChatColor.GRAY).setScore(5);
 
         //level
-        Team level = b.registerNewTeam("l" + p.getName());
+        Team level = b.registerNewTeam("l");
         level.addEntry(ChatColor.DARK_RED + "" + ChatColor.RED);
         String levelprefix = ChatColor.translateAlternateColorCodes('&', "&4&lLEVEL");
         String levelsuffix = ChatColor.translateAlternateColorCodes('&', " &c" + mysql.getLevel(p.getUniqueId()));
@@ -162,9 +162,9 @@ public class CreateScoreboard {
                     Scoreboard b = p.getScoreboard();
                     // String s1 = ChatColor.translateAlternateColorCodes('&', "&4&lHUB-" + plugin.getConfig().getInt("hub-identifier"));
 
-                    Team dust = b.getTeam("c" + p.getName());
-                    Team xp = b.getTeam("e" + p.getName());
-                    Team level = b.getTeam("l" + p.getName());
+                    Team dust = b.getTeam("c");
+                    Team xp = b.getTeam("e");
+                    Team level = b.getTeam("l");
 
                     dust.setPrefix(ChatColor.translateAlternateColorCodes('&', "&5&lMAGIC DUST"));
                     dust.setSuffix(ChatColor.translateAlternateColorCodes('&', " &d" + mysql.getDust(p.getUniqueId())));
