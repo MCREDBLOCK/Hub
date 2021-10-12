@@ -233,28 +233,28 @@ public class CreateGameMenu implements Listener {
                 if (j.get("DR-1Status").equals("OFFLINE")) {
                     i.setItem(10, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lDR-1"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-1"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("DR-1Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(10, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-1"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + ServerConnector.getPlayerCount("DR", 1) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("DR-2Status") != null) {
                 if (j.get("DR-2Status").equals("OFFLINE")) {
                     i.setItem(12, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lDR-2"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(12, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-2"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("DR-2Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(12, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-2"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + ServerConnector.getPlayerCount("DR", 2) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("DR-3Status") != null) {
                 if (j.get("DR-3Status").equals("OFFLINE")) {
                     i.setItem(14, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lDR-3"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(14, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-3"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("DR-3Online") + "&2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(14, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-3"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + ServerConnector.getPlayerCount("DR", 3) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             if (j.get("DR-4Status") != null) {
                 if (j.get("DR-4Status").equals("OFFLINE")) {
                     i.setItem(16, createGuiItem(Material.REDSTONE_BLOCK, ChatColor.translateAlternateColorCodes('&', "&4&lDR-4"), translate("&4&m-----------------------"), translate("&4&lOFFLINE"), translate("&4&m-----------------------")));
                 } else {
-                    i.setItem(16, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-4"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + j.get("DR-4Online") + " &2&lPLAYERS"), translate("&2&m-----------------------")));
+                    i.setItem(16, createGuiItem(Material.IRON_SWORD, ChatColor.translateAlternateColorCodes('&', "&2&lDR-4"), translate("&2&m-----------------------"), translate("Maps:"), translate("&aDeadly Dungeon"), translate("&aTerracotta Desert"), "", translate("&a" + ServerConnector.getPlayerCount("DR", 4) + " &2&lPLAYERS"), translate("&2&m-----------------------")));
                 }
             }
             i.setItem(22, createGuiItem(Material.BARRIER, ChatColor.translateAlternateColorCodes('&', "&4&lCLOSE"), (String) null));

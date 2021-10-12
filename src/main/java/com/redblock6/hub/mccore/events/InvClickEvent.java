@@ -86,17 +86,37 @@ public class InvClickEvent implements Listener {
                 return;
             }
 
-            if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-1"))) {
+            if (item.getItemMeta().getDisplayName().equals(format("&2&lDR-1"))) {
                 ServerConnector.sendServer(p, "DR-1");
                 e.setCancelled(true);
-            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-2"))) {
+            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-1"))) {
+                CreateGameMenu.newInventory(p, "DR");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&2&lDR-2"))) {
                 ServerConnector.sendServer(p, "DR-2");
                 e.setCancelled(true);
-            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-3"))) {
+            }else if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-2"))) {
+                CreateGameMenu.newInventory(p, "DR");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&2&lDR-3"))) {
                 ServerConnector.sendServer(p, "DR-3");
                 e.setCancelled(true);
-            } else if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-4"))) {
+            }else if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-3"))) {
+                CreateGameMenu.newInventory(p, "DR");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
+                e.setCancelled(true);
+            } else if (item.getItemMeta().getDisplayName().equals(format("&2&lDR-4"))) {
                 ServerConnector.sendServer(p, "DR-4");
+                e.setCancelled(true);
+            }else if (item.getItemMeta().getDisplayName().equals(format("&4&lDR-4"))) {
+                CreateGameMenu.newInventory(p, "DR");
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 100, 1);
+                p.sendMessage(CreateGameMenu.translate("&4&l> &fThis server is offline"));
                 e.setCancelled(true);
             } else if (item.getItemMeta().getDisplayName().equals(format("&4&lBACK"))) {
                 CreateGameMenu.newInventory(p, "GameMenu");
